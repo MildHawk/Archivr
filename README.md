@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/MildHawk/Archivr.png?label=ready&title=Ready)](https://waffle.io/MildHawk/Archivr)
 # Archivr
 Because it's hip to add an "r" at the end. r.
 
