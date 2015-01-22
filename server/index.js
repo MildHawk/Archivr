@@ -1,9 +1,8 @@
 var express = require('express');
-var app = express();
+var app = module.exports = express();
 
-var expressConfig = require('./config/expressConfig');
-
-app.use(parser());
+require('./config/expressConfig')(app);
+require('./routes')(app);
 
 app.listen(app.get('port'), function() {
   console.log('Listening on port ' + app.get('port'));
