@@ -1,6 +1,6 @@
 module.exports = function applicationRouter(app) {
 
-  // mount user router to /api
+  // mount user and screenshot routers to /api
   app.use('/api/user', require('./api/user'));
   app.use('/api/screenshot', require('./api/screenshot'));
 
