@@ -1,0 +1,32 @@
+{
+  "name": "Archivr",
+  "version": "1.0.0",
+  "description": "[![Stories in Ready](https://badge.waffle.io/MildHawk/Archivr.png?label=ready&title=Ready)](https://waffle.io/MildHawk/Archivr) # Archivr Because it's hip to add an \"r\" at the end. r.",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MildHawk/Archivr.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MildHawk/Archivr/issues"
+  },
+  "homepage": "https://github.com/MildHawk/Archivr",
+  "dependencies": {
+    "body-parser": "^1.10.2",
+    "express": "^4.11.1",
+    "morgan": "^1.5.1"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "karma": "^0.12.31",
+    "karma-chai": "^0.1.0",
+    "karma-cli": "0.0.4",
+    "karma-mocha": "^0.1.10",
+    "mocha": "^2.1.0"
+  }
+}
