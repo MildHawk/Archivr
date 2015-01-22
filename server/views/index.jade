@@ -1,0 +1,17 @@
+doctype html
+html(lang="en" class="no-js" ng-app="Archivr")
+
+  head
+    include _partials/head.jade
+
+  body
+    include _partials/header.jade
+
+    main(role="main" id="main" class="container")
+
+      block content
+        div(ui-view)
+
+    footer(role="footer" id="footer")
+
+  block footer_scripts
