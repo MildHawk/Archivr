@@ -16,6 +16,8 @@ module.exports = function expressConfig(app) {
 
   if(env !== 'production'){
     app.set('port', 3000);
+  } else {
+    app.set('port', process.env.PORT);
   }
 
 };
