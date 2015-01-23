@@ -1,29 +1,15 @@
-var router = require('express').Router();
+exports.create = function(req, res, next) {
+  res.send('Create a screenshot');
+};
 
-/**
- * /api/screenshot/
- */
-router.route('/')
-  // create a screenshot
-  .post(function(req, res, next) {
-    res.send('Create a screenshot');
-  });
+exports.show = function(req, res, next) {
+  res.send('GET screenshot with ID ' + req.params.id);
+};
 
-/**
- * /api/screenshot/:id
- */
-router.route('/:id')
-  // get the screenshot
-  .get(function(req, res, next) {
-    res.send('GET screenshot with ID ' + req.params.id);
-  })
-  // update the screenshot
-  .put(function(req, res, next) {
-    res.send('PUT screenshot with ID ' + req.params.id);
-  })
-  // delete the screenshot
-  .delete(function(req, res, next) {
-    res.send('DELETE screenshot with ID ' + req.params.id);
-  });
+exports.update = function(req, res, next) {
+  res.send('PUT screenshot with ID ' + req.params.id);
+};
 
-module.exports = router;
+exports.destroy = function(req, res, next) {
+  res.send('DELETE screenshot with ID ' + req.params.id);
+};
