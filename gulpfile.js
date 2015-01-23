@@ -3,7 +3,7 @@ var karma = require('karma').server;
 var watch = require('gulp-watch');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var image = require('gulp-image');
+// var image = require('gulp-image');
 var compass = require('gulp-compass');
 var minifyCSS = require('gulp-minify-css');
 var jshint = require('gulp-jshint');
@@ -24,7 +24,7 @@ var paths = {
     img: './client/app/dist/img',
     views: './client/app/dist/views'
   },
-  karmaConf: __dirname + '/karma.conf.js'
+  karmaConf: __dirname + '/spec/karma.conf.js'
 };
 
 var handleError = function(err) {
@@ -77,6 +77,13 @@ gulp.task('compass', function() {
     .on('error', handleError)
     .pipe(minifyCSS())
     .pipe(gulp.dest(paths.dist.css));
+});
+
+gulp.task('karma', function (done) {
+  karma.start({
+    configFile: paths.karmaConf,
+    singleRun: true
+  }, done);
 });
 
 gulp.task('watch', function() {
