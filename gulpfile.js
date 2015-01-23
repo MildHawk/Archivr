@@ -3,12 +3,14 @@ var karma = require('karma').server;
 var watch = require('gulp-watch');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-// var image = require('gulp-image');
+var image = require('gulp-image');
 var compass = require('gulp-compass');
 var minifyCSS = require('gulp-minify-css');
+var mocha = require('gulp-mocha');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var rename = require('gulp-rename');
+var runSequence = require('run-sequence');
 
 var paths = {
   src: {
@@ -24,6 +26,7 @@ var paths = {
     img: './client/app/dist/img',
     views: './client/app/dist/views'
   },
+  serverSpec: __dirname + '/spec/server/**/*.js',
   karmaConf: __dirname + '/spec/karma.conf.js'
 };
 
@@ -80,10 +83,17 @@ gulp.task('compass', function() {
 });
 
 gulp.task('karma', function (done) {
-  karma.start({
+  return karma.start({
     configFile: paths.karmaConf,
     singleRun: true
   }, done);
+});
+
+gulp.task('mocha', function () {
+  return gulp.src(paths.serverSpec, {read: false})
+    .pipe(mocha({
+      reporter: 'spec',
+    }));
 });
 
 gulp.task('watch', function() {
@@ -91,6 +101,13 @@ gulp.task('watch', function() {
   gulp.watch(paths.src.scss + '/**/*.scss', ['compass']);
   gulp.watch(paths.src.js + '/**/*.js', ['lint', 'javascript']);
   gulp.watch(paths.src.views + '/**/*', ['moveViews']);
+});
+
+// Run testing suite: karma (client-side) and mocha (server-side)
+gulp.task('test', function(callback) {
+  // Use `runSequence` to call tasks synchronously, otherwise
+  // messages from both will be potentially interleaved.
+  runSequence('karma', 'mocha', callback);
 });
 
 gulp.task('default', ['compass', 'image', 'moveViews', 'lint', 'javascript', 'watch']);
