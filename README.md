@@ -1,5 +1,5 @@
-[![Stories in Ready](https://badge.waffle.io/MildHawk/Archivr.png?label=ready&title=Ready)](https://waffle.io/MildHawk/Archivr)
-# Archivr
+
+# Archivr [![Stories in Ready](https://badge.waffle.io/MildHawk/Archivr.png?label=ready&title=Ready)](https://waffle.io/MildHawk/Archivr) [![Build Status](https://travis-ci.org/MildHawk/Archivr.svg?branch=develop)](https://travis-ci.org/MildHawk/Archivr)
 Because it's hip to add an "r" at the end. r.
 
 <!--
