@@ -1,4 +1,4 @@
-function AuthController($scope, $window, $location, Auth) {
+function AuthController($window, $location, Auth) {
 
   this.signin = function (user,password) {
     Auth.signin() //should send in user?
@@ -22,12 +22,14 @@ function AuthController($scope, $window, $location, Auth) {
       });
   };
 
+
   this.logout = function(){
     console.log("Signed out!!!!!!!!!!!");
     Auth.signout();
   };
 
-}
+};
+AuthController.$inject = ['$window','$location','Auth'];
 
 angular.module('Archivr.auth', [])
 .controller('AuthController', AuthController);

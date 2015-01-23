@@ -4,10 +4,10 @@ function Auth($http, $location, $window) {
   // it is responsible for authenticating our user
   // by exchanging the user's username and password
   // for a JWT from the server
-  // that JWT is then stored in localStorage as 'com.shortly'
+  // that JWT is then stored in localStorage as 'com.archivr'
   // after you signin/signup open devtools, click resources,
   // then localStorage and you'll see your token from the server
-  var signin = function (user) {
+  var signin = function(user) {
     return $http({
       method: 'POST',
       url: '/api/users/signin',
@@ -20,22 +20,22 @@ function Auth($http, $location, $window) {
 
 
 
-  var signup = function (user) {
+  var signup = function(user) {
     return $http({
       method: 'POST',
       url: '/api/users/signup',
       data: user
     })
-    .then(function (resp) {
+    .then(function(resp) {
       return resp.data.token;
     });
   };
 
-  var isAuth = function () {
+  var isAuth = function() {
     return !!$window.localStorage.getItem('com.archivr');
   };
 
-  var signout = function () {
+  var signout = function() {
     console.log("in services... signout!!!");
     $window.localStorage.removeItem('com.archivr');
     $location.path('/signin');
@@ -48,7 +48,8 @@ function Auth($http, $location, $window) {
     isAuth: isAuth,
     signout: signout
   };
-});
+};
+Auth.$inject = ['$http', '$location', '$window'];
 
 
 angular.module('Archivr.services', [])
