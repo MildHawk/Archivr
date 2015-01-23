@@ -5,6 +5,7 @@
 logs
 *.log
 
+# Ignore distribution folder
 client/app/dist/**
 
 # Runtime data
