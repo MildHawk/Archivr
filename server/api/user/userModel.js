@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
+//TODO --> set username to be unique
 
 var usersSchema = mongoose.Schema({
   username: { type: String, required: true },
