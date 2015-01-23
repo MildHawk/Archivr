@@ -15,12 +15,14 @@ var paths = {
     bower: './client/app/src/bower_components',
     js: './client/app/src/js',
     scss: './client/app/src/scss',
-    img: './client/app/src/img'
+    img: './client/app/src/img',
+    views: './client/app/src/views'
   },
   dist: {
     js: './client/app/dist/js',
     css: './client/app/dist/css',
-    img: './client/app/dist/img'
+    img: './client/app/dist/img',
+    views: './client/app/dist/views'
   },
   karmaConf: __dirname + '/karma.conf.js'
 };
@@ -57,6 +59,11 @@ gulp.task('image', function() {
     .pipe(image())
     .on('error', handleError)
     .pipe(gulp.dest(paths.dist.img));
+});
+
+gulp.task('moveViews', function() {
+  gulp.src(paths.src.views + '/**/*')
+    .pipe(gulp.dest(paths.dist.views));
 });
 
 gulp.task('compass', function() {
