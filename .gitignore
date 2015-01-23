@@ -5,6 +5,8 @@
 logs
 *.log
 
+client/app/dist
+
 # Runtime data
 pids
 *.pid
