@@ -51,22 +51,35 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
           controller: 'UserScreenshotsController',
           controllerAs: 'userScreenshotsCtrl'
         }
-
       }
-
     })
 
     /**
-     * User profile bar
-     * ================
-     * Sub view of a user page to display user info.
+     * screenshot
+     * ==========
+     * Provides view of a single screenshot. Sibling view to the user page.
+     * Contains details on the screenshot as well as the ability to edit
+     * the screenshot details (when authorized).
      */
-    .state('user.profile', {
-      templateUrl: 'app/src/views/userProfile.html',
-      controller: 'UserProfileController',
-      controllerAs: 'userProfileCtrl',
-      url:
+    .state('user.screenshot', {
+      url: '/screenshot/:screenshotId',
+      templateUrl: 'app/src/views/screenshot.html',
+      controller: 'ScreenshotController',
+      controllerAs: 'screenshotCtrl'
     })
+
+    /**
+     * Sign up
+     * =======
+     * Allows user to sign up for the app.
+     */
+    .state('signup', {
+      url: '/signup',
+      templateUrl: 'app/src/views/signup.html',
+      controller: 'AuthController',
+      controllerAs: 'authCtrl'
+    })
+
   // default uncaught routes to landing page
   $urlRouterProvider.otherwise('/');
 
