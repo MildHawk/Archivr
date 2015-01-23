@@ -1,7 +1,7 @@
 var express = require('express');
 var app = module.exports = express();
 
-require('./config/expressConfig')(app);
+require('./config/express')(app);
 require('./routes')(app);
 
 app.listen(app.get('port'), function() {

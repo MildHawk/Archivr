@@ -13,7 +13,7 @@ router.route('/')
 /**
  * /api/user/:id
  */
-router.route('/:id')
+router.route('/:username')
   // get the user
   .get(userController.show)
   // update the user

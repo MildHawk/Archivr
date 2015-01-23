@@ -1,6 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var jwt = require('jwt-simple');
 
 module.exports = function expressConfig(app) {
   var env = app.get('env');
@@ -23,8 +26,18 @@ module.exports = function expressConfig(app) {
   // set static asset dir
   app.use(express.static(__dirname + '/../../client/app/dist'));
 
+  //
+  app.use(cookieParser());
+
+  //
+  app.use(session({
+    secret: 'a secret'
+  }));
+
+  // dynamically set port if in production otherwise use port 3000
   if(env !== 'production') {
     app.set('port', 3000);
+    app.set('jwtTokenSecret', '967697183e094509a81bf34bd5d9f19c');
   } else {
     app.set('port', process.env.PORT);
   }

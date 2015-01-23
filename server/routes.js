@@ -1,8 +1,35 @@
+var User = require('./api/user/userModel');
+
 module.exports = function applicationRouter(app) {
+
+  /**
+   * middleware for handling username param
+   * this is probably the place check if
+   * this is a valid username and also get access to the user id
+   */
+  app.param('username', function(req, res, next, username) {
+    // find the user
+    User.findOne({ username: username }, function(err, user) {
+      // there was an error
+      if (err) return res.send(500);
+      // the user doesn't exist
+      if (!user) return res.send(404);
+      // the user exists, attach their ID to the request
+      req.params.user = user;
+      // continue
+      return next();
+    });
+  });
 
   // mount user and screenshot routers to /api
   app.use('/api/user', require('./api/user'));
-  app.use('/api/screenshot', require('./api/screenshot'));
+
+  /**
+   * screenshot routes are structured
+   * /user/:id/screenshot
+   * and /user/:id/screenshot/:id
+   */
+  app.use('/api/user', require('./api/screenshot'));
 
   /**
    * catch all other routes and send back to

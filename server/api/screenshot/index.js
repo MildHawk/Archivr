@@ -4,14 +4,14 @@ var screenshotController = require('./screenshotController');
 /**
  * /api/screenshot/
  */
-router.route('/')
+router.route('/:username/screenshot')
   // create a screenshot
   .post(screenshotController.create);
 
 /**
  * /api/screenshot/:id
  */
-router.route('/:id')
+router.route('/:username/screenshot/:id')
   // get the screenshot
   .get(screenshotController.show)
   // update the screenshot
