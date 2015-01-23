@@ -83,6 +83,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.src.img + '/**/*', ['image']);
   gulp.watch(paths.src.scss + '/**/*.scss', ['compass']);
   gulp.watch(paths.src.js + '/**/*.js', ['lint', 'javascript']);
+  gulp.watch(paths.src.views + '/**/*', ['moveViews']);
 });
 
-gulp.task('default', ['compass', 'image', 'lint', 'javascript', 'watch']);
+gulp.task('default', ['compass', 'image', 'moveViews', 'lint', 'javascript', 'watch']);
