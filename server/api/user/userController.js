@@ -1,3 +1,5 @@
+var User = require('./userModel');
+
 exports.list = function(req, res, next) {
   res.send('List of users');
 };
