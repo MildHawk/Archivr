@@ -58,7 +58,31 @@ function Auth($http, $location, $window) {
 };
 Auth.$inject = ['$http', '$location', '$window'];
 
+function Screenshots($http) {
+
+  var grabScreenshots = function(){//should probably pass something in..
+    return $http({
+      url:'/api/screenshots/',
+      method:"GET",
+      params: {gruble:uname}
+    });
+
+  };
+  var addScreenshot = function (data) {
+    return $http.post('/api/screenshots',data);
+  };
+
+  return {
+    grabScreenshots:grabScreenshots,
+    addScreenshot:addScreenshot
+  };
+};
+Screenshots.$inject = ['$http','$location','$window'];
+
+
 
 angular.module('Archivr.services', [])
 .factory('Auth', Auth)
 .factory('Screenshots', Screenshots);
+
+
