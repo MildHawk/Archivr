@@ -23,7 +23,7 @@ module.exports = function expressConfig(app) {
   // set static asset dir
   app.use(express.static(__dirname + '/../../client/app/dist'));
 
-  if(env !== 'production'){
+  if(env !== 'production') {
     app.set('port', 3000);
   } else {
     app.set('port', process.env.PORT);
