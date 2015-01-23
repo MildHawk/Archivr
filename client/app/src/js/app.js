@@ -1,5 +1,35 @@
 function config($urlRouterProvider, $stateProvider, $locationProvider) {
 
+
+  // configure routes
+  $stateProvider
+    /**
+     * Landing page
+     * =============
+     * The default entry point for the website.
+     */
+    .state('landing', {
+      templateUrl: 'app/src/views/landing.html',
+      controller: 'LandingController',
+      controllerAs: 'landingCtrl',
+      url: '/'
+    })
+
+    /**
+     * User page
+     * =========
+     * Displays the user information and recent screen shots. Contains
+     * multiple sibling views.
+     */
+    .state('user', {
+      templateUrl: 'app/src/views/user.html',
+      controller: 'UserPageController',
+      controllerAs: 'userPageCtrl',
+      url: ''
+    })
+  // default uncaught routes to landing page
+  $urlRouterProvider.otherwise('/');
+
   // enable HTML5 mode
   $locationProvider.html5Mode(true);
 
