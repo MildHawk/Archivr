@@ -19,12 +19,13 @@ describe('User', function() {
   describe('#createGallery', function() {
     it('should create a new gallery for a specific user'){
       var user = createUser("Ruben", "1010");
-      user.createGallery()
+      var gallery = user.createGallery("Design");
+      expect(user).to.equal()
     };
   });
   
   describe('#getGalleries', function() {
-    it('should serve all galleries for a specific user'){
+    it('should serve all galleries from a specific user'){
       var user = createUser("Ruben", "1010");
       var gallery = user.createGallery();
       var gallery2 = user.createGallery();
