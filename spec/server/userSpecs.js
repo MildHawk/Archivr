@@ -4,11 +4,11 @@
 
 describe('User', function() {
 
-  beforeEach(function () {
+  beforeEach(function() {
   });
 
   describe('#createUser', function() {
-    it('should create a new user', function(){
+    it('should create a new user', function() {
       createUser("Ruben", "1010");
       //var user = new User({username: 'Ruben', password: '1010'});
       //user.save();
@@ -17,29 +17,30 @@ describe('User', function() {
   });
 
   describe('#createGallery', function() {
-    it('should create a new gallery for a specific user'){
+    it('should create a new gallery for a specific user', function() {
       var user = createUser("Ruben", "1010");
       var gallery = user.createGallery("Design");
       expect(user).to.equal()
-    };
+      user.createGallery();
+    });
   });
-  
+
   describe('#getGalleries', function() {
-    it('should serve all galleries from a specific user'){
+    it('should serve all galleries for a specific user', function() {
       var user = createUser("Ruben", "1010");
       var gallery = user.createGallery();
       var gallery2 = user.createGallery();
       expect(user.getGalleries()).to.equal([gallery, gallery2]);
-    };
-  })
+    });
+  });
 
   describe('#getGallery', function() {
-    it('should serve a certain gallery from a specific user'){
+    it('should serve a certain gallery from a specific user', function() {
       var user = createUser("Ruben", "1010");
       var gallery = user.createGallery();
       var gallery2 = user.createGallery();
       expect().to.equal(gallery);
-    };
+    });
   });
 
   //describe('', function() {
