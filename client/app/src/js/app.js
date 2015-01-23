@@ -22,10 +22,50 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
      * multiple sibling views.
      */
     .state('user', {
-      templateUrl: 'app/src/views/user.html',
-      controller: 'UserPageController',
-      controllerAs: 'userPageCtrl',
-      url: ''
+      url: '/users/:username',
+      views: {
+        // main view
+        '': {
+          templateUrl: 'app/src/views/user.html'
+        },
+
+        /**
+         * profile bar
+         * ===========
+         * Creates a sidebar to display details for this user's page.
+         * Information such as profile image, name, number of screenshots, etc.
+         */
+        'profile@user': {
+          templateUrl: 'app/src/views/profileBar.html',
+          controller: 'ProfileBarController',
+          controllerAs: 'profileBarCtrl'
+        },
+
+        /**
+         * screenshots
+         * ===========
+         * Displays all the screenshots from a user
+         */
+        'screenshots@user': {
+          templateUrl: 'app/src/views/userScreenshots.html',
+          controller: 'UserScreenshotsController',
+          controllerAs: 'userScreenshotsCtrl'
+        }
+
+      }
+
+    })
+
+    /**
+     * User profile bar
+     * ================
+     * Sub view of a user page to display user info.
+     */
+    .state('user.profile', {
+      templateUrl: 'app/src/views/userProfile.html',
+      controller: 'UserProfileController',
+      controllerAs: 'userProfileCtrl',
+      url:
     })
   // default uncaught routes to landing page
   $urlRouterProvider.otherwise('/');
