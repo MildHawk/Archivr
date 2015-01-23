@@ -5,7 +5,8 @@
 logs
 *.log
 
-client/app/dist
+client/app/dist/*
+!client/app/dist/views
 
 # Runtime data
 pids
