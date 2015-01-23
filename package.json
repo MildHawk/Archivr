@@ -19,6 +19,7 @@
   "dependencies": {
     "body-parser": "^1.10.2",
     "express": "^4.11.1",
+    "jade": "^1.9.1",
     "morgan": "^1.5.1"
   },
   "devDependencies": {
@@ -27,6 +28,17 @@
     "karma-chai": "^0.1.0",
     "karma-cli": "0.0.4",
     "karma-mocha": "^0.1.10",
-    "mocha": "^2.1.0"
+    "mocha": "^2.1.0",
+    "gulp": "^3.8.10",
+    "gulp-compass": "~2.0.3",
+    "gulp-concat": "^2.4.3",
+    "gulp-image": "^0.5.3",
+    "gulp-jshint": "~1.9.0",
+    "gulp-karma": "0.0.4",
+    "gulp-minify-css": "~0.3.11",
+    "gulp-rename": "~1.2.0",
+    "gulp-uglify": "~1.0.2",
+    "gulp-watch": "~3.0.0",
+    "jshint-stylish": "~1.0.0"
   }
 }
