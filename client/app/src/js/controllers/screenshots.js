@@ -12,19 +12,10 @@ function ScreenshotsController(Screenshots, Auth) {
     });
   };
 
-  this.sendMessage = function(){
-    Contacts.sendMesh(number)
-      .success(function(data){
-        this.results = data;
-      })
-      .error(function(err){
-        console.log(err);
-      });
 
-  }
 
-  // this.getContacts();
 
+  this.getScreenshots();
 
 }
 
