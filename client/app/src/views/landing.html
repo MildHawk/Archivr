@@ -1,1 +1,12 @@
-<h1>Hello from Landing</h1>
+
+<!-- Template for Landing -->
+
+  <div class="container" ng-controller="ScreenshotController">
+      <div class="row" ng-repeat="screenshot in results">
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img src={{ location }} alt={{ description }}>
+          </a>
+        </div>
+      </div>
+  </div>
