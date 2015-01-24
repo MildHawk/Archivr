@@ -1,5 +1,12 @@
 
+;(function() {
 
+});
+/**
+ * ProfileBarController
+ * ====================
+ * Handles display of profile bar on a user page.
+ */
 
 function ProfileBarController() {
 
