@@ -1,4 +1,4 @@
-var Screenshot = require('screenshotModel');
+var Screenshot = require('./screenshotModel');
 
 exports.create = function(req, res, next) {
   res.send('Create a screenshot');
