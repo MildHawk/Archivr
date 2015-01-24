@@ -26,7 +26,9 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
       views: {
         // main view
         '': {
-          templateUrl: '/views/user.html'
+          templateUrl: '/views/user.html',
+          controller: 'UserPageController',
+          controllerAs: 'userPageCtrl'
         },
 
         /**
@@ -113,6 +115,7 @@ angular
     'Archivr.profile',
     'Archivr.screenshots',
     'Archivr.screenshot',
+    'Archivr.userPage',
     'ui.router'
   ])
   .config(config)
