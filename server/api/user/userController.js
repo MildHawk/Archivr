@@ -16,7 +16,10 @@ exports.list = function(req, res, next) {
 };
 
 exports.create = function(req, res, next) {
-
+  var username = req.params.username;
+  var password = req.params.password;
+  var user = new User({username: username, password, password});
+  user.save();
 };
 
 exports.show = function(req, res, next) {
