@@ -9,7 +9,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
      * The default entry point for the website.
      */
     .state('landing', {
-      templateUrl: 'app/src/views/landing.html',
+      templateUrl: '/views/landing.html',
       controller: 'LandingController',
       controllerAs: 'landingCtrl',
       url: '/'
@@ -26,7 +26,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
       views: {
         // main view
         '': {
-          templateUrl: 'app/src/views/user.html'
+          templateUrl: '/views/user.html'
         },
 
         /**
@@ -36,7 +36,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
          * Information such as profile image, name, number of screenshots, etc.
          */
         'profile@user': {
-          templateUrl: 'app/src/views/profileBar.html',
+          templateUrl: '/views/profileBar.html',
           controller: 'ProfileBarController',
           controllerAs: 'profileBarCtrl'
         },
@@ -47,9 +47,9 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
          * Displays all the screenshots from a user
          */
         'screenshots@user': {
-          templateUrl: 'app/src/views/userScreenshots.html',
-          controller: 'UserScreenshotsController',
-          controllerAs: 'userScreenshotsCtrl'
+          templateUrl: '/views/userScreenshots.html',
+          controller: 'ScreenshotsController',
+          controllerAs: 'screenshotsCtrl'
         }
       }
     })
@@ -63,7 +63,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
      */
     .state('user.screenshot', {
       url: '/screenshot/:screenshotId',
-      templateUrl: 'app/src/views/screenshot.html',
+      templateUrl: '/views/screenshot.html',
       controller: 'ScreenshotController',
       controllerAs: 'screenshotCtrl'
     })
@@ -75,7 +75,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
      */
     .state('signup', {
       url: '/signup',
-      templateUrl: 'app/src/views/signup.html',
+      templateUrl: '/views/signup.html',
       controller: 'AuthController',
       controllerAs: 'authCtrl'
     })
@@ -108,8 +108,12 @@ function AttachTokens($window) {
 
 angular
   .module('Archivr', [
-    'ui.router',
-    'Archivr.auth'
+    'Archivr.auth',
+    'Archivr.landing',
+    'Archivr.profile',
+    'Archivr.screenshots',
+    'Archivr.screenshot',
+    'ui.router'
   ])
   .config(config)
   .factory('AttachTokens', AttachTokens)

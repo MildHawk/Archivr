@@ -28,7 +28,8 @@ function AuthController($window, $location, Auth) {
     Auth.signout();
   };
 
-};
+}
+
 AuthController.$inject = ['$window','$location','Auth'];
 
 angular.module('Archivr.auth', [])
