@@ -10,8 +10,6 @@ describe('User', function() {
   describe('#createUser', function() {
     it('should create a new user', function() {
       createUser("Ruben", "1010");
-      //var user = new User({username: 'Ruben', password: '1010'});
-      //user.save();
       expect(User.find().length).to.equal(1);
     });
   });
@@ -20,8 +18,7 @@ describe('User', function() {
     it('should create a new gallery for a specific user', function() {
       var user = createUser("Ruben", "1010");
       var gallery = user.createGallery("Design");
-      expect(user).to.equal()
-      user.createGallery();
+      expect(user.galleries).to.not.be.empty;
     });
   });
 
@@ -39,10 +36,18 @@ describe('User', function() {
       var user = createUser("Ruben", "1010");
       var gallery = user.createGallery();
       var gallery2 = user.createGallery();
-      expect().to.equal(gallery);
+      expect(user.getGallery(gallery.id)).to.equal(gallery);
     });
   });
-
+  
+  describe('#getScreenshot', function() {
+    it('should serve a certain screenshot from a specific user'){
+      var user = createUser("Ruben", "1010");
+      var gallery = user.cre();
+      var gallery2 = user.createGallery();
+      expect(user.getGallery(gallery.id)).to.equal(gallery);
+    };
+  });
   //describe('', function() {
     //it('should create a new gallery for a specific user'){
 
