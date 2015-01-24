@@ -1,6 +1,3 @@
-
-
-
 function ScreenshotsController(Screenshots, Auth) {
   // Your code here
   this.data = {};
@@ -24,14 +21,16 @@ function ScreenshotsController(Screenshots, Auth) {
         console.log(err);
       });
 
-    }
-  };
+  }
 
-  this.getContacts();
+  // this.getContacts();
 
 
-};
+}
+
 ScreenshotsController.$inject = ['Screenshots','Auth'];
 
-angular.module('Archivr.screenshots', [])
+angular.module('Archivr.screenshots', [
+  'Archivr.services'
+])
 .controller('ScreenshotsController', ScreenshotsController);

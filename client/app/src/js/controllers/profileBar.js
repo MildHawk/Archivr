@@ -1,7 +1,3 @@
-
-;(function() {
-
-});
 /**
  * ProfileBarController
  * ====================
@@ -10,9 +6,12 @@
 
 function ProfileBarController() {
 
+  //TODO: build out
+  this.something = function() {};
 
-};
-ProfileBarController.$inject = [];
+}
+// ProfileBarController.$inject = [];
 
-angular.module('Archivr.userPage', [])
+angular.module('Archivr.profile', [])
 .controller('ProfileBarController', ProfileBarController);
+
