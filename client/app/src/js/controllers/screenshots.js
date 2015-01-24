@@ -33,5 +33,5 @@ function ScreenshotsController(Screenshots, Auth) {
 };
 ScreenshotsController.$inject = ['Screenshots','Auth'];
 
-angular.module('archivr.screenshots', [])
+angular.module('Archivr.screenshots', [])
 .controller('ScreenshotsController', ScreenshotsController);

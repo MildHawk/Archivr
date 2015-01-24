@@ -48,8 +48,8 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
          */
         'screenshots@user': {
           templateUrl: 'app/src/views/userScreenshots.html',
-          controller: 'UserScreenshotsController',
-          controllerAs: 'userScreenshotsCtrl'
+          controller: 'ScreenshotsController',
+          controllerAs: 'screenshotsCtrl'
         }
       }
     })
