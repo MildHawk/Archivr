@@ -38,7 +38,11 @@ var handleError = function(err) {
 var jsFiles = [
   paths.src.bower + '/angular/angular.js',
   paths.src.bower + '/angular-ui-router/release/angular-ui-router.js',
-  paths.src.js + '/app.js'
+  paths.src.js + '/app.js',
+  paths.src.js + '/controllers/*.js',
+  paths.src.js + '/directives/*.js',
+  paths.src.js + '/services/*.js'
+
 ];
 
 gulp.task('javascript', function() {
