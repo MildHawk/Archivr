@@ -22,11 +22,64 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
      * multiple sibling views.
      */
     .state('user', {
-      templateUrl: 'app/src/views/user.html',
-      controller: 'UserPageController',
-      controllerAs: 'userPageCtrl',
-      url: ''
+      url: '/users/:username',
+      views: {
+        // main view
+        '': {
+          templateUrl: 'app/src/views/user.html'
+        },
+
+        /**
+         * profile bar
+         * ===========
+         * Creates a sidebar to display details for this user's page.
+         * Information such as profile image, name, number of screenshots, etc.
+         */
+        'profile@user': {
+          templateUrl: 'app/src/views/profileBar.html',
+          controller: 'ProfileBarController',
+          controllerAs: 'profileBarCtrl'
+        },
+
+        /**
+         * screenshots
+         * ===========
+         * Displays all the screenshots from a user
+         */
+        'screenshots@user': {
+          templateUrl: 'app/src/views/userScreenshots.html',
+          controller: 'UserScreenshotsController',
+          controllerAs: 'userScreenshotsCtrl'
+        }
+      }
     })
+
+    /**
+     * screenshot
+     * ==========
+     * Provides view of a single screenshot. Sibling view to the user page.
+     * Contains details on the screenshot as well as the ability to edit
+     * the screenshot details (when authorized).
+     */
+    .state('user.screenshot', {
+      url: '/screenshot/:screenshotId',
+      templateUrl: 'app/src/views/screenshot.html',
+      controller: 'ScreenshotController',
+      controllerAs: 'screenshotCtrl'
+    })
+
+    /**
+     * Sign up
+     * =======
+     * Allows user to sign up for the app.
+     */
+    .state('signup', {
+      url: '/signup',
+      templateUrl: 'app/src/views/signup.html',
+      controller: 'AuthController',
+      controllerAs: 'authCtrl'
+    })
+
   // default uncaught routes to landing page
   $urlRouterProvider.otherwise('/');
 
