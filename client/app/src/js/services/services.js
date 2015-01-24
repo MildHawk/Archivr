@@ -1,4 +1,11 @@
 
+function Screenshots() {
+  // TODO: build out Screenshots factory
+  return {};
+}
+
+Screenshots.$inject = [];
+
 function Auth($http, $location, $window) {
   // Don't touch this Auth service!!!
   // it is responsible for authenticating our user
@@ -53,4 +60,5 @@ Auth.$inject = ['$http', '$location', '$window'];
 
 
 angular.module('Archivr.services', [])
-.factory('Auth', Auth);
+.factory('Auth', Auth)
+.factory('Screenshots', Screenshots);
