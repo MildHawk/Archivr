@@ -1,7 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var jwt = require('jwt-simple');
 
@@ -28,11 +27,6 @@ module.exports = function expressConfig(app) {
 
   //
   app.use(cookieParser());
-
-  //
-  app.use(session({
-    secret: 'a secret'
-  }));
 
   // dynamically set port if in production otherwise use port 3000
   if(env !== 'production') {

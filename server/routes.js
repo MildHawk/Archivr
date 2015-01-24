@@ -14,10 +14,16 @@ module.exports = function applicationRouter(app) {
       if (err) return res.send(500);
       // the user doesn't exist
       if (!user) return res.send(404);
-      // the user exists, attach their ID to the request
-      req.params.user = user;
-      // continue
-      return next();
+
+      if (user) {
+        // the user exists, attach their ID to the request
+        req.params.foundUser = user;
+        // continue
+        return next();
+      } else {
+        return next(new Error('Unable to find user.'));
+      }
+
     });
   });
 
