@@ -1,11 +1,12 @@
 var User = require('./userModel');
 var mongoosePaginate = require('mongoose-paginate');
 
-User.plugin(mongoosePaginate);
+// User.plugin(mongoosePaginate);
 
 exports.list = function(req, res, next) {
-  User.paginate({}, 1, 16, function(err, pageCount, paginatedResults, itemCount) {
-    if(err) return res.status(500).end();
+  var page = req.params.page || 1;
+  User.paginate({}, page, 16, function(err, pageCount, paginatedResults, itemCount) {
+    if (err) return res.status(500).end();
     res.status(200).json({
       pageCount: pageCount,
       results: paginatedResults,
