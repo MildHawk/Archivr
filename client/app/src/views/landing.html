@@ -1,12 +1,13 @@
 
 <!-- Template for Landing -->
 
-  <div class="container" ng-controller="ScreenshotController">
-      <div class="row" ng-repeat="screenshot in results">
-        <div class="col-xs-6 col-md-3">
+  <div class="container">
+      <ul class="row" >
+        <li class="col-xs-6 col-md-3" ng-repeat="screenshot in landingCtrl.results">
           <a href="#" class="thumbnail">
-            <img src={{ location }} alt={{ description }}>
+            <img src="{{ screenshots.sizes.small.url }}" alt="{{ screenshots.sizes.small.description }}">
           </a>
-        </div>
-      </div>
+        </li>
+      </ul>
   </div>
+
