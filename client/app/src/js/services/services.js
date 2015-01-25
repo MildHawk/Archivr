@@ -1,11 +1,3 @@
-
-function Screenshots() {
-  // TODO: build out Screenshots factory
-  return {};
-}
-
-Screenshots.$inject = [];
-
 function Auth($http, $location, $window) {
   // Don't touch this Auth service!!!
   // it is responsible for authenticating our user
@@ -57,6 +49,24 @@ function Auth($http, $location, $window) {
   };
 };
 Auth.$inject = ['$http', '$location', '$window'];
+
+function Screenshots($http, $location, $window) {
+
+  var grabScreenshots = function(){//should probably pass something in..
+    return $http.get('/api/screenshots');
+
+  };
+  var addScreenshot = function (data) {
+    return $http.post('/api/screenshots',data);
+  };
+
+  return {
+    grabScreenshots:grabScreenshots,
+    addScreenshot:addScreenshot
+  };
+};
+Screenshots.$inject = ['$http','$location','$window'];
+
 
 
 angular.module('Archivr.services', [])
