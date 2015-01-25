@@ -6,6 +6,7 @@ var screenshotController = require('./screenshotController');
  */
 router.route('/:username/screenshot')
   // create a screenshot
+  .get(screenshotController.list);
   .post(screenshotController.create);
 
 /**

@@ -2,7 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
-// var jwt = require('express-jwt');
 
 module.exports = function expressConfig(app) {
   var env = app.get('env');
@@ -24,9 +23,6 @@ module.exports = function expressConfig(app) {
 
   // set static asset dir
   app.use(express.static(__dirname + '/../../client/app/dist'));
-
-  //
-  app.use(cookieParser());
 
   // dynamically set port if in production otherwise use port 3000
   if(env !== 'production') {
