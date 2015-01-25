@@ -17,7 +17,7 @@ module.exports = function applicationRouter(app) {
 
       if (user) {
         // the user exists, attach their ID to the request
-        req.params.foundUser = user;
+        req.foundUser = user;
         // continue
         return next();
       } else {
