@@ -74,7 +74,7 @@ gulp.task('moveViews', function() {
 });
 
 gulp.task('compass', function() {
-  gulp.src(paths.src.scss + '/app.scss')
+  gulp.src(paths.src.scss + '/*.scss')
     .pipe(compass({
       css: paths.dist.css,
       sass: paths.src.scss,

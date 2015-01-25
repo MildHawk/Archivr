@@ -1,5 +1,5 @@
 <div class="jumbotron text-center">
-    <h1>The User Page for {{ userPageCtrl.user }}</h1>
+    <h1>The User Page for {{ userPageCtrl.user.username }}</h1>
     <p>This page has multiple views!</p>
 </div>
 
@@ -7,7 +7,7 @@
 
     <!-- COLUMN ONE NAMED VIEW -->
     <div class="col-sm-3">
-        <div ui-view="profile"></div>
+        <div ui-view="profile" class="profile-view"></div>
     </div>
 
     <!-- COLUMN TWO NAMED VIEW -->
