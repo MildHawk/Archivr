@@ -8,14 +8,7 @@
 function UserPageController($stateParams) {
 
   // Get User object for reference
-  // this.user = new User($stateParams.username);
-
-  // STAGING DEBUG
-  this.user = {
-    username: 'Andrew',
-    images: ['image1.jpg', 'image2.jpg']
-  }
-
+  this.user = new User($stateParams.username);
 
 }
 // UserPageController.$inject = ['$stateParams', 'User'];
