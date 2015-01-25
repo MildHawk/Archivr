@@ -5,13 +5,15 @@
  */
 
 function LandingController(Screenshots, Auth) {
-  this.data = {};
+
+  // object to hold screenshots sent back from AJAX
+  this.screenshots = {};
 
   this.getScreenshots = function(){
     // gets public screenshots
     Screenshots.grabScreenshots()
     .success(function(data){
-      this.results = data;
+      this.screenshots = data;
     })
     .error(function(err){
       console.log(err);
@@ -19,7 +21,7 @@ function LandingController(Screenshots, Auth) {
   };
 
 
-
+  // Call to get public screenshots on load
   this.getScreenshots();
 
 
