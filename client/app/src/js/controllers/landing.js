@@ -30,3 +30,4 @@ LandingController.$inject = ['Screenshots','Auth'];
 
 angular.module('Archivr.landing', [])
 .controller('LandingController', LandingController);
+// garbage comment
