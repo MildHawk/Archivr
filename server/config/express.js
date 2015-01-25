@@ -1,7 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var cookieParser = require('cookie-parser');
 
 module.exports = function expressConfig(app) {
   var env = app.get('env');
