@@ -83,6 +83,7 @@ gulp.task('compass', function() {
     }))
     .on('error', handleError)
     .pipe(minifyCSS())
+    .pipe(concat('app.css'))
     .pipe(gulp.dest(paths.dist.css));
 });
 

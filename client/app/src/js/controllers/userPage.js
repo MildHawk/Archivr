@@ -9,6 +9,7 @@ function UserPageController($stateParams) {
 
   // Get User object for reference
   // this.user = new User($stateParams.username);
+
   // STAGING DEBUG
   this.user = {
     username: 'Andrew',
