@@ -9,10 +9,16 @@ function LandingController(Screenshots, Auth) {
   // object to hold screenshots sent back from AJAX
   this.screenshots = {};
 
+  /**
+   * getScreenshots
+   * ==============
+   * Gets public screenshots from server. Assigns to object on
+   * controller.
+   */
   this.getScreenshots = function(){
-    // gets public screenshots
     Screenshots.grabScreenshots()
     .success(function(data){
+      // TODO:  e.g. data = [{size},{},..]
       this.screenshots = data;
     })
     .error(function(err){
@@ -30,4 +36,3 @@ LandingController.$inject = ['Screenshots','Auth'];
 
 angular.module('Archivr.landing', [])
 .controller('LandingController', LandingController);
-// garbage comment
