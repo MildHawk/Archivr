@@ -72,7 +72,8 @@ gulp.task('javascript', function() {
 gulp.task('lint', function() {
   gulp.src(jsFiles)
     .pipe(jshint())
-    .pipe(jshint.reporter(stylish));
+    .pipe(jshint.reporter(stylish))
+    .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('image', function() {

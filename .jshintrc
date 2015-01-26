@@ -10,11 +10,12 @@
     "latedef": true,
     "newcap": true,
     "noarg": true,
+    "predef": ["angular"],
     "quotmark": "single",
     "regexp": true,
     "undef": true,
     "unused": true,
-    "strict": true,
+    "strict": false,
     "trailing": true,
     "smarttabs": true,
     "white": true
