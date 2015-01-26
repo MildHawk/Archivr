@@ -23,8 +23,10 @@ exports.list = function(req, res, next) {
 exports.create = function(req, res, next) {
   var username = req.body.username;
   var password = req.body.password;
-
   User.findOne({username: username, password: password}, function(err, user) {
+    if (err) {
+      res.send(500)
+    }
     if(!user) {
       var newUser = new User({username: username, password: password});
       newUser.save(function(err, user) {
@@ -33,17 +35,18 @@ exports.create = function(req, res, next) {
         }
         console.log("User created");
         res.status(201).end();
-      }); 
+      });
     } else {
       console.log("already exists");
       res.status(409).end();
     }
-  })
+  });
+
 };
 
 exports.show = function(req, res, next) {
   var user = req.params.user;
-  
+
   res.status(200).json(req.foundUser);
 };
 
@@ -60,6 +63,6 @@ exports.update = function(req, res, next) {
 };
 
 exports.destroy = function(req, res, next) {
-  
+
   res.send('DELETE user with ID ' + req.params.id);
 };

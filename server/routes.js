@@ -27,6 +27,9 @@ module.exports = function applicationRouter(app) {
     });
   });
 
+  // authentication related routes
+  app.use('/api/auth', require('./api/auth'));
+
   // mount user and screenshot routers to /api
   app.use('/api/user', require('./api/user'));
 

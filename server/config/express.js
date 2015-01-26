@@ -26,5 +26,4 @@ module.exports = function expressConfig(app) {
 
   // dynamically set port if in production otherwise use port 3000
   app.set('port', port);
-  app.set('jwtTokenSecret', '967697183e094509a81bf34bd5d9f19c');
 };
