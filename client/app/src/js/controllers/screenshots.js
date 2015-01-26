@@ -6,12 +6,13 @@
 
 function ScreenshotsController(Screenshots, Auth) {
   this.screenshots = [];
+  var context = this;
 
   this.getScreenshots = function(){
     Screenshots.grabScreenshots()
     .success(function(data){
       // TODO:  e.g. data = [{size},{},..]
-      this.screenshots = data;
+      context.screenshots = data;
     })
     .error(function(err){
       console.log(err);
