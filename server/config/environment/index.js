@@ -2,6 +2,21 @@
 
 var path = require('path');
 var _ = require('lodash');
+var nconf = require('nconf');
+
+/**
+ * nconf sets environment variables intelligently. Will try loading the
+ * local.env file if it exists. Will also pull from the existing `process.env`
+ * variable. This allows us to use local environment variables provided through
+ * local.env, and the Heroku env variables provided through process.env.
+ *
+ * Format to use nconf is: nconf.get('variableName');
+ *
+ * Initialize nconf here.
+ */
+nconf.argv() // grabs flags, e.g. --foo bar --> nconf.get('foo') === 'bar'
+  .env() // grabs process.env
+  .file({ file: '../local.env.json' }) // loads local.env if exists
 
 function requiredProcessEnv(name) {
   if(!process.env[name]) {
@@ -13,13 +28,13 @@ function requiredProcessEnv(name) {
 // All configurations will extend these options
 // ============================================
 var all = {
-  env: process.env.NODE_ENV,
+  env: nconf.get('NODE_ENV'),
 
   // Root path of server
   root: path.normalize(__dirname + '/../../..'),
 
   // Server port
-  port: process.env.PORT || 3000,
+  port: nconf.get('PORT') || 3000,
 
   // Should we populate the DB with sample data?
   seedDB: false,
@@ -39,21 +54,21 @@ var all = {
   },
 
   facebook: {
-    clientID:     process.env.FACEBOOK_ID || 'id',
-    clientSecret: process.env.FACEBOOK_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/facebook/callback'
+    clientID:     nconf.get('FACEBOOK_ID') || 'id',
+    clientSecret: nconf.get('FACEBOOK_SECRET') || 'secret',
+    callbackURL:  (nconf.get('DOMAIN') || '') + '/auth/facebook/callback'
   },
 
   twitter: {
-    clientID:     process.env.TWITTER_ID || 'id',
-    clientSecret: process.env.TWITTER_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/twitter/callback'
+    clientID:     nconf.get('TWITTER_ID') || 'id',
+    clientSecret: nconf.get('TWITTER_SECRET') || 'secret',
+    callbackURL:  (nconf.get('DOMAIN') || '') + '/auth/twitter/callback'
   },
 
   google: {
-    clientID:     process.env.GOOGLE_ID || 'id',
-    clientSecret: process.env.GOOGLE_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback'
+    clientID:     nconf.get('GOOGLE_ID') || 'id',
+    clientSecret: nconf.get('GOOGLE_SECRET') || 'secret',
+    callbackURL:  (nconf.get('DOMAIN') || '') + '/auth/google/callback'
   }
 };
 
@@ -61,4 +76,4 @@ var all = {
 // ==============================================
 module.exports = _.merge(
   all,
-  require('./' + process.env.NODE_ENV + '.js') || {});
+  require('./' + nconf.get('NODE_ENV') + '.js') || {});

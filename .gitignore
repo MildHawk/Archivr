@@ -10,7 +10,7 @@ client/app/dist/**
 server/views/_partials/dist/**
 
 # API and environment keys
-server/config/local.env
+server/config/local.env.json
 
 # Runtime data
 pids
