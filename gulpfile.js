@@ -12,6 +12,7 @@ var stylish = require('jshint-stylish');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
 var preprocess = require('gulp-preprocess');
+var exit = require('gulp-exit');
 
 var paths = {
   src: {
@@ -73,7 +74,8 @@ gulp.task('lint', function() {
   gulp.src(jsFiles)
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
-    .pipe(jshint.reporter('fail'));
+    // .pipe(jshint.reporter('fail'))
+    .pipe(exit());
 });
 
 gulp.task('image', function() {
