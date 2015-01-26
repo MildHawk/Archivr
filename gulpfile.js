@@ -11,6 +11,7 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
+var preprocess = require('gulp-preprocess');
 
 var paths = {
   src: {
@@ -26,6 +27,7 @@ var paths = {
     img: './client/app/dist/img',
     views: './client/app/dist/views'
   },
+  jade: './server/views/_partials',
   serverSpec: __dirname + '/spec/server/**/*.js',
   karmaConf: __dirname + '/spec/karma.conf.js'
 };
@@ -44,6 +46,18 @@ var jsFiles = [
   paths.src.js + '/services/*.js'
 
 ];
+
+var jadeFiles = [paths.jade + '/*.jade'];
+
+var envConfig;
+
+var envConfigLocal = {
+  BASE_HREF: 'localhost:3000'
+}
+
+var envConfigDev = {
+  BASE_HREF: 'archivr-dev.herokuapp.com'
+}
 
 gulp.task('javascript', function() {
   gulp.src(jsFiles)
@@ -86,6 +100,12 @@ gulp.task('compass', function() {
     .pipe(gulp.dest(paths.dist.css));
 });
 
+gulp.task('processEnv', function() {
+  gulp.src(jadeFiles)
+    .pipe(preprocess({context: envConfig}))
+    .pipe(gulp.dest(paths.jade + '/dist'))
+});
+
 gulp.task('karma', function (done) {
   return karma.start({
     configFile: paths.karmaConf,
@@ -114,4 +134,19 @@ gulp.task('test', function(callback) {
   runSequence('karma', 'mocha', callback);
 });
 
-gulp.task('default', ['compass', 'image', 'moveViews', 'lint', 'javascript', 'watch']);
+/**
+ * build-local and build-dev tasks are to build out the app with different
+ * configurations. Preprocessing is necessary to insert the appropriate
+ * base href into the Jade partials.
+ */
+gulp.task('build-local', function() {
+  envConfig = envConfigLocal;
+  gulp.start('compass', 'image', 'moveViews', 'lint', 'javascript', 'processEnv');
+});
+
+gulp.task('build-dev', function() {
+  envConfig = envConfigDev;
+  gulp.start('compass', 'image', 'moveViews', 'lint', 'javascript', 'processEnv');
+});
+
+gulp.task('default', ['build-local', 'watch']);
