@@ -1,35 +1,50 @@
 var User = require('./userModel');
-var mongoosePaginate = require('mongoose-paginate');
+//var mongoosePaginate = require('mongoose-paginate');
 
 //User.plugin(mongoosePaginate);
 
-//app.use(mongoosePaginate.middleware(10, 50));
-
 exports.list = function(req, res, next) {
-  var page = req.params.page || 1;
-  User.paginate({}, page, 16, function(err, pageCount, paginatedResults, itemCount) {
-    if (err) return res.status(500).end();
-    res.status(200).json({
-      pageCount: pageCount,
-      results: paginatedResults,
-      count: itemCount
-    });
+  var users = User.find({}, function(err, users){
+    console.log(users);
+    res.end();
   });
+  //User.find({}).sort().skip().limit()
+  //var page = req.params.page || 1;
+  //User.paginate({}, page, 16, function(err, pageCount, paginatedResults, itemCount) {
+    //if (err) return res.status(500).end();
+    //res.status(200).json({
+      //pageCount: pageCount,
+      //results: paginatedResults,
+      //count: itemCount
+    //});
+  //});
 };
 
 exports.create = function(req, res, next) {
-  var username = req.params.username;
-  var password = req.params.password;
-  var user = new User({username: username, password: password});
-  user.save(function(err, user) {
-    console.log("User created");
-  }); 
-  res.status(201).end();
+  var username = req.body.username;
+  var password = req.body.password;
+
+  User.findOne({username: username, password: password}, function(err, user) {
+    if(!user) {
+      var newUser = new User({username: username, password: password});
+      newUser.save(function(err, user) {
+        if(err) {
+          res.status(500).end();
+        }
+        console.log("User created");
+        res.status(201).end();
+      }); 
+    } else {
+      console.log("already exists");
+      res.status(409).end();
+    }
+  })
 };
 
 exports.show = function(req, res, next) {
   var user = req.params.user;
-  res.status(200).json(user);
+  
+  res.status(200).json(req.foundUser);
 };
 
 exports.update = function(req, res, next) {

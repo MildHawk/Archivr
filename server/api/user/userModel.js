@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var db = require('../../db/index.js');
 
 //TODO --> set username to be unique
 
