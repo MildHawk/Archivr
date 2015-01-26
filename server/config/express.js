@@ -4,6 +4,7 @@ var morgan = require('morgan');
 
 module.exports = function expressConfig(app) {
   var env = app.get('env');
+  var port = process.env.PORT || 3000;
 
   // standard POST request body parser
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,11 +25,6 @@ module.exports = function expressConfig(app) {
   app.use(express.static(__dirname + '/../../client/app/dist'));
 
   // dynamically set port if in production otherwise use port 3000
-  if(env !== 'production') {
-    app.set('port', 3000);
-    app.set('jwtTokenSecret', '967697183e094509a81bf34bd5d9f19c');
-  } else {
-    app.set('port', process.env.PORT);
-  }
-
+  app.set('port', port);
+  app.set('jwtTokenSecret', '967697183e094509a81bf34bd5d9f19c');
 };
