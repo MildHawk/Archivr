@@ -7,6 +7,7 @@ logs
 
 # Ignore distribution folder
 client/app/dist/**
+server/views/_partials/dist/**
 
 # Runtime data
 pids

@@ -2,16 +2,16 @@ doctype html
 html(lang="en" class="no-js" ng-app="Archivr")
 
   head
-    include _partials/head.jade
+    include _partials/dist/head.jade
 
   body
-    include _partials/header.jade
+    include _partials/dist/header.jade
 
     main(role="main" id="main" class="container")
 
       block content
         div(ui-view)
 
-    include _partials/footer.jade
+    include _partials/dist/footer.jade
 
   block footer_scripts
