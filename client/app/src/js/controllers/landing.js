@@ -8,7 +8,7 @@ function LandingController(Screenshots, Auth) {
 
   // object to hold screenshots sent back from AJAX
   this.screenshots = [];
-  var context = this;
+  var _this = this;
 
   /**
    * getScreenshots
@@ -20,7 +20,7 @@ function LandingController(Screenshots, Auth) {
     Screenshots.grabScreenshots()
     .success(function(data){
       // TODO:  e.g. data = [{size},{},..]
-      context.screenshots = data;
+      _this.screenshots = data;
     })
     .error(function(err){
       console.log(err);
