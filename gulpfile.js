@@ -44,11 +44,21 @@ var jsFiles = [
   paths.src.js + '/controllers/*.js',
   paths.src.js + '/directives/*.js',
   paths.src.js + '/services/*.js'
+];
 
+// Keep track of own JS files for linting
+var jsFilesForLint = [
+  paths.src.js + '/**/*.js'
 ];
 
 var jadeFiles = [paths.jade + '/*.jade'];
 
+/**
+ * envConfig, envConfigLocal, and envConfigDev are used to configure builds
+ * with the proper environment. Arguments are passed into the preprocess
+ * task to insert variables into files. For example, the base href needs
+ * to be dynamically set based on the environment.
+ */
 var envConfig;
 
 var envConfigLocal = {
@@ -69,10 +79,15 @@ gulp.task('javascript', function() {
   .pipe(gulp.dest(paths.dist.js));
 });
 
+/**
+ * Run JSHint
+ */
 gulp.task('lint', function() {
-  gulp.src(jsFiles)
+  gulp.src(jsFilesForLint)
     .pipe(jshint())
-    .pipe(jshint.reporter(stylish));
+    .pipe(jshint.reporter(stylish))
+    // Error out if any warnings appear
+    .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('image', function() {
@@ -128,11 +143,13 @@ gulp.task('watch', function() {
   gulp.watch(paths.src.views + '/**/*', ['moveViews']);
 });
 
-// Run testing suite: karma (client-side) and mocha (server-side)
+// Run testing suite: lint, karma (client-side) and mocha (server-side)
 gulp.task('test', function(callback) {
-  // Use `runSequence` to call tasks synchronously, otherwise
-  // messages from both will be potentially interleaved.
-  runSequence('karma', 'mocha', callback);
+  /**
+   * Use `runSequence` to call tasks synchronously, otherwise
+   * messages from both will be potentially interleaved.
+   */
+  runSequence('lint', 'karma', 'mocha', callback);
 });
 
 /**

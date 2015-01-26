@@ -17,7 +17,7 @@ module.exports = function(config) {
     files: [
       // TODO: specify client files more carefully
       // src files
-      'client/**/*.js',
+      'client/dist/app.min.js',
 
       // TODO: set up server-side tests in karma
       // spec files
