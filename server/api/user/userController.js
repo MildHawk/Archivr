@@ -1,7 +1,4 @@
 var User = require('./userModel');
-//var mongoosePaginate = require('mongoose-paginate');
-
-//User.plugin(mongoosePaginate);
 
 exports.list = function(req, res, next) {
   var page = req.params.page || 0;
@@ -14,15 +11,6 @@ exports.list = function(req, res, next) {
     }
     res.json(users);
   })
-  //var page = req.params.page || 1;
-  //User.paginate({}, page, 16, function(err, pageCount, paginatedResults, itemCount) {
-    //if (err) return res.status(500).end();
-    //res.status(200).json({
-      //pageCount: pageCount,
-      //results: paginatedResults,
-      //count: itemCount
-    //});
-  //});
 };
 
 exports.create = function(req, res, next) {
@@ -50,9 +38,15 @@ exports.create = function(req, res, next) {
 };
 
 exports.show = function(req, res, next) {
-  var user = req.params.user;
-
-  res.status(200).json(req.foundUser);
+  var username = req.params.username;
+  console.log(req.foundUser);
+  User.findOne({username: username}, function(err, user) {
+    if(!user) {
+      res.status(404).end();
+    } else {
+      res.status(200).json(user);
+    }
+  })
 };
 
 exports.update = function(req, res, next) {
