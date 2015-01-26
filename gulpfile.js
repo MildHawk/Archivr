@@ -132,7 +132,8 @@ gulp.task('watch', function() {
 gulp.task('test', function(callback) {
   // Use `runSequence` to call tasks synchronously, otherwise
   // messages from both will be potentially interleaved.
-  runSequence('lint', 'karma', 'mocha', callback);
+  // runSequence('lint', 'karma', 'mocha', callback);
+  runSequence('lint', callback);
 });
 
 /**
