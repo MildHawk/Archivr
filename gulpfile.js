@@ -53,6 +53,12 @@ var jsFilesForLint = [
 
 var jadeFiles = [paths.jade + '/*.jade'];
 
+/**
+ * envConfig, envConfigLocal, and envConfigDev are used to configure builds
+ * with the proper environment. Arguments are passed into the preprocess
+ * task to insert variables into files. For example, the base href needs
+ * to be dynamically set based on the environment.
+ */
 var envConfig;
 
 var envConfigLocal = {
@@ -73,10 +79,14 @@ gulp.task('javascript', function() {
   .pipe(gulp.dest(paths.dist.js));
 });
 
+/**
+ * Run JSHint
+ */
 gulp.task('lint', function() {
   gulp.src(jsFilesForLint)
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
+    // Error out if any warnings appear
     .pipe(jshint.reporter('fail'));
 });
 
