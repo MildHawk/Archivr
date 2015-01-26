@@ -88,7 +88,7 @@ gulp.task('moveViews', function() {
 });
 
 gulp.task('compass', function() {
-  gulp.src(paths.src.scss + '/app.scss')
+  gulp.src(paths.src.scss + '/*.scss')
     .pipe(compass({
       css: paths.dist.css,
       sass: paths.src.scss,
@@ -97,6 +97,7 @@ gulp.task('compass', function() {
     }))
     .on('error', handleError)
     .pipe(minifyCSS())
+    .pipe(concat('app.css'))
     .pipe(gulp.dest(paths.dist.css));
 });
 

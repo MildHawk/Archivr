@@ -1,1 +1,10 @@
-Hello from profileBar.html
+<div class="container profile-view">
+  <div class="row">
+    <img ng-src="{{ userPageCtrl.user.profileImage || 'http://www.gurucul.com/wp-content/uploads/2014/02/anonymous-user.png' }}">
+  </div>
+  <div class="row">
+    <h1>{{ userPageCtrl.user.username }}</h1>
+    <p>Screenshots: {{ userPageCtrl.user.images.length }}</p>
+    <p>Galleries: {{ userPageCtrl.user.galleries.length }}</p>
+  </div>
+</div>

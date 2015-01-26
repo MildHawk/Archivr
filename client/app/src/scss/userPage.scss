@@ -1,0 +1,10 @@
+.profile-view {
+  // Set container div to 100% of ui-view
+  max-width: 100%;
+
+  // Set profile image to fit container
+  img {
+    max-width:100%;
+  }
+}
+
