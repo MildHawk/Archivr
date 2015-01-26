@@ -1,7 +1,9 @@
 var User = require('./userModel');
 var mongoosePaginate = require('mongoose-paginate');
 
-// User.plugin(mongoosePaginate);
+//User.plugin(mongoosePaginate);
+
+//app.use(mongoosePaginate.middleware(10, 50));
 
 exports.list = function(req, res, next) {
   var page = req.params.page || 1;
@@ -18,8 +20,11 @@ exports.list = function(req, res, next) {
 exports.create = function(req, res, next) {
   var username = req.params.username;
   var password = req.params.password;
-  var user = new User({username: username, password, password});
-  user.save();
+  var user = new User({username: username, password: password});
+  user.save(function(err, user) {
+    console.log("User created");
+  }); 
+  res.status(201).end();
 };
 
 exports.show = function(req, res, next) {
@@ -40,5 +45,6 @@ exports.update = function(req, res, next) {
 };
 
 exports.destroy = function(req, res, next) {
+  
   res.send('DELETE user with ID ' + req.params.id);
 };
