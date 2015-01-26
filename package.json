@@ -38,8 +38,6 @@
     "morgan": "^1.5.1",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0"
-  },
-  "devDependencies": {
     "chai": "^1.10.0",
     "gulp-compass": "~2.0.3",
     "gulp-concat": "^2.4.3",
@@ -61,5 +59,7 @@
     "mocha": "^2.1.0",
     "request": "^2.51.0",
     "run-sequence": "^1.0.2"
+  },
+  "devDependencies": {
   }
 }
