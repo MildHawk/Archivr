@@ -1,4 +1,5 @@
 var User = require('./userModel');
+var bcrypt = require('bcrypt-nodejs');
 
 exports.list = function(req, res, next) {
   var page = req.params.page || 0;
@@ -16,18 +17,18 @@ exports.list = function(req, res, next) {
 exports.create = function(req, res, next) {
   var username = req.body.username;
   var password = req.body.password;
-  User.findOne({username: username, password: password}, function(err, user) {
-    if (err) {
-      res.send(500)
-    }
+
+  User.findOne({username: username}, function(err, user) {
     if(!user) {
-      var newUser = new User({username: username, password: password});
-      newUser.save(function(err, user) {
-        if(err) {
-          res.status(500).end();
-        }
-        console.log("User created");
-        res.status(201).end();
+      bcrypt.hash(password, null, null, function(err, hash) {
+        var newUser = new User({username: username, password: hash});
+        newUser.save(function(err, user) {
+          if(err) {
+            res.status(500).end();
+          }
+          console.log("User created");
+          res.status(201).end();
+        }); 
       });
     } else {
       console.log("already exists");
