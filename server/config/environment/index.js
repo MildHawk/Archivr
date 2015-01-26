@@ -1,3 +1,16 @@
+/**
+ * index.js provides the summary export for environment variables. It will
+ * pull environment variables either from a local.env.json file or from the
+ * deployment environment on Heroku. Exports on index.js are further refined
+ * by input from `development.js`, `production.js`, and `test.js` depending
+ * on which environment has been chosen to run.
+ *
+ * Variables can be accessed in the following manner:
+ *   var config = require('./path/to/environment') // (no need for '/index.js')
+ *   console.log(config.port);
+ *   console.log(config.facebook.clientID);
+ */
+
 'use strict';
 
 var path = require('path');
