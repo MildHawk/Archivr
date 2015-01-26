@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/index.js",
     "postinstall": "npm run build",
-    "build": "gulp build-dev",
+    "build": "node node_modules/.bin/gulp build-dev",
     "test": "gulp test"
   },
   "engines": {
