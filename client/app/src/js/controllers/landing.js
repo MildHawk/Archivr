@@ -7,7 +7,7 @@
 function LandingController(Screenshots, Auth) {
 
   // object to hold screenshots sent back from AJAX
-  this.screenshots = {};
+  this.screenshots = [];
 
   /**
    * getScreenshots

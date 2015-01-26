@@ -1,11 +1,17 @@
+/**
+ * ScreenshotsController
+ * ====================
+ * Handles display of a user screenshots.
+ */
+
 function ScreenshotsController(Screenshots, Auth) {
-  // Your code here
-  this.data = {};
+  this.screenshots = [];
 
   this.getScreenshots = function(){
-    Screenshots.grabScreenshots()//might have to pass something in here
+    Screenshots.grabScreenshots()
     .success(function(data){
-      this.results = data;
+      // TODO:  e.g. data = [{size},{},..]
+      this.screenshots = data;
     })
     .error(function(err){
       console.log(err);
@@ -13,8 +19,7 @@ function ScreenshotsController(Screenshots, Auth) {
   };
 
 
-
-
+  // Call to get public screenshots on load
   this.getScreenshots();
 
 }

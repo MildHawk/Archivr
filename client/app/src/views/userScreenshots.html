@@ -1,1 +1,11 @@
-Hello from userScreenshots.html
+<!-- Template for UserScreenshots -->
+
+  <div class="container">
+      <ul class="row" >
+        <li class="col-xs-6 col-md-3" ng-repeat="screenshot in screenshotsCtrl.screenshots">
+          <a href="#" class="thumbnail">
+            <img src="{{ screenshot.sizes.small.url }}" alt="{{ screenshot.sizes.small.description }}">
+          </a>
+        </li>
+      </ul>
+  </div>
