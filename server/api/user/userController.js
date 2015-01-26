@@ -50,8 +50,14 @@ exports.show = function(req, res, next) {
 };
 
 exports.update = function(req, res, next) {
-  var user = req.params.user;
-  var updates = req.body;
+  var username = req.body.username;
+  var newData = req.body;
+  User.update({username: username}, newData, function(err, numberAffected, raw) {
+    if(err) {
+      res.status(404).end();
+    }
+    res.end();
+  })
   // the user exists, we need to make sure
   // the user is trying to update their own information
   // and not someone elses... so we need to check
@@ -62,6 +68,17 @@ exports.update = function(req, res, next) {
 };
 
 exports.destroy = function(req, res, next) {
-
-  res.send('DELETE user with ID ' + req.params.id);
+  var username = req.params.username;
+  User.findOne({username: username}, function(err, user) {
+    if(!user) {
+      res.status(404).end();
+    } else {
+      User.remove({username: username}, function(err) {
+        if(err) {
+          res.status(500).end();
+        }
+        res.status(200).end();
+      })
+    }
+  })
 };
