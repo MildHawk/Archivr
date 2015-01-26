@@ -23,8 +23,10 @@ exports.list = function(req, res, next) {
 exports.create = function(req, res, next) {
   var username = req.body.username;
   var password = req.body.password;
-
   User.findOne({username: username, password: password}, function(err, user) {
+    if (err) {
+      res.send(500)
+    }
     if(!user) {
       var newUser = new User({username: username, password: password});
       newUser.save(function(err, user) {

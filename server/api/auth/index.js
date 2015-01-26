@@ -7,7 +7,6 @@ var authController = require('./authController');
 router.post('/signup', authController.signup);
 // create a session
 router.post('/login', authController.login);
-  // destroy a session
-// router.get.delete(authController.logout);
+// destroy a session
 
 module.exports = router;

@@ -1,5 +1,7 @@
 var createUser = require('../user/userController').create;
 var passport = require('passport');
+var jwt = require('jsonwebtoken');
+var config = require('../../config/development');
 
 exports.signup = function(req, res, next) {
   createUser(req, res, next);
@@ -7,7 +9,6 @@ exports.signup = function(req, res, next) {
 
 exports.login = function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
-
     // if theres an error throw a 500
     if (err) return res.send(500);
 
@@ -20,7 +21,7 @@ exports.login = function(req, res, next) {
     if (user) {
       res.json({
         user: user,
-        token: jwt.sign(user, app.get('jwtTokenSecret'))
+        token: jwt.sign(user._id, config.jwtTokenSecret, { expiresInMinutes: 60*5 })
       });
     }
 

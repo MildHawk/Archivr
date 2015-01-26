@@ -28,5 +28,4 @@ module.exports = function jwtConfig(app) {
   //   next();
 
   // });
->>>>>>> auth updates
 };
