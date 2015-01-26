@@ -1,6 +1,6 @@
 //import user
 //import screenshots
-var db = require('../../server/db/index');
+
 
 describe('Screenshots', function() {
 

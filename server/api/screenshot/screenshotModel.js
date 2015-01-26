@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var db = require('../../db/index.js');
 
 var screenshotsSchema = mongoose.Schema({
   url: { type: String, required: true },
