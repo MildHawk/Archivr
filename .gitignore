@@ -5,9 +5,12 @@
 logs
 *.log
 
-# Ignore distribution folder
+# Distribution folder
 client/app/dist/**
 server/views/_partials/dist/**
+
+# API and environment keys
+server/config/local.env
 
 # Runtime data
 pids
