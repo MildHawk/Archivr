@@ -2,11 +2,12 @@
 
 <div id='signup'>
 
-  <h1>signup</h1>
+  <h1>Signup</h1>
   <form name="signupForm" ng-submit='authCtrl.signup()'>
-    <input type='text' ng-model='username'>
+    <label for="username">Create username:</label>
+    <input id="username" type='text' ng-model='username'>
+    <label for="password">Create password:</label>
     <input type="password" ng-model='password'>
-    <button>signup</button>
+    <button>Signup</button>
   </form>
-  <a href="#/signin">Already have an account? <strong>Signin</strong> ...</a>
 </div>
