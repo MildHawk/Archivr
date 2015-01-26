@@ -1,5 +1,8 @@
 function AuthController($window, $location, Auth) {
 
+  this.username = "";
+  this.password = "";
+
   this.signin = function (user,password) {
     Auth.signin() //should send in user?
       .then(function (token) {
