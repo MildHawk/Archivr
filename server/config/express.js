@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var config = require('./environment');
 
 module.exports = function expressConfig(app) {
   var env = app.get('env');
@@ -25,5 +26,6 @@ module.exports = function expressConfig(app) {
   app.use(express.static(__dirname + '/../../client/app/dist'));
 
   // dynamically set port if in production otherwise use port 3000
-  app.set('port', port);
+  app.set('port', config.port);
+  app.set('jwtTokenSecret', '967697183e094509a81bf34bd5d9f19c');
 };
