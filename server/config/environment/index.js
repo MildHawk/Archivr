@@ -66,6 +66,7 @@ var all = {
     }
   },
 
+  // Social API keys
   facebook: {
     clientID:     nconf.get('FACEBOOK_ID') || 'id',
     clientSecret: nconf.get('FACEBOOK_SECRET') || 'secret',
@@ -82,7 +83,10 @@ var all = {
     clientID:     nconf.get('GOOGLE_ID') || 'id',
     clientSecret: nconf.get('GOOGLE_SECRET') || 'secret',
     callbackURL:  (nconf.get('DOMAIN') || '') + '/auth/google/callback'
-  }
+  },
+
+  // JWT token
+  jwtTokenSecret = nconf.get('JWT_TOKEN_SECRET');
 };
 
 // Export the config object based on the NODE_ENV
