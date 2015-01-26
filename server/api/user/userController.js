@@ -4,11 +4,16 @@ var User = require('./userModel');
 //User.plugin(mongoosePaginate);
 
 exports.list = function(req, res, next) {
-  var users = User.find({}, function(err, users){
-    console.log(users);
-    res.end();
-  });
-  //User.find({}).sort().skip().limit()
+  var page = req.params.page || 0;
+  var usersPerPage = 10;
+  var startAtUser = page * usersPerPage;
+
+  User.find({}, {}, {skip: startAtUser, limit: usersPerPage}, function(err, users) {
+    if(err) {
+      res.status(500).end();
+    }
+    res.json(users);
+  })
   //var page = req.params.page || 1;
   //User.paginate({}, page, 16, function(err, pageCount, paginatedResults, itemCount) {
     //if (err) return res.status(500).end();
