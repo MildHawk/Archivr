@@ -12,7 +12,6 @@ var stylish = require('jshint-stylish');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
 var preprocess = require('gulp-preprocess');
-var exit = require('gulp-exit');
 
 var paths = {
   src: {
@@ -45,7 +44,11 @@ var jsFiles = [
   paths.src.js + '/controllers/*.js',
   paths.src.js + '/directives/*.js',
   paths.src.js + '/services/*.js'
+];
 
+// Keep track of own JS files for linting
+var jsFilesForLint = [
+  paths.src.js + '/**/*.js'
 ];
 
 var jadeFiles = [paths.jade + '/*.jade'];
@@ -71,11 +74,10 @@ gulp.task('javascript', function() {
 });
 
 gulp.task('lint', function() {
-  gulp.src(jsFiles)
+  gulp.src(jsFilesForLint)
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
-    // .pipe(jshint.reporter('fail'))
-    .pipe(exit());
+    .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('image', function() {
@@ -131,12 +133,13 @@ gulp.task('watch', function() {
   gulp.watch(paths.src.views + '/**/*', ['moveViews']);
 });
 
-// Run testing suite: karma (client-side) and mocha (server-side)
+// Run testing suite: lint, karma (client-side) and mocha (server-side)
 gulp.task('test', function(callback) {
-  // Use `runSequence` to call tasks synchronously, otherwise
-  // messages from both will be potentially interleaved.
-  // runSequence('lint', 'karma', 'mocha', callback);
-  runSequence('lint', callback);
+  /**
+   * Use `runSequence` to call tasks synchronously, otherwise
+   * messages from both will be potentially interleaved.
+   */
+  runSequence('lint', 'karma', 'mocha', callback);
 });
 
 /**
