@@ -1,11 +1,15 @@
-function AuthController($window, $location, Auth) {
+function AuthController($window, $location, Auth, User) {
+
+  // this.username = "";
+  // this.password = "";
+  // this.user = {};
+  // the above are not currently used, commented out for JSHint to pass.
 
   this.signin = function (user,password) {
-    // TODO: resolve issue of how to get user and pass params
-    console.log('TODO:', user, password);
-    Auth.signin() //should send in user?
-      .then(function (token) {
-        $window.localStorage.setItem('com.archivr', token);
+    Auth.signin(user,password)
+      .then(function (userObj) {
+        $window.localStorage.setItem('com.archivr', userObj.token);
+        User.user = userObj;
         $location.path('/screenshots');
       })
       .catch(function (error) {
@@ -32,7 +36,7 @@ function AuthController($window, $location, Auth) {
 
 }
 
-AuthController.$inject = ['$window','$location','Auth'];
+AuthController.$inject = ['$window','$location','Auth','UserInfo'];
 
 angular.module('Archivr.auth', [])
 .controller('AuthController', AuthController);

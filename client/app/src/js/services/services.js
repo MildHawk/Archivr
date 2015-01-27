@@ -72,10 +72,27 @@ function Screenshots($http, $location, $window) {
 }
 Screenshots.$inject = ['$http','$location','$window'];
 
-function User() {
-  // TODO: build out User factory?
-  return {};
+function User($http){
+
+  /**
+   * User Service
+   * ====================
+   * username variable is set on signin
+   */
+
+  // var user = {};
+  // NOT USED currently, commented out for JSHint
+
+  var getUserInfo = function(){
+    var url = '/api/users/:' + this.username;
+    return $http.get(url);
+  };
+
+  return {
+    getUserInfo:getUserInfo
+  };
 }
+User.$inject = ['$http'];
 
 angular.module('Archivr.services', [])
 .factory('Auth', Auth)
