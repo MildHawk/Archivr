@@ -4,7 +4,7 @@
  * Handles display of a user screenshots.
  */
 
-function ScreenshotsController(Screenshots, Auth) {
+function ScreenshotsController(Screenshots) {
   this.screenshots = [];
   var _this = this;
 
@@ -22,10 +22,9 @@ function ScreenshotsController(Screenshots, Auth) {
 
   // Call to get public screenshots on load
   this.getScreenshots();
-
 }
 
-ScreenshotsController.$inject = ['Screenshots','Auth'];
+ScreenshotsController.$inject = ['Screenshots'];
 
 angular.module('Archivr.screenshots', [
   'Archivr.services'

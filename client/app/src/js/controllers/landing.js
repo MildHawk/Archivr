@@ -31,8 +31,12 @@ function LandingController(Screenshots, Auth) {
   // Call to get public screenshots on load
   this.getScreenshots();
 
+  // TODO do something with Auth
+  Auth.signin();
 
-};
+
+}
+
 LandingController.$inject = ['Screenshots','Auth'];
 
 angular.module('Archivr.landing', [])

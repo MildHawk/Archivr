@@ -80,7 +80,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
       templateUrl: '/views/signup.html',
       controller: 'AuthController',
       controllerAs: 'authCtrl'
-    })
+    });
 
   // default uncaught routes to landing page
   $urlRouterProvider.otherwise('/');
@@ -95,7 +95,7 @@ function AttachTokens($window) {
   // its job is to stop all out going request
   // then look in local storage and find the user's token
   // then add it to the header so the server can validate the request
-  var AttachTokens = {
+  return {
     request: function (object) {
       var jwt = $window.localStorage.getItem('com.archivr');
       if (jwt) {
@@ -105,7 +105,6 @@ function AttachTokens($window) {
       return object;
     }
   };
-  return AttachTokens;
 }
 
 angular
@@ -119,4 +118,4 @@ angular
     'ui.router'
   ])
   .config(config)
-  .factory('AttachTokens', AttachTokens)
+  .factory('AttachTokens', AttachTokens);

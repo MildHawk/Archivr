@@ -1,9 +1,8 @@
 function AuthController($window, $location, Auth) {
 
-  this.username = "";
-  this.password = "";
-
   this.signin = function (user,password) {
+    // TODO: resolve issue of how to get user and pass params
+    console.log('TODO:', user, password);
     Auth.signin() //should send in user?
       .then(function (token) {
         $window.localStorage.setItem('com.archivr', token);
@@ -27,7 +26,7 @@ function AuthController($window, $location, Auth) {
 
 
   this.logout = function(){
-    console.log("Signed out!!!!!!!!!!!");
+    console.log('Signed out');
     Auth.signout();
   };
 

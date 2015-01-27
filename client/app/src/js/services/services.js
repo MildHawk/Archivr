@@ -34,7 +34,7 @@ function Auth($http, $location, $window) {
   };
 
   var signout = function() {
-    console.log("in services... signout!!!");
+    console.log('in services... signout!!!');
     $window.localStorage.removeItem('com.archivr');
     $location.path('/signin');
   };
@@ -46,7 +46,7 @@ function Auth($http, $location, $window) {
     isAuth: isAuth,
     signout: signout
   };
-};
+}
 Auth.$inject = ['$http', '$location', '$window'];
 
 function Screenshots($http, $location, $window) {
@@ -59,13 +59,25 @@ function Screenshots($http, $location, $window) {
     return $http.post('/api/screenshots',data);
   };
 
+  // TODO: do something with $window or remove
+  console.log($window);
+
+  // TODO: do something with $location or remove
+  console.log($location);
+
   return {
     grabScreenshots:grabScreenshots,
     addScreenshot:addScreenshot
   };
-};
+}
 Screenshots.$inject = ['$http','$location','$window'];
+
+function User() {
+  // TODO: build out User factory?
+  return {};
+}
 
 angular.module('Archivr.services', [])
 .factory('Auth', Auth)
-.factory('Screenshots', Screenshots);
+.factory('Screenshots', Screenshots)
+.factory('User', User);
