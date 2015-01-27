@@ -80,7 +80,8 @@ function User($http){
    * username variable is set on signin
    */
 
-  var user = {};
+  // var user = {};
+  // NOT USED currently, commented out for JSHint
 
   var getUserInfo = function(){
     var url = '/api/users/:' + this.username;
@@ -91,7 +92,7 @@ function User($http){
     getUserInfo:getUserInfo
   };
 }
-UserInfo.$inject = ['$http']
+User.$inject = ['$http'];
 
 angular.module('Archivr.services', [])
 .factory('Auth', Auth)
