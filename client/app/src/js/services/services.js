@@ -80,11 +80,10 @@ function User($http){
    * username variable is set on signin
    */
 
-  var username = "";
-  _this = this;
+  var user = {};
 
   var getUserInfo = function(){
-    var url = '/api/users/:' + _this.username;
+    var url = '/api/users/:' + this.username;
     return $http.get(url);
   };
 

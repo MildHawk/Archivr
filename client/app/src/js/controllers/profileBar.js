@@ -4,13 +4,12 @@
  * Handles display of profile bar on a user page.
  */
 
-function ProfileBarController(UserInfo) {
+function ProfileBarController(User) {
 
-  //TODO: build out
-  this.something = function() {};
+  this.user = User.user;
 
 }
-ProfileBarController.$inject = ['UserInfo'];
+ProfileBarController.$inject = ['User'];
 
 angular.module('Archivr.profile', [])
 .controller('ProfileBarController', ProfileBarController);
