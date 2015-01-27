@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var config = require('./environment');
+var session = require('express-session');
 
 module.exports = function expressConfig(app) {
   var env = app.get('env');
@@ -24,6 +25,8 @@ module.exports = function expressConfig(app) {
 
   // set static asset dir
   app.use(express.static(__dirname + '/../../client/app/dist'));
+
+  app.use(session({ secret: 'wassup' }));
 
   // dynamically set port if in production otherwise use port 3000
   app.set('port', config.port);
