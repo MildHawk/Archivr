@@ -2,13 +2,16 @@ var User = require('./userModel');
 var bcrypt = require('bcrypt-nodejs');
 
 exports.list = function(req, res, next) {
+  //get page from request or set to page 0 if not page is passed in request
   var page = req.params.page || 0;
+  //set to 10 the number of users displayed per page
   var usersPerPage = 10;
+  
   var startAtUser = page * usersPerPage;
 
   User.find({}, {}, {skip: startAtUser, limit: usersPerPage}, function(err, users) {
     if(err) {
-      res.status(500).end();
+      return res.status(500).end();
     }
     res.json(users);
   })
@@ -20,16 +23,14 @@ exports.create = function(req, res, next) {
 
   User.findOne({username: username}, function(err, user) {
     if(!user) {
-      bcrypt.hash(password, null, null, function(err, hash) {
-        var newUser = new User({username: username, password: hash});
-        newUser.save(function(err, user) {
-          if(err) {
-            res.status(500).end();
-          }
-          console.log("User created");
-          res.status(201).end();
-        }); 
-      });
+      var newUser = new User({username: username, password: password});
+      newUser.save(function(err, user) {
+        if(err) {
+          return res.status(500).end();
+        }
+        console.log("User created");
+        res.status(201).end();
+      }); 
     } else {
       console.log("already exists");
       res.status(409).end();
@@ -55,7 +56,7 @@ exports.update = function(req, res, next) {
   var newData = req.body;
   User.update({username: username}, newData, function(err, numberAffected, raw) {
     if(err) {
-      res.status(404).end();
+      return res.status(404).end();
     }
     res.end();
   })
@@ -76,7 +77,7 @@ exports.destroy = function(req, res, next) {
     } else {
       User.remove({username: username}, function(err) {
         if(err) {
-          res.status(500).end();
+          return res.status(500).end();
         }
         res.status(200).end();
       })

@@ -11,9 +11,6 @@ var screenshotsSchema = mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-screenshotsSchema.methods.editScreenshot = function() {
-
-};
 
 var Screenshot = mongoose.model('Screenshot', screenshotsSchema);
 

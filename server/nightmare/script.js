@@ -1,19 +1,25 @@
 var Nightmare = require('nightmare');
+var Promise = require('bluebird');
 
-//var url = require('');
 //var width = require('');
 //var height = require('');
 
+var takeScreenshot = function(url) {
+    var randomString = Math.random().toString(36).substring(7);
 
-//var randomName = 
+    new Nightmare()
+    //.viewport(900, 900)
+    .goto(url)
+    .screenshot('./screenshotsImages/' + randomString + '.png')
+    .title(function(str) {
+      console.log(str);
+    })
+    .run(function(err, nightmare) {
+      console.log(nightmare);
+    })
+    //.on, return path
 
-new Nightmare()
- //.viewport(900, 900)
- .goto('http://www.yahoo.com')
- .screenshot('./yahoo.png')
- .title(function(str) {
-   console.log(str);
- })
- .run(function(err, nightmare) {
-   console.log("DOne!!!")
- })
+  return ("/" + randomString + '.png');
+};
+
+module.exports = takeScreenshot;
