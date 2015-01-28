@@ -35,6 +35,7 @@
     "gulp": "^3.8.10",
     "gulp-compass": "~2.0.3",
     "gulp-concat": "^2.4.3",
+    "gulp-exit": "0.0.2",
     "gulp-image": "^0.5.3",
     "gulp-jshint": "~1.9.0",
     "gulp-karma": "0.0.4",
@@ -44,7 +45,6 @@
     "gulp-rename": "~1.2.0",
     "gulp-uglify": "~1.0.2",
     "gulp-watch": "~3.0.0",
-    "gulp-exit": "0.0.2",
     "jade": "^1.9.1",
     "jshint-stylish": "~1.0.0",
     "jsonwebtoken": "^3.2.2",
@@ -57,7 +57,8 @@
     "passport": "^0.2.1",
     "passport-facebook": "^1.0.3",
     "passport-local": "^1.0.0",
-    "passport-twitter": "^1.0.2"
+    "passport-twitter": "^1.0.2",
+    "run-sequence": "^1.0.2"
   },
   "devDependencies": {
     "chai": "^1.10.0",
