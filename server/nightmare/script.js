@@ -1,7 +1,6 @@
 var Nightmare = require('nightmare');
 var Promise = require('bluebird');
 
-//var url = require('');
 //var width = require('');
 //var height = require('');
 
@@ -18,8 +17,9 @@ var takeScreenshot = function(url) {
     .run(function(err, nightmare) {
       console.log(nightmare);
     })
+    //.on, return path
 
   return ("/" + randomString + '.png');
-}
+};
 
 module.exports = takeScreenshot;

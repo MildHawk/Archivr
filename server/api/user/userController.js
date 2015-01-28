@@ -23,16 +23,14 @@ exports.create = function(req, res, next) {
 
   User.findOne({username: username}, function(err, user) {
     if(!user) {
-      bcrypt.hash(password, null, null, function(err, hash) {
-        var newUser = new User({username: username, password: hash});
-        newUser.save(function(err, user) {
-          if(err) {
-            return res.status(500).end();
-          }
-          console.log("User created");
-          res.status(201).end();
-        }); 
-      });
+      var newUser = new User({username: username, password: password});
+      newUser.save(function(err, user) {
+        if(err) {
+          return res.status(500).end();
+        }
+        console.log("User created");
+        res.status(201).end();
+      }); 
     } else {
       console.log("already exists");
       res.status(409).end();
