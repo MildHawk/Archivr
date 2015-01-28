@@ -1,7 +1,7 @@
 var createUser = require('../user/userController').create;
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
-var config = require('../../config/development');
+var config = require('../../config/environment');
 
 exports.signup = function(req, res, next) {
   createUser(req, res, next);
@@ -23,7 +23,7 @@ exports.login = function(req, res, next) {
       delete user.password;
       // send token and logged in user info
       res.json({
-        user: user._id,
+        user: user,
         token: jwt.sign(user, config.jwtTokenSecret, { expiresInMinutes: 60*5 })
       });
     }

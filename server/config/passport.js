@@ -16,14 +16,25 @@ module.exports = function(app) {
     function(username, password, done) {
       User.findOne({ username: username }, function(err, user) {
         // return done if error
-        if (err) { return done(err); }
+        if (err) {
+          return done(err);
+        }
         // there isnt a user return done with false authentication
-        if (!user) { return done(null, false); }
-        // password is wrong
-        if(password !== user.password) return done(null, false);
-        // if (!user.verifyPassword(password)) { return done(null, false); }
-        // password is correct
-        return done(null, user);
+        if (!user) {
+          return done(null, false);
+        }
+
+        // verify the password is correct
+        user.verifyPassword(password, function(match){
+          if(!match){
+            console.log('bad password');
+            return done(null, false);
+          } else {
+            console.log('correct password');
+            return done(null, user);
+          }
+        });
+
       });
     }
   ));
@@ -49,7 +60,7 @@ module.exports = function(app) {
         return done(null, user);
       } else {
         // create the user
-        var user = new User({ username: profile.scree_name });
+        var user = new User({ username: profile.screen_name });
         user.save(function(err, user) {
           if (err) return done(null, false);
           return done(null, user);

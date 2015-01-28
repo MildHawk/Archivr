@@ -29,7 +29,7 @@ var nconf = require('nconf');
  */
 nconf.argv() // grabs flags, e.g. --foo bar --> nconf.get('foo') === 'bar'
   .env() // grabs process.env
-  .file({ file: '../local.env.json' }) // loads local.env if exists
+  .file({ file: __dirname + '/../local.env.json' }) // loads local.env if exists
 
 function requiredProcessEnv(name) {
   if(!process.env[name]) {
