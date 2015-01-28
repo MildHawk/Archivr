@@ -83,7 +83,7 @@ gulp.task('javascript', function() {
  * Run JSHint
  */
 gulp.task('lint', function() {
-  gulp.src(jsFilesForLint)
+  return gulp.src(jsFilesForLint)
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     // Error out if any warnings appear
@@ -133,7 +133,13 @@ gulp.task('mocha', function () {
   return gulp.src(paths.serverSpec, {read: false})
     .pipe(mocha({
       reporter: 'spec',
-    }));
+    }))
+    .once('error', function () {
+        process.exit(1);
+    })
+    .once('end', function () {
+      process.exit();
+    });
 });
 
 gulp.task('watch', function() {
