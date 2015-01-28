@@ -19,7 +19,10 @@ exports.create = function(req, res, next) {
   var url = req.body.url;
   var username = req.params.username;
   var annotatedImage = req.body.annotatedImage;
-  var originalImage = takeScreenshot(url);
+  var originalImage;
+  takeScreenshot(url, function(imageUrl) {
+    originalImage = imageUrl;
+  });
 
   console.log("originalImage -->", originalImage);
 
