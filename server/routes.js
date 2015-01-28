@@ -1,5 +1,6 @@
 var User = require('./api/user/userModel');
 var config = require('./config/environment');
+var jwt = require('express-jwt');
 
 module.exports = function applicationRouter(app) {
 
@@ -28,13 +29,16 @@ module.exports = function applicationRouter(app) {
     });
   });
 
-  // authentication related routes
-  app.use('/api/auth', require('./api/auth'));
-
+  // mounts JWT checker to all routes prefixed with /api
+  // the idea is this should deserialize the JWT and attach
+  // the user to req.user when the user is authenticated
   app.use('/api', jwt({
     secret: config.jwtTokenSecret,
     credentialsRequired: false
-  }))
+  }));
+
+  // authentication related routes
+  app.use('/api/auth', require('./api/auth'));
 
   // mount user and screenshot routers to /api
   app.use('/api/user', require('./api/user'));

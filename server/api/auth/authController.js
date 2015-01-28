@@ -23,7 +23,7 @@ exports.login = function(req, res, next) {
       delete user.password;
       // send token and logged in user info
       res.json({
-        user: user._id,
+        user: user,
         token: jwt.sign(user, config.jwtTokenSecret, { expiresInMinutes: 60*5 })
       });
     }
