@@ -65,7 +65,6 @@ exports.update = function(req, res, next) {
     }
     res.end();
   })
-  //res.send('PUT screenshot with ID ' + req.params.id);
 };
 
 exports.destroy = function(req, res, next) {
@@ -83,5 +82,4 @@ exports.destroy = function(req, res, next) {
       })
     }
   })
-  //res.send('DELETE screenshot with ID ' + req.params.id);
 };
