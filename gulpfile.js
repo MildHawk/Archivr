@@ -63,11 +63,11 @@ var envConfig;
 
 var envConfigDevelopment = {
   BASE_HREF: 'localhost:3000'
-}
+};
 
 var envConfigProduction = {
   BASE_HREF: 'archivr-dev.herokuapp.com'
-}
+};
 
 gulp.task('javascript', function() {
   gulp.src(jsFiles)
@@ -119,7 +119,7 @@ gulp.task('compass', function() {
 gulp.task('processEnv', function() {
   gulp.src(jadeFiles)
     .pipe(preprocess({context: envConfig}))
-    .pipe(gulp.dest(paths.jade + '/dist'))
+    .pipe(gulp.dest(paths.jade + '/dist'));
 });
 
 gulp.task('karma', function (done) {
