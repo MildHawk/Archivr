@@ -1,4 +1,5 @@
 var User = require('./api/user/userModel');
+var config = require('./config/environment');
 
 module.exports = function applicationRouter(app) {
 
@@ -29,6 +30,11 @@ module.exports = function applicationRouter(app) {
 
   // authentication related routes
   app.use('/api/auth', require('./api/auth'));
+
+  app.use('/api', jwt({
+    secret: config.jwtTokenSecret,
+    credentialsRequired: false
+  }))
 
   // mount user and screenshot routers to /api
   app.use('/api/user', require('./api/user'));

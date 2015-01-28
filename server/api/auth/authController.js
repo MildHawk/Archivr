@@ -1,7 +1,7 @@
 var createUser = require('../user/userController').create;
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
-var config = require('../../config/development');
+var config = require('../../config/environment');
 
 exports.signup = function(req, res, next) {
   createUser(req, res, next);
