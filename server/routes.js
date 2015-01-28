@@ -34,7 +34,27 @@ module.exports = function applicationRouter(app) {
   // the user to req.user when the user is authenticated
   app.use('/api', jwt({
     secret: config.jwtTokenSecret,
-    credentialsRequired: false
+    credentialsRequired: false,
+    getToken: function fromHeaderOrQuerystring(req) {
+      console.log(req.headers);
+      // if(req.body && req.headers['x-access-token']){
+      //   // handle posts
+      //   return req.headers['x-access-token'];
+      // } else if(req.query && req.query['x-access-token']){
+      //   // handle GETs
+      //   return req.headers['x-access-token'];
+      // }
+      // return null;
+
+      console.log(req.headers);
+    //   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+    //         return req.headers.authorization.split(' ')[1];
+    //     } else if (req.query && req.query.token) {
+    //       return req.query.token;
+    //     }
+    //     return null;
+    //   }
+    }
   }));
 
   // authentication related routes

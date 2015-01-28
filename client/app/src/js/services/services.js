@@ -5,27 +5,25 @@
  * user model data. JWT is stored in localStorage as 'com.archivr'.
  */
 function Auth($http, $location, $window) {
+  // sign a user in
   var signin = function(user) {
     return $http({
       method: 'POST',
-      url: '/api/users/signin',
+      url: '/api/auth/login',
       data: user
-    })
-    .then(function (resp) {
-      return resp.data.token;
+    }).then(function(resp) {
+      return resp.data;
     });
   };
 
-
-
+  // sign a user up
   var signup = function(user) {
     return $http({
       method: 'POST',
-      url: '/api/users/signup',
+      url: '/api/auth/signup',
       data: user
-    })
-    .then(function(resp) {
-      return resp.data.token;
+    }).then(function(resp) {
+      return resp.data;
     });
   };
 
@@ -52,9 +50,11 @@ Auth.$inject = ['$http', '$location', '$window'];
 function Screenshots($http, $location, $window) {
 
   var grabScreenshots = function(){//should probably pass something in..
-    return $http.get('/api/screenshots');
-
+    return $http.get('/api/user/jackson/screenshot').then(function(response) {
+      console.log(response);
+    });
   };
+
   var addScreenshot = function (data) {
     return $http.post('/api/screenshots',data);
   };

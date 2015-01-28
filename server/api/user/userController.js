@@ -6,7 +6,7 @@ exports.list = function(req, res, next) {
   var page = req.params.page || 0;
   //set to 10 the number of users displayed per page
   var usersPerPage = 10;
-  
+
   var startAtUser = page * usersPerPage;
 
   User.find({}, {}, {skip: startAtUser, limit: usersPerPage}, function(err, users) {
@@ -21,19 +21,34 @@ exports.create = function(req, res, next) {
   var username = req.body.username;
   var password = req.body.password;
 
-  User.findOne({username: username}, function(err, user) {
+  User.findOne({ username: username }, function(err, user) {
     if(!user) {
-      var newUser = new User({username: username, password: password});
+
+      var newUser = new User({
+        username: username,
+        password: password
+      });
+
       newUser.save(function(err, user) {
+
         if(err) {
           return res.status(500).end();
         }
+
         console.log("User created");
-        res.status(201).end();
-      }); 
+
+        res.status(201).json({
+          message: 'User created'
+        });
+
+      });
+
     } else {
       console.log("already exists");
-      res.status(409).end();
+
+      res.status(409).json({
+        message: 'User already exists'
+      });
     }
   });
 

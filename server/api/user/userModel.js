@@ -14,6 +14,7 @@ var usersSchema = mongoose.Schema({
 
 usersSchema.pre('save', function(next) {
   var user = this;
+  console.log('asgagasgsagsagsagsa')
   if (!user.isModified('password')) {
     return next();
   }
@@ -21,9 +22,9 @@ usersSchema.pre('save', function(next) {
   bcrypt.genSalt(10, function(err, salt) {
     if (err) return next(err);
     bcrypt.hash(user.password, salt, null, function(err, hash) {
+      console.log('making a hash')
       if (err) return next(err);
       user.password = hash;
-      // user.salt = salt;
       next();
     });
   });
