@@ -26,12 +26,23 @@ describe('User', function() {
       });
     });
 
-    it('should save user and password', function(done){
+    it('should save user and password', function(done) {
       User.findOne({ username: 'Ruben' }, function(err, user) {
         expect(user.username).to.equal('Ruben');
         done();
       });
     });
+
+    it('should hash and compare hash passwords', function(done) {
+      User.findOne({ username: 'Ruben' }, function(err, user) {
+        user.verifyPassword('password', function(match){
+          expect(user.password).to.not.equal('password');
+          expect(match).to.equal(true);
+          done();
+        });
+      });
+    });
+
   });
 
   // describe('#createGallery', function() {
