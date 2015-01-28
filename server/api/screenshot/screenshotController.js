@@ -1,8 +1,11 @@
 var Screenshot = require('./screenshotModel');
+var User = require('../user/userModel');
+var takeScreenshot = require('../../nightmare/script.js');
+var Promise = require('bluebird');
 
 exports.list = function(req, res, next){
-  var user = req.foundUser;
-  Screenshot.find({ userId: user._id }, function(err, screenshots){
+  var username = req.params.username;
+  Screenshot.find({ userId: username._id }, function(err, screenshots){
     if (err) return res.send(500);
     res.status(200).json(screenshots);
   });
@@ -11,38 +14,67 @@ exports.list = function(req, res, next){
 exports.create = function(req, res, next) {
   var url = req.body.url;
   var username = req.params.username;
-  //var originalImage = call method to take screenshot
+  var annotatedImage = req.body.annotatedImage;
+  var originalImage = takeScreenshot(url);
 
-  var newScreenshot = new Screenshot({url: url, originalImage: originalImage});
+  console.log("originalImage -->", originalImage);
+
+  var newScreenshot = new Screenshot({url: url, originalImage: originalImage, 
+                      annotatedImage: annotatedImage, user_id: username});
+
   newScreenshot.save(function(err, screenshot) {
     if(err) {
-      res.status(500).end();
+      return res.status(500).end();
     }
-    console.log("Screenshot created");
     User.findOne({username: username}, function(err, user) {
       if(err) {
-        res.status(404).end();
+        return res.status(404).end();
       }
-      user.images.push(screenshot._id);
-      res.end();
+      User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
+        if(err) {
+          return res.status(500).end();
+        }
+        res.end();
+      })
     })
   }); 
 };
 
 exports.show = function(req, res, next) {
-  var user = req.foundUser;
+  var username = req.params.username;
   var id = req.params.id;
   Screenshot.findOne({ _id: id }, function(err, screenshot) {
     if (err) return res.send(500);
-    res.status(200).json(screenshot)
+    res.status(200).json(screenshot);
   });
 };
 
 exports.update = function(req, res, next) {
-
-  res.send('PUT screenshot with ID ' + req.params.id);
+  var id = req.params.id;
+  var newData = {}; //, get new notes 
+  Screenshot.update({_id: id}, newData, function(err, numberAffected, raw) {
+    if(err) {
+      return res.status(500).end();
+    }
+    res.end();
+  })
+  //res.send('PUT screenshot with ID ' + req.params.id);
 };
 
 exports.destroy = function(req, res, next) {
-  res.send('DELETE screenshot with ID ' + req.params.id);
+  var username = req.params.username;
+  var id = req.params.id;
+  Screenshot.findOne({_id: id}, function(err, screenshot) {
+    if(!screenshot) {
+      res.status(404).end();
+    } else {
+      Screenshot.remove({_id: id}, function(err) {
+        if(err) {
+          return res.status(500).end();
+        }
+        res.status(200).end();
+      })
+    }
+  })
+  //res.send('DELETE screenshot with ID ' + req.params.id);
 };
