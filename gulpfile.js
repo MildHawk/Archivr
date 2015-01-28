@@ -54,18 +54,18 @@ var jsFilesForLint = [
 var jadeFiles = [paths.jade + '/*.jade'];
 
 /**
- * envConfig, envConfigLocal, and envConfigDev are used to configure builds
+ * envConfig, envConfigDevelopment, and envConfigProduction are used to configure builds
  * with the proper environment. Arguments are passed into the preprocess
  * task to insert variables into files. For example, the base href needs
  * to be dynamically set based on the environment.
  */
 var envConfig;
 
-var envConfigLocal = {
+var envConfigDevelopment = {
   BASE_HREF: 'localhost:3000'
 }
 
-var envConfigDev = {
+var envConfigProduction = {
   BASE_HREF: 'archivr-dev.herokuapp.com'
 }
 
@@ -153,18 +153,18 @@ gulp.task('test', function(callback) {
 });
 
 /**
- * build-local and build-dev tasks are to build out the app with different
+ * build-development and build-production tasks are to build out the app with different
  * configurations. Preprocessing is necessary to insert the appropriate
  * base href into the Jade partials.
  */
-gulp.task('build-local', function() {
-  envConfig = envConfigLocal;
+gulp.task('build-development', function() {
+  envConfig = envConfigDevelopment;
   gulp.start('compass', 'image', 'moveViews', 'lint', 'javascript', 'processEnv');
 });
 
-gulp.task('build-dev', function() {
-  envConfig = envConfigDev;
+gulp.task('build-production', function() {
+  envConfig = envConfigProduction;
   gulp.start('compass', 'image', 'moveViews', 'lint', 'javascript', 'processEnv');
 });
 
-gulp.task('default', ['build-local', 'watch']);
+gulp.task('default', ['build-development', 'watch']);
