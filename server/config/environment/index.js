@@ -41,7 +41,7 @@ function requiredProcessEnv(name) {
 // All configurations will extend these options
 // ============================================
 var all = {
-  env: nconf.get('NODE_ENV'),
+  env: nconf.get('NODE_ENV') || 'development',
 
   // Root path of server
   root: path.normalize(__dirname + '/../../..'),
@@ -86,11 +86,11 @@ var all = {
   },
 
   // JWT token
-  jwtTokenSecret = nconf.get('JWT_TOKEN_SECRET');
+  jwtTokenSecret: nconf.get('JWT_TOKEN_SECRET')
 };
 
 // Export the config object based on the NODE_ENV
 // ==============================================
 module.exports = _.merge(
   all,
-  require('./' + nconf.get('NODE_ENV') + '.js') || {});
+  require('./' + all.env + '.js') || {});
