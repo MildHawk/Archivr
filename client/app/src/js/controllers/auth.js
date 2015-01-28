@@ -5,27 +5,32 @@ function AuthController($window, $location, Auth, User) {
   // this.user = {};
   // the above are not currently used, commented out for JSHint to pass.
 
-  this.signin = function (user,password) {
-    Auth.signin(user,password)
-      .then(function (userObj) {
-        $window.localStorage.setItem('com.archivr', userObj.token);
-        User.user = userObj;
-        $location.path('/screenshots');
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+  this.login = function(user, pass) {
+    Auth.signin({
+      username: user,
+      password: pass
+    }).then(function(response) {
+      $window.localStorage.setItem('com.archivr', response.token);
+      // User.user = userObj;
+      // $location.path('/screenshots');
+    }).catch(function (error) {
+      console.error(error);
+    });
   };
 
-  this.signup = function () {
-    Auth.signup()
-      .then(function (token) {
-        $window.localStorage.setItem('com.archivr', token);
-        $location.path('/screenshots');
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+  this.signup = function(user, pass) {
+    Auth.signup({
+      username: user,
+      password: pass
+    })
+    .then(function(response) {
+      console.log(response);
+      // $window.localStorage.setItem('com.archivr', token);
+      // $location.path('/screenshots');
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
   };
 
 
@@ -36,7 +41,7 @@ function AuthController($window, $location, Auth, User) {
 
 }
 
-AuthController.$inject = ['$window','$location','Auth','UserInfo'];
+AuthController.$inject = ['$window', '$location', 'Auth', 'User'];
 
 angular.module('Archivr.auth', [])
 .controller('AuthController', AuthController);

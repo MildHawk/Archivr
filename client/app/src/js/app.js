@@ -1,4 +1,4 @@
-function config($urlRouterProvider, $stateProvider, $locationProvider) {
+function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProvider) {
 
 
   // configure routes
@@ -80,6 +80,12 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
       templateUrl: '/views/signup.html',
       controller: 'AuthController',
       controllerAs: 'authCtrl'
+    })
+    .state('login', {
+      url: '/login',
+      templateUrl: '/views/login.html',
+      controller: 'AuthController',
+      controllerAs: 'authCtrl'
     });
 
   // default uncaught routes to landing page
@@ -88,6 +94,8 @@ function config($urlRouterProvider, $stateProvider, $locationProvider) {
   // enable HTML5 mode
   $locationProvider.html5Mode(true);
 
+  // add tokens to $http request
+  $httpProvider.interceptors.push('AttachTokens');
 }
 
 function AttachTokens($window) {
