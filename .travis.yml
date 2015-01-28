@@ -3,6 +3,9 @@ node_js:
 - '0.10'
 services:
 - mongodb
+branches:
+- master
+- develop
 before_install:
 - npm install -g npm
 before_script:
