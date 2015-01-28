@@ -4,8 +4,9 @@ node_js:
 services:
 - mongodb
 branches:
-- master
-- develop
+  only:
+    - master
+    - develop
 before_install:
 - npm install -g npm
 before_script:
