@@ -1,7 +1,7 @@
 // var router = require('express').Router();
 var screenshotController = require('./screenshotController');
 
-module.exports = function(router){
+module.exports = function(router) {
   /**
    * /api/screenshot/
    */
