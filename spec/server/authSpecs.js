@@ -9,7 +9,7 @@ var Screenshot = require('../../server/api/screenshot/screenshotModel');
 
 
 
-describe('UNIT: Server: /api/screenshot', function () {
+describe('INTEGRATION: Server + DB: /api/auth', function () {
 
   // Clear users collection
   beforeEach(function (done) {
@@ -18,196 +18,167 @@ describe('UNIT: Server: /api/screenshot', function () {
         username: 'Ruben',
         password: 'password'
       });
+      console.log(user);
       user.save(function() {
         done();
       });
     });
   });
 
-  describe('/:username/screenshot', function () {
-    it('should GET /', function (done) {
-      request(app).get('/api/screenshot/Ruben/screenshot').expect(200, done);
-    });
+  describe('POST /signup', function () {
 
-    it('should POST /', function (done) {
-      request(app).post('/api/screenshot/Ruben/screenshot').expect(201, done);
-    });
-  });
-
-});
-
-describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot', function () {
-
-  // Clear users and screenshots collections
-  beforeEach(function (done) {
-    User.remove({}, function() {
-      var user = new User({
-        username: 'Ruben',
-        password: 'password'
-      });
-      user.save(function() {});
-    });
-
-    Screenshot.remove({}, function() {
-      done();
-    });
-  });
-
-  describe('POST /', function () {
-
-    it('should create a new screenshot', function (done) {
-      request(app).post('/api/screenshot/Ruben/screenshot')
-        .send({ url: 'http://www.purple.com' })  // TODO: why send annotatedImage?
-        // should get back 201 response
+    it('should create a new user and return a token', function (done) {
+      request(app).post('/api/auth/signup')
+        .send({
+          username: 'billy',
+          password: 'billy'
+        })
         .expect(201)
+        .expect(function(res) {
+          expect(JSON.stringify(res.body)).to.contain('token');
+        })
         .end(function(err, res) {
           if (err) return done(err);
-
-          Screenshot.find(function(err, res) {
-            expect(res.length).to.equal(1);
-            done();
-          });
-        });
-    });
-
-    it('should append to user image property', function (done) {
-      request(app).post('/api/screenshot/Ruben/screenshot')
-        .send({ url: 'http://www.purple.com' })  // TODO: why send annotatedImage?
-        .end(function(err, res) {
-          if (err) return done(err);
-          request(app).get('/api/user/Ruben')
-            .expect(function(res) {
-              // should append id to user images
-              expect(res.body.images).to.have.length(1);
-            })
-            .end(function(err, res) {
-              if (err) return done(err);
-              done();
-            });
-        });
-    });
-  });
-
-  describe('GET /', function () {
-
-    it('should return a screenshot', function (done) {
-      // Create a new shot
-      var shot = new Screenshot({
-        url: 'www.google.com',
-        originalImage: 'image1.png',
-        annotatedImage: 'image1a.png',
-        user: 'Ruben'
-      });
-
-      // Save the shot, then...
-      shot.save(function(err, shot) {
-        // query the server
-        request(app).get('/api/screenshot/Ruben/screenshot')
-          .expect(200)
-          .expect('Content-Type', /json/)
-          .expect(function(res) {
-            expect(res.body).to.have.length(1);
-          })
-          .end(function(err, res) {
-            if (err) return done(err);
-            done();
-          });
-      });
-    });
-
-
-  });
-});
-
-describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot/:id', function () {
-
-  var shotID;
-
-  beforeEach(function (done) {
-    // Clear users and screenshots collections
-    User.remove({}, function() {
-      var user = new User({
-        username: 'Ruben',
-        password: 'password'
-      });
-      user.save(function() {});
-    });
-
-    Screenshot.remove({}, function() {});
-
-    // Create a new stock screenshot
-    request(app).post('/api/screenshot/Ruben/screenshot')
-      .send({ url: 'http://www.purple.com' })
-      .expect(function(res) {
-        shotID = res.body;  // TODO may need to change later
-      })
-      .end(function(err, res) {
-        if (err) return done(err);
-        done();
-      });
-  });
-
-  describe('GET /', function () {
-
-    it('should retrieve screenshots from a user', function (done) {
-      request(app)
-        .get('/api/screenshot/Ruben/screenshot/' + shotID)
-        .expect(200)
-        .expect('Content-Type', /image/)
-        .end(function(err, res) {
-          if (err) done(err);
           done();
         });
     });
 
-    it('should fail to retrieve bad screenshot id', function (done) {
-      request(app).get('/api/screenshot/Ruben/screenshot/notAnID')
-        .expect(404, done);
-    });
-
-    it('should fail on bad username', function (done) {
-      request(app).get('/api/screenshot/billy/screenshot/' + shotID)
-        .expect(404, done);
-    });
-
-  });
-
-  describe('PUT /', function () {
-
-    it('TODO: what should screenshot PUT do?', function (done) {
-      expect(true).to.equal(false);
-      done();
-    });
-
-  });
-
-  describe('DELETE /', function () {
-    it('should delete a screenshot', function (done) {
-      request(app).delete('/api/screenshot/Ruben/screenshot/' + shotID)
-        .expect(200)
+    it('should store new user in database', function (done) {
+      request(app).post('/api/auth/signup')
+        .send({
+          username: 'billy',
+          password: 'billy'
+        })
         .end(function(err, res) {
           if (err) return done(err);
-          request(app).get('/api/screenshot/Ruben/screenshot')
-            .expect(function(res) {
-              expect(res.body).to.have.length(0);
-            })
-            .end(function(err, res) {
-              if (err) return done(err);
-              done();
-            });
+          // Otherwise, check for user in database
+          User.findOne({ username: 'billy' }, function(err, res) {
+            expect(res).to.have.length(1);
+            done();
+          });
+        })
+    });
+
+    it('should hash the password', function (done) {
+      request(app).post('/api/auth/signup')
+        .send({
+          username: 'billy',
+          password: 'billy'
+        })
+        .end(function(err, res) {
+          if (err) return done(err);
+          User.findOne({ username: 'billy' }, function(err, res) {
+            expect(res.password).to.not.equal('billy');
+            done();
+          });
         });
     });
 
-    it('should fail to delete with bad ID', function (done) {
-      request(app).delete('/api/screenshot/Ruben/screenshot/notanid')
-        .expect(404, done);
+    it('should disallow duplicate user creation', function (done) {
+      request(app).post('/api/auth/signup')
+        .send({
+          username: 'Ruben',
+          password: 'newPassword'
+        })
+        .expect(409)
+        .end(function(err, res) {
+          if (err) return done(err);
+          User.findOne({ username: 'Ruben' }, function(err, user) {
+            // Expect password to be unchanged
+            user.verifyPassword('newPassword', function(match) {
+              expect(match).to.be.not.ok;
+              done();
+            });
+          });
+        });
     });
 
-    it('should fail with bad username', function (done) {
-      request(app).delete('/api/screenshot/billy/screenshot/' + shotID)
-        .expect(404, done);
+    it('should not work if no username supplied', function (done) {
+      request(app).post('/api/auth/signup')
+        .send({
+          password: 'hello'
+        })
+        .expect(400, done);
     });
+
+    it('should not work if empty username supplied', function (done) {
+      request(app).post('/api/auth/signup')
+        .send({
+          username: '',
+          password: 'hello'
+        })
+        .expect(400, done);
+    });
+
+    it('should not work if no password supplied', function (done) {
+      request(app).post('/api/auth/signup')
+        .send({
+          username: 'billy'
+        })
+        .expect(400, done);
+    });
+
+    it('should not work if empty password supplied', function (done) {
+      request(app).post('/api/auth/signup')
+        .send({
+          username: 'billy',
+          password: ''
+        })
+        .expect(400, done);
+    });
+
   });
+
+  describe('POST /login', function () {
+
+    it('should work for a valid user and password', function (done) {
+      request(app).post('/api/auth/login')
+        .send({
+          username: 'Ruben',
+          password: 'password'
+        })
+        .expect(200, done);
+    });
+
+    it('should return JWT on valid login', function (done) {
+      request(app).post('/api/auth/login')
+        .send({
+          username: 'Ruben',
+          password: 'password'
+        })
+        .expect(function(res) {
+          expect(res.body).to.include.keys('user');
+          expect(res.body).to.include.keys('token');
+        })
+        .end(function(err, res) {
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should not work on invalid username', function (done) {
+      request(app).post('/api/auth/login')
+        .send({
+          username: 'billy',
+          password: 'password'
+        })
+        .expect(404)
+        .expect(/User does not exist/, done);
+    });
+
+    it('should not work on invalid password', function (done) {
+      request(app).post('/api/auth/login')
+        .send({
+          username: 'Ruben',
+          password: 'badPassword'
+        })
+        .expect(404)
+        .expect(/Invalid password/, done);
+    });
+
+  });
+
+
 
 });
 
