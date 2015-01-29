@@ -53,11 +53,6 @@ var all = {
   // Should we populate the DB with sample data?
   seedDB: false,
 
-  // Secret for session, you will want to change this and make it an environment variable
-  secrets: {
-    session: 'archivr-dev'
-  },
-
   // MongoDB connection options
   mongo: {
     options: {
@@ -88,6 +83,9 @@ var all = {
 
   // JWT token
   jwtTokenSecret: nconf.get('JWT_TOKEN_SECRET'),
+
+  // Express session
+  expressSessionSecret: nconf.get('EXPRESS_SESSION_SECRET')
 
 };
 
