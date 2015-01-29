@@ -13,8 +13,13 @@ exports.login = function(req, res, next) {
     if (err) return res.send(500);
 
     // the user doesnt exist
-    if (!user) return res.json(404, {
+    if (!user && info.match(/Incorrect username/)) return res.json(404, {
       message: 'User does not exist'
+    });
+
+    // invalid password
+    if (!user && info.match(/Incorrect password/)) return res.json(404, {
+      message: 'Invalid password'
     });
 
     // the user exists, log them in, send a jwt

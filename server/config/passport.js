@@ -21,14 +21,13 @@ module.exports = function(app) {
         }
         // there isnt a user return done with false authentication
         if (!user) {
-          return done(null, false);
+          return done(null, false, { message: 'Incorrect username.' });
         }
 
         // verify the password is correct
         user.verifyPassword(password, function(match){
           if(!match){
-            console.log('bad password');
-            return done(null, false);
+            return done(null, false, { message: 'Incorrect password.' });
           } else {
             console.log('correct password');
             return done(null, user);
