@@ -5,8 +5,12 @@ var Promise = require('bluebird');
 
 exports.list = function(req, res, next){
   var user = req.foundUser;
-  Screenshot.find({ userId: user._id }, function(err, screenshots){
-    if (err) return res.status(500).json({ status: 500, message: 'Internal Server Error' });
+  Screenshot.find({ user_id: user.username }, function(err, screenshots){
+
+    if (err) return res.status(500).json({
+      status: 500, message: 'Internal Server Error'
+    });
+
     res.status(200).json(screenshots);
   });
 };
