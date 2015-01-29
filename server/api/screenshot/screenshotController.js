@@ -1,6 +1,6 @@
 var Screenshot = require('./screenshotModel');
 var User = require('../user/userModel');
-var takeScreenshot = require('../../nightmare/script.js');
+var takeScreenshot = require('../../screenshotCapture/script.js');
 var Promise = require('bluebird');
 
 exports.list = function(req, res, next){
@@ -19,28 +19,30 @@ exports.create = function(req, res, next) {
   var url = req.body.url;
   var username = req.params.username;
   var annotatedImage = req.body.annotatedImage;
-  var originalImage = takeScreenshot(url);
 
-  console.log("originalImage -->", originalImage);
+  takeScreenshot(url, function(imageUrl) {
+    var originalImage = imageUrl;
 
   var newScreenshot = new Screenshot({url: url, originalImage: originalImage,
                       annotatedImage: annotatedImage, user_id: username});
+    console.log(newScreenshot);  
 
-  newScreenshot.save(function(err, screenshot) {
-    if(err) {
-      return res.status(500).end();
-    }
-    User.findOne({username: username}, function(err, user) {
+    newScreenshot.save(function(err, screenshot) {
       if(err) {
-        return res.status(404).end();
+        return res.status(500).end();
       }
-      User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
+      User.findOne({username: username}, function(err, user) {
         if(err) {
-          return res.status(500).end();
+          return res.status(404).end();
         }
-        res.end();
+        User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
+          if(err) {
+            return res.status(500).end();
+          }
+          res.end();
+        })
       })
-    })
+    }); 
   });
 };
 
@@ -62,7 +64,6 @@ exports.update = function(req, res, next) {
     }
     res.end();
   })
-  //res.send('PUT screenshot with ID ' + req.params.id);
 };
 
 exports.destroy = function(req, res, next) {
@@ -80,5 +81,4 @@ exports.destroy = function(req, res, next) {
       })
     }
   })
-  //res.send('DELETE screenshot with ID ' + req.params.id);
 };
