@@ -67,7 +67,6 @@ exports.show = function(req, res, next) {
 };
 
 exports.update = function(req, res, next) {
-  console.log(req.body);
   var username = req.body.username;
   var newData = req.body;
   User.update({username: username}, newData, function(err, numberAffected, raw) {
