@@ -27,7 +27,7 @@ module.exports = function expressConfig(app) {
   app.use(express.static(__dirname + '/../../client/app/dist'));
 
   app.use(session({
-    secret: 'wassup',
+    secret: config.expressSessionSecret,
     resave: false,
     saveUninitialized: true
   }));
