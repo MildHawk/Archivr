@@ -45,10 +45,10 @@ module.exports = function applicationRouter(app) {
   }));
 
   // // authentication related routes
-  router.use('/api/auth', require('./api/auth'));
+  // router.use('/api/auth', require('./api/auth'));
 
   // // mount user and screenshot routers to /api
-  router.use('/api/user', require('./api/user'));
+  // router.use('/api/user', require('./api/user'));
 
   /**
    * screenshot routes are structured
@@ -57,6 +57,8 @@ module.exports = function applicationRouter(app) {
    */
 
   // TODO: everything must be mounted to the same router to use params middleware
+  require('./api/auth')(router);
+  require('./api/user')(router);
   require('./api/screenshot')(router);
 
   /**
