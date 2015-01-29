@@ -66,7 +66,7 @@ module.exports = function(config) {
 
     //  Custom launcher for Travis-CI
     customLaunchers: {
-      Chrome_travis_ci: {
+      chromeTravisCI: {
         base: 'Chrome',
         flags: ['--no-sandbox']
       }
@@ -79,6 +79,6 @@ module.exports = function(config) {
   });
 
   if(process.env.TRAVIS){
-    config.browsers = ['Chrome_travis_ci'];
+    config.browsers = ['chromeTravisCI'];
   }
 };
