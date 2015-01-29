@@ -1,3 +1,5 @@
+/*jshint -W079 */
+
 var expect = require('chai').expect;
 var request = require('supertest');
 var express = require('express');
