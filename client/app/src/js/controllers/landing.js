@@ -29,11 +29,7 @@ function LandingController(Screenshots, Auth) {
 
 
   // Call to get public screenshots on load
-  grabScreenshots.grabScreenshots();
-
-  // TODO do something with Auth
-  // Auth.signin();
-
+  this.getScreenshots();
 
 }
 
