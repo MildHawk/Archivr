@@ -5,10 +5,9 @@
  */
 
 function ScreenshotController(Screenshots) {
-  Screenshots.grabScreenshots();
 }
-ScreenshotController.$inject = ['Screenshots'];
+ScreenshotController.$inject = ['Screenshot'];
 
-angular.module('Archivr.screenshot', ['Archivr.services'])
+angular.module('Archivr.screenshot', [])
   .controller('ScreenshotController', ScreenshotController);
 

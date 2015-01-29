@@ -1,5 +1,11 @@
 <!-- Template for UserScreenshots -->
 
+  <form name="newScreenshot" class="form-inline" id="newScreenshot" novalidate ng-submit="newScreenshot.$valid && screenshotsCtrl.addScreenshot(url)">
+    <!-- <label for="newUrl">Enter URL:</label> -->
+    <input placeholder="Enter URL here..." id="newUrl" type="url" name="url" ng-model="url" class="form-control">
+    <button class="btn" type="submit">Get Screenshot</button>
+  </form>
+
   <div class="container">
       <ul class="row" >
         <li class="col-xs-6 col-md-3" ng-repeat="screenshot in screenshotsCtrl.screenshots">

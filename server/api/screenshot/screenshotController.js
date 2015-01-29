@@ -4,6 +4,7 @@ var takeScreenshot = require('../../screenshotCapture/script.js');
 var Promise = require('bluebird');
 
 exports.list = function(req, res, next){
+<<<<<<< HEAD
   var user = req.foundUser;
   Screenshot.find({ user_id: user.username }, function(err, screenshots){
 
@@ -11,6 +12,14 @@ exports.list = function(req, res, next){
       status: 500, message: 'Internal Server Error'
     });
 
+=======
+  // console.log(req.foundUser);
+  // console.log(req);
+  var username = req.params.username;
+  // res.json(req);
+  Screenshot.find({ user_id: username }, function(err, screenshots){
+    if (err) return res.send(500);
+>>>>>>> Add connection of username to back end and logout and gets screenshots from backend
     res.status(200).json(screenshots);
   });
 };

@@ -14,7 +14,7 @@ function AuthController($window, $location, Auth, User) {
       // User.user = userObj;
       // $location.path('/screenshots');
     }).catch(function (error) {
-      console.error(error);
+      console.log(error);
     });
   };
 
@@ -40,8 +40,9 @@ function AuthController($window, $location, Auth, User) {
   };
 
 }
-
 AuthController.$inject = ['$window', '$location', 'Auth', 'User'];
 
-angular.module('Archivr.auth', [])
-.controller('AuthController', AuthController);
+angular.module('Archivr.auth', [
+  'Archivr.services.User',
+  'Archivr.services.Auth'
+]).controller('AuthController', AuthController);

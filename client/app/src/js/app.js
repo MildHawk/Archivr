@@ -23,6 +23,18 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
      */
     .state('user', {
       url: '/users/:username',
+<<<<<<< HEAD
+=======
+      resolve: {
+        screenshots: function($stateParams, Screenshot) {
+          var user = $stateParams.username;
+          return Screenshot.getScreenshots(user)
+            .then(function(screenshots){
+              return screenshots.data;
+            });
+        }
+      },
+>>>>>>> Add connection of username to back end and logout and gets screenshots from backend
       views: {
         // main view
         '': {
