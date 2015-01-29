@@ -20,6 +20,7 @@ var takeScreenshot = function(url, cb) {
         //if(err) throw err
         //console.log("img saved!!");
       //})
+      console.log('img-->', img);
       cloudinary.uploader.upload(randomString + ".png", function(result) {
         console.log(result);
         cb(result.url);
@@ -29,4 +30,8 @@ var takeScreenshot = function(url, cb) {
 };
 
 module.exports = takeScreenshot;
+
+takeScreenshot("http://www.google.com", function(url) {
+  console.log('url -->', url);
+});
 

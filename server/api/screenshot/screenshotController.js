@@ -1,6 +1,6 @@
 var Screenshot = require('./screenshotModel');
 var User = require('../user/userModel');
-var takeScreenshot = require('../../nightmare/script.js');
+var takeScreenshot = require('../../screenshotCapture/script.js');
 var Promise = require('bluebird');
 
 exports.list = function(req, res, next){
@@ -28,6 +28,7 @@ exports.create = function(req, res, next) {
 
   var newScreenshot = new Screenshot({url: url, originalImage: originalImage,
                       annotatedImage: annotatedImage, user_id: username});
+  console.log(newScreenshot);  
 
   newScreenshot.save(function(err, screenshot) {
     if(err) {
