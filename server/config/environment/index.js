@@ -16,6 +16,7 @@
 var path = require('path');
 var _ = require('lodash');
 var nconf = require('nconf');
+var cloudinary = require('cloudinary');
 
 /**
  * nconf sets environment variables intelligently. Will try loading the
@@ -86,8 +87,21 @@ var all = {
   },
 
   // JWT token
-  jwtTokenSecret: nconf.get('JWT_TOKEN_SECRET')
+  jwtTokenSecret: nconf.get('JWT_TOKEN_SECRET'),
+
 };
+
+/**
+ * Configure cloudinary if on local; otherwise, it's configured by Heroku
+ * (http://bit.ly/1Lj4KIy)
+ */
+if (all.env === 'development') {
+  cloudinary.config({
+    cloud_name: nconf.get('CLOUDINARY_NAME'),
+    api_key: nconf.get('CLOUDINARY_KEY'),
+    api_secret: nconf.get('CLOUDINARY_SECRET')
+  });
+}
 
 // Export the config object based on the NODE_ENV
 // ==============================================
