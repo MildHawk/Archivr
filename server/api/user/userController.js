@@ -55,15 +55,11 @@ exports.create = function(req, res, next) {
 };
 
 exports.show = function(req, res, next) {
-  var username = req.params.username;
-  console.log(req.foundUser);
-  User.findOne({username: username}, function(err, user) {
-    if(!user) {
-      res.status(404).end();
-    } else {
-      res.status(200).json(user);
-    }
-  })
+  if(req.foundUser) {
+    res.status(200).json(req.foundUser);
+  } else {
+    res.status(404).json({ message: 'User not found' });
+  }
 };
 
 exports.update = function(req, res, next) {

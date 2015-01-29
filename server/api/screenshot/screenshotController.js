@@ -4,9 +4,13 @@ var takeScreenshot = require('../../nightmare/script.js');
 var Promise = require('bluebird');
 
 exports.list = function(req, res, next){
-  var username = req.params.username;
-  Screenshot.find({ userId: username._id }, function(err, screenshots){
-    if (err) return res.send(500);
+  var user = req.foundUser;
+  Screenshot.find({ user_id: user.username }, function(err, screenshots){
+
+    if (err) return res.status(500).json({
+      status: 500, message: 'Internal Server Error'
+    });
+
     res.status(200).json(screenshots);
   });
 };
@@ -19,7 +23,7 @@ exports.create = function(req, res, next) {
 
   console.log("originalImage -->", originalImage);
 
-  var newScreenshot = new Screenshot({url: url, originalImage: originalImage, 
+  var newScreenshot = new Screenshot({url: url, originalImage: originalImage,
                       annotatedImage: annotatedImage, user_id: username});
 
   newScreenshot.save(function(err, screenshot) {
@@ -37,7 +41,7 @@ exports.create = function(req, res, next) {
         res.end();
       })
     })
-  }); 
+  });
 };
 
 exports.show = function(req, res, next) {
@@ -51,7 +55,7 @@ exports.show = function(req, res, next) {
 
 exports.update = function(req, res, next) {
   var id = req.params.id;
-  var newData = {}; //, get new notes 
+  var newData = {}; //, get new notes
   Screenshot.update({_id: id}, newData, function(err, numberAffected, raw) {
     if(err) {
       return res.status(500).end();

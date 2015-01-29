@@ -1,12 +1,10 @@
-var router = require('express').Router();
 var authController = require('./authController');
-
 /**
  * /api/auth/
  */
-router.post('/signup', authController.signup);
-// create a session
-router.post('/login', authController.login);
-// destroy a session
-
-module.exports = router;
+module.exports = function(router) {
+  // sign a user up --- convenience for user.create
+  router.post('/api/auth/signup', authController.signup);
+  // create a session / authenticate a user
+  router.post('/api/auth/login', authController.login);
+};
