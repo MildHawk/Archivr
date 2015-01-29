@@ -48,7 +48,8 @@ var jsFiles = [
 
 // Keep track of own JS files for linting
 var jsFilesForLint = [
-  paths.src.js + '/**/*.js'
+  paths.src.js + '/**/*.js',
+  './spec/**/*.js'
 ];
 
 var jadeFiles = [paths.jade + '/*.jade'];

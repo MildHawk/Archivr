@@ -10,7 +10,7 @@ exports.list = function(req, res, next) {
   var startAtUser = page * usersPerPage;
 
   User.find({}, {}, {skip: startAtUser, limit: usersPerPage}, function(err, users) {
-    if(err) {
+    if (err) {
       return res.status(500).end();
     }
     res.json(users);
@@ -22,7 +22,7 @@ exports.create = function(req, res, next) {
   var password = req.body.password;
 
   User.findOne({ username: username }, function(err, user) {
-    if(!user) {
+    if (!user) {
 
       var newUser = new User({
         username: username,
@@ -31,7 +31,7 @@ exports.create = function(req, res, next) {
 
       newUser.save(function(err, user) {
 
-        if(err) {
+        if (err) {
           return res.status(500).end();
         }
 
@@ -58,7 +58,7 @@ exports.show = function(req, res, next) {
   var username = req.params.username;
   console.log(req.foundUser);
   User.findOne({username: username}, function(err, user) {
-    if(!user) {
+    if (!user) {
       res.status(404).end();
     } else {
       res.status(200).json(user);
@@ -67,12 +67,16 @@ exports.show = function(req, res, next) {
 };
 
 exports.update = function(req, res, next) {
+  console.log(req.body);
   var username = req.body.username;
   var newData = req.body;
   User.update({username: username}, newData, function(err, numberAffected, raw) {
-    if(err) {
+    if (err) {
       return res.status(404).end();
     }
+    // Notify of an invalid username
+    if (!numberAffected) return res.status(404).end('User not found.');
+
     res.end();
   })
   // the user exists, we need to make sure
@@ -87,11 +91,11 @@ exports.update = function(req, res, next) {
 exports.destroy = function(req, res, next) {
   var username = req.params.username;
   User.findOne({username: username}, function(err, user) {
-    if(!user) {
+    if (!user) {
       res.status(404).end();
     } else {
       User.remove({username: username}, function(err) {
-        if(err) {
+        if (err) {
           return res.status(500).end();
         }
         res.status(200).end();
