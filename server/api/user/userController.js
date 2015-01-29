@@ -58,7 +58,7 @@ exports.show = function(req, res, next) {
   if(req.foundUser) {
     res.status(200).json(req.foundUser);
   } else {
-    res.status(404).json({ message: 'Not user found.' });
+    res.status(404).json({ message: 'User not found' });
   }
 };
 

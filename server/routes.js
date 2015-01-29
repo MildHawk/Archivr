@@ -30,9 +30,11 @@ module.exports = function applicationRouter(app) {
     });
   });
 
-  // mounts JWT checker to all routes prefixed with /api
-  // the idea is this should deserialize the JWT and attach
-  // the user to req.user when the user is authenticated
+  /**
+   * mounts JWT checker to all routes prefixed with /api
+   * the idea is this should deserialize the JWT and attach
+   * the user to req.user when the user is authenticated
+   */
   router.use('/api', jwt({
     secret: config.jwtTokenSecret,
     credentialsRequired: false,
@@ -44,19 +46,12 @@ module.exports = function applicationRouter(app) {
     }
   }));
 
-  // // authentication related routes
-  // router.use('/api/auth', require('./api/auth'));
-
-  // // mount user and screenshot routers to /api
-  // router.use('/api/user', require('./api/user'));
 
   /**
-   * screenshot routes are structured
-   * /user/:id/screenshot
-   * and /user/:id/screenshot/:id
+   *  routes must be mounted to the same router to utilize
+   *  .params('username') middleware.  We want to have the req.foundUser
+   *  available on all these routes if the user exists.
    */
-
-  // TODO: everything must be mounted to the same router to use params middleware
   require('./api/auth')(router);
   require('./api/user')(router);
   require('./api/screenshot')(router);
