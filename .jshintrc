@@ -10,7 +10,7 @@
     "latedef": true,
     "newcap": true,
     "noarg": true,
-    "predef": ["angular"],
+    "predef": ["angular", "beforeEach", "describe", "it", "afterEach"],
     "quotmark": "single",
     "regexp": true,
     "undef": true,
