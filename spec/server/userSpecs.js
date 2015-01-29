@@ -1,9 +1,7 @@
-//import user
-//import screenshots
 var expect = require('chai').expect;
 var User = require('../../server/api/user/userModel');
 
-describe('User', function() {
+describe('UNIT: Database: User model', function() {
 
   beforeEach(function(done) {
     // truncate users
