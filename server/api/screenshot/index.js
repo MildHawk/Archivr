@@ -1,9 +1,8 @@
-// var router = require('express').Router();
 var screenshotController = require('./screenshotController');
 
 module.exports = function(router) {
   /**
-   * /api/screenshot/
+   * /api/user/:username/screenshot
    */
   router.route('/api/user/:username/screenshot')
     // create a screenshot
@@ -11,7 +10,7 @@ module.exports = function(router) {
     .post(screenshotController.create);
 
   /**
-   * /api/screenshot/:id
+   * /api/user/:username/screenshot/:id
    */
   router.route('/api/user/:username/screenshot/:id')
     // get the screenshot
@@ -22,6 +21,3 @@ module.exports = function(router) {
     .delete(screenshotController.destroy);
 
 };
-
-
-// module.exports = router;
