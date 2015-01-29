@@ -19,32 +19,30 @@ exports.create = function(req, res, next) {
   var url = req.body.url;
   var username = req.params.username;
   var annotatedImage = req.body.annotatedImage;
-  var originalImage;
-  takeScreenshot(url, function(imageUrl) {
-    originalImage = imageUrl;
-  });
 
-  console.log("originalImage -->", originalImage);
+  takeScreenshot(url, function(imageUrl) {
+    var originalImage = imageUrl;
 
   var newScreenshot = new Screenshot({url: url, originalImage: originalImage,
                       annotatedImage: annotatedImage, user_id: username});
-  console.log(newScreenshot);  
+    console.log(newScreenshot);  
 
-  newScreenshot.save(function(err, screenshot) {
-    if(err) {
-      return res.status(500).end();
-    }
-    User.findOne({username: username}, function(err, user) {
+    newScreenshot.save(function(err, screenshot) {
       if(err) {
-        return res.status(404).end();
+        return res.status(500).end();
       }
-      User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
+      User.findOne({username: username}, function(err, user) {
         if(err) {
-          return res.status(500).end();
+          return res.status(404).end();
         }
-        res.end();
+        User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
+          if(err) {
+            return res.status(500).end();
+          }
+          res.end();
+        })
       })
-    })
+    }); 
   });
 };
 
