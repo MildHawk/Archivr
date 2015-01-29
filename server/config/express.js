@@ -4,6 +4,8 @@ var morgan = require('morgan');
 var config = require('./environment');
 var session = require('express-session');
 
+console.log(config);
+
 module.exports = function expressConfig(app) {
   var env = app.get('env');
   var port = process.env.PORT || 3000;
