@@ -36,7 +36,7 @@ usersSchema.methods.verifyPassword = function(password, callback) {
     if (err) {
       callback(false);
     } else {
-      callback(true);
+      callback(match);
     }
   });
 };
