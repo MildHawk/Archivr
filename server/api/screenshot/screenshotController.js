@@ -14,30 +14,30 @@ exports.list = function(req, res, next){
 exports.create = function(req, res, next) {
   var url = req.body.url;
   var username = req.params.username;
-  var annotatedImage = req.body.annotatedImage;
+  var annotatedImage = req.body.annotatedImage; // TODO why is this here?
   var originalImage = takeScreenshot(url);
 
   console.log("originalImage -->", originalImage);
 
-  var newScreenshot = new Screenshot({url: url, originalImage: originalImage, 
+  var newScreenshot = new Screenshot({url: url, originalImage: originalImage,
                       annotatedImage: annotatedImage, user_id: username});
 
   newScreenshot.save(function(err, screenshot) {
-    if(err) {
+    if (err) {
       return res.status(500).end();
     }
     User.findOne({username: username}, function(err, user) {
-      if(err) {
+      if (err) {
         return res.status(404).end();
       }
       User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
-        if(err) {
+        if (err) {
           return res.status(500).end();
         }
-        res.end();
+        res.status(201).end();  // TODO: send back screenshot ID
       })
     })
-  }); 
+  });
 };
 
 exports.show = function(req, res, next) {
@@ -51,9 +51,9 @@ exports.show = function(req, res, next) {
 
 exports.update = function(req, res, next) {
   var id = req.params.id;
-  var newData = {}; //, get new notes 
+  var newData = {}; //, get new notes
   Screenshot.update({_id: id}, newData, function(err, numberAffected, raw) {
-    if(err) {
+    if (err) {
       return res.status(500).end();
     }
     res.end();
@@ -65,11 +65,11 @@ exports.destroy = function(req, res, next) {
   var username = req.params.username;
   var id = req.params.id;
   Screenshot.findOne({_id: id}, function(err, screenshot) {
-    if(!screenshot) {
+    if (!screenshot) {
       res.status(404).end();
     } else {
       Screenshot.remove({_id: id}, function(err) {
-        if(err) {
+        if (err) {
           return res.status(500).end();
         }
         res.status(200).end();
