@@ -1,3 +1,5 @@
+/*jshint -W079 */
+
 var expect = require('chai').expect;
 var User = require('../../server/api/user/userModel');
 
