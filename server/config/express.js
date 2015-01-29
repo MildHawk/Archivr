@@ -26,7 +26,11 @@ module.exports = function expressConfig(app) {
   // set static asset dir
   app.use(express.static(__dirname + '/../../client/app/dist'));
 
-  app.use(session({ secret: 'wassup' }));
+  app.use(session({
+    secret: 'wassup',
+    resave: false,
+    saveUninitialized: true
+  }));
 
   // dynamically set port if in production otherwise use port 3000
   app.set('port', config.port);
