@@ -21,6 +21,7 @@ exports.create = function(req, res, next) {
   var annotatedImage = req.body.annotatedImage;
 
   takeScreenshot(url, function(imageUrl) {
+    console.log('imageUrl:', imageUrl);
     var originalImage = imageUrl;
     // TODO: change annotatedImage to something real
     var annotatedImage = imageUrl;
