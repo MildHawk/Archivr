@@ -15,41 +15,35 @@ exports.list = function(req, res, next){
   });
 };
 
+/**
+ * create
+ * ======
+ * Takes screenshot of specified URL, creates new Screenshot in DB, and
+ * adds screenshot to the user images.
+ */
 exports.create = function(req, res, next) {
-  var url = req.body.url;
   var username = req.params.username;
-  var annotatedImage = req.body.annotatedImage;
+  var url = req.body.url;
 
   takeScreenshot(url, function(err, imageUrl) {
     if (err) return res.status(500).json({ message: err });
 
-    console.log('imageUrl:', imageUrl);
-    var originalImage = imageUrl;
-    // TODO: change annotatedImage to something real
-    var annotatedImage = imageUrl;
-
-    var newScreenshot = new Screenshot({url: url, originalImage: originalImage,
-                      annotatedImage: annotatedImage, user_id: username});
-    console.log('new screenshot:', newScreenshot);
-
+    // Save screenshot
+    var newScreenshot = new Screenshot({url: url, originalImage: imageUrl,
+                      annotatedImage: imageUrl, user_id: username});
     newScreenshot.save(function(err, screenshot) {
-      if (err) {
-        console.log('err', err);
-        return res.status(500).json({ message: err });
-      }
+      if (err) return res.status(500).json({ message: err });
+
+      // Get user to add the screenshot
       User.findOne({username: username}, function(err, user) {
-        if (err) {
-          console.log('err', err);
-          return res.status(404).json({ message: err });
-        }
+        if (err) return res.status(404).json({ message: err });
+
+        // Add screenshot to user
         User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
-          if (err) {
-            console.log('err', err);
-            return res.status(500).json({ message: err });
-          }
+          if (err) return res.status(500).json({ message: err });
           res.status(201).json(screenshot);
-        })
-      })
+        });
+      });
     });
   });
 };
