@@ -9,15 +9,15 @@ function ScreenshotsController(screenshots, Screenshot) {
   this.url = '';
   this.addScreenshot = function(url){
     Screenshot.addScreenshot(url)
-    .success(function(data){
-      console.log(data);
-    });
+      .success(function(data){
+        console.log(data);
+      });
   };
   this.getScreenshot = function(id){
     Screenshot.getScreenshot(id)
-    .success(function(data){
-      console.log(data);
-    });
+      .success(function(data){
+        console.log(data);
+      });
 
   };
 }
