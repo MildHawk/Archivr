@@ -29,17 +29,17 @@ exports.create = function(req, res, next) {
 
     newScreenshot.save(function(err, screenshot) {
       if (err) {
-        return res.status(500).end();
+        return res.status(500).end(err);
       }
       User.findOne({username: username}, function(err, user) {
         if (err) {
-          return res.status(404).end();
+          return res.status(404).end(err);
         }
         User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
           if (err) {
-            return res.status(500).end();
+            return res.status(500).end(err);
           }
-          res.end();
+          res.status(201).end(screenshot);
         })
       })
     });
