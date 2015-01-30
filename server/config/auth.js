@@ -1,7 +1,9 @@
-// this is not used anywhere yet but the idea is that
-// this will be middleware to prevent access to performing
-// operations on the certain resources that arent owned
-// by the user
+/**
+ * this is not used anywhere yet but the idea is that
+ * this will be middleware to prevent access to performing
+ * operations on the certain resources that arent owned
+ * by the user
+ */
 exports.modifiableOnlyByOwner = function(req, res, next) {
   /**
    * if the authenticated users ID doesn't match

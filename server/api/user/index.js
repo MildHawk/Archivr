@@ -18,7 +18,7 @@ module.exports = function(router) {
     // get the user
     .get(userController.show)
     // update the user
-    .put(userController.update)
+    .put(auth.modifiableOnlyByOwner, userController.update)
     // delete the user
-    .delete(userController.destroy);
+    .delete(auth.modifiableOnlyByOwner, userController.destroy);
 };
