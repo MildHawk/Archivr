@@ -134,7 +134,16 @@ gulp.task('mocha', function () {
     .pipe(mocha({
       reporter: 'spec',
     }))
-    // Comment out the `once` methods below to report mocha errors
+    /**
+     * The methods below are a hack to get gulp to exit after mocha tests
+     * finish. Without these methods, you must ^+C to exit, and Travis will
+     * never finish running the tests.
+     *
+     * However, it suppresses error messages from mocha (e.g. server
+     * errors that cause the process to crash). If the tests are not running
+     * or Travis is behaving strangely, comment out these methods to report
+     * the errors and debug.
+     */
     .once('error', function () {
         process.exit(1);
     })
