@@ -7,35 +7,6 @@ var app = require('../../server/index.js');
 var User = require('../../server/api/user/userModel');
 var Screenshot = require('../../server/api/screenshot/screenshotModel');
 
-
-
-describe('UNIT: Server: /api/screenshot', function () {
-
-  // Clear users collection
-  beforeEach(function (done) {
-    User.remove({}, function() {
-      var user = new User({
-        username: 'Ruben',
-        password: 'password'
-      });
-      user.save(function() {
-        done();
-      });
-    });
-  });
-
-  describe('/:username/screenshot', function () {
-    it('should GET /', function (done) {
-      request(app).get('/api/screenshot/Ruben/screenshot').expect(200, done);
-    });
-
-    it('should POST /', function (done) {
-      request(app).post('/api/screenshot/Ruben/screenshot').expect(201, done);
-    });
-  });
-
-});
-
 describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot', function () {
 
   // Clear users and screenshots collections
