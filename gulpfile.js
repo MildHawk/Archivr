@@ -134,6 +134,7 @@ gulp.task('mocha', function () {
     .pipe(mocha({
       reporter: 'spec',
     }))
+    // Comment out the `once` methods below to report mocha errors
     .once('error', function () {
         process.exit(1);
     })
