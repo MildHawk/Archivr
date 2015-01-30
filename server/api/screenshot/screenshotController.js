@@ -25,7 +25,7 @@ exports.create = function(req, res, next) {
 
   var newScreenshot = new Screenshot({url: url, originalImage: originalImage,
                       annotatedImage: annotatedImage, user_id: username});
-    console.log(newScreenshot);  
+    console.log(newScreenshot);
 
     newScreenshot.save(function(err, screenshot) {
       if(err) {
@@ -42,7 +42,7 @@ exports.create = function(req, res, next) {
           res.end();
         })
       })
-    }); 
+    });
   });
 };
 

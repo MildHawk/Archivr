@@ -23,7 +23,18 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
      */
     .state('user', {
       url: '/users/:username',
-      views: {
+      resolve: {
+        screenshots: function($stateParams, Screenshot) {
+          var user = $stateParams.username;
+          return Screenshot.getScreenshots(user)
+            .then(function(screenshots){
+              return screenshots.data;
+            });
+        }
+      },
+      views:  {
+
+
         // main view
         '': {
           templateUrl: '/views/user.html',
@@ -81,6 +92,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
       controller: 'AuthController',
       controllerAs: 'authCtrl'
     })
+
     .state('login', {
       url: '/login',
       templateUrl: '/views/login.html',
@@ -122,6 +134,9 @@ angular
     'Archivr.profile',
     'Archivr.screenshots',
     'Archivr.screenshot',
+    'Archivr.services.Auth',
+    'Archivr.services.User',
+    'Archivr.services.Screenshot',
     'Archivr.userPage',
     'ui.router'
   ])

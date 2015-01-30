@@ -11,10 +11,10 @@ function AuthController($window, $location, Auth, User) {
       password: pass
     }).then(function(response) {
       $window.localStorage.setItem('com.archivr', response.token);
-      // User.user = userObj;
-      // $location.path('/screenshots');
+      User.setUser(response.user);
+      $location.path('/users/' + response.user.username);
     }).catch(function (error) {
-      console.error(error);
+      console.log(error);
     });
   };
 
@@ -40,8 +40,9 @@ function AuthController($window, $location, Auth, User) {
   };
 
 }
-
 AuthController.$inject = ['$window', '$location', 'Auth', 'User'];
 
-angular.module('Archivr.auth', [])
-.controller('AuthController', AuthController);
+angular.module('Archivr.auth', [
+  'Archivr.services.User',
+  'Archivr.services.Auth'
+]).controller('AuthController', AuthController);

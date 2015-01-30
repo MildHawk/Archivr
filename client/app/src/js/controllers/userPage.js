@@ -12,6 +12,8 @@ function UserPageController($stateParams, User) {
 }
 UserPageController.$inject = ['$stateParams', 'User'];
 
-angular.module('Archivr.userPage', [])
-.controller('UserPageController', UserPageController);
+
+angular.module('Archivr.userPage', [
+  'Archivr.services.User'
+]).controller('UserPageController', UserPageController);
 
