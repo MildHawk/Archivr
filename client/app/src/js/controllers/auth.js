@@ -12,6 +12,7 @@ function AuthController($window, $location, Auth, User) {
     }).then(function(response) {
       $window.localStorage.setItem('com.archivr', response.token);
       User.setUser(response.user);
+      console.log(response.user);
       $location.path('/users/' + response.user.username);
     }).catch(function (error) {
       console.log(error);

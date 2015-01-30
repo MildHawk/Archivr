@@ -13,6 +13,13 @@ function ScreenshotsController(screenshots, Screenshot) {
       console.log(data);
     });
   };
+  this.getScreenshot = function(id){
+    Screenshot.getScreenshot(id)
+    .success(function(data){
+      console.log(data);
+    });
+
+  };
 }
 
 ScreenshotsController.$inject = [

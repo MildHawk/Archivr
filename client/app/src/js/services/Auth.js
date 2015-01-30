@@ -35,6 +35,7 @@ function Auth($http, $location, $window) {
     console.log('in services... signout!!!');
     $window.localStorage.removeItem('com.archivr');
     $location.path('/login');
+    console.log('hello');
   };
 
 
@@ -48,6 +49,6 @@ function Auth($http, $location, $window) {
 Auth.$inject = ['$http', '$location', '$window'];
 
 
-angular.module('Archivr.services.Auth', [])
-  .factory('Auth', Auth);
+angular.module('Archivr.services.Auth', [
+]).factory('Auth', Auth);
 
