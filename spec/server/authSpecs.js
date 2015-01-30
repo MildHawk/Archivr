@@ -2,7 +2,6 @@
 
 var expect = require('chai').expect;
 var request = require('supertest');
-var express = require('express');
 var app = require('../../server/index.js');
 var User = require('../../server/api/user/userModel');
 var Screenshot = require('../../server/api/screenshot/screenshotModel');

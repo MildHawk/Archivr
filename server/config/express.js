@@ -5,9 +5,6 @@ var config = require('./environment');
 var session = require('express-session');
 
 module.exports = function expressConfig(app) {
-  var env = app.get('env');
-  var port = process.env.PORT || 3000;
-
   // standard POST request body parser
   app.use(bodyParser.urlencoded({ extended: false }));
 
