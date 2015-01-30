@@ -4,8 +4,8 @@ var Screenshot = require('url-to-screenshot');
 var fs = require('fs');
 var cloudinary = require('cloudinary');
 
-var width = 800 //require('').width;
-var height = 600//require('').height;
+//var width = 800 //require('').width;
+//var height = 600//require('').height;
 //var height = require('');
 
 //cloudinary.config({
@@ -16,8 +16,11 @@ var height = 600//require('').height;
 
 
 var takeScreenshot = function(url, cb) {
+    var width = 800;
+    var height = 600;
     var randomString = Math.random().toString(36).substring(7);
     var fileName = "/" + randomString + ".png";
+    
     Screenshot(url)
     .width(width)
     .height(height)
