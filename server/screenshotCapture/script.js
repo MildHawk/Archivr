@@ -27,14 +27,14 @@ var takeScreenshot = function(url, cb) {
       fs.writeFile(__dirname + fileName, img, function(err) {
         if(err) throw err
         console.log("img saved!!");
-      })
-      cloudinary.uploader.upload(__dirname + fileName, function(result) {
-        console.log('cloudinary result', result);
-        //delete local file;
-        fs.unlink(__dirname + fileName, function() {
-          console.log('file removed!');
-          console.log('result.url', result.url);
-          cb(result.url);
+        cloudinary.uploader.upload(__dirname + fileName, function(result) {
+          console.log('cloudinary result', result);
+          //delete local file;
+          fs.unlink(__dirname + fileName, function() {
+            console.log('file removed!');
+            console.log('result.url', result.url);
+            cb(result.url);
+          })
         })
       })
     })
