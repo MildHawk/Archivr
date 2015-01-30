@@ -23,20 +23,23 @@ exports.create = function(req, res, next) {
   takeScreenshot(url, function(imageUrl) {
     var originalImage = imageUrl;
 
-  var newScreenshot = new Screenshot({url: url, originalImage: originalImage,
+    var newScreenshot = new Screenshot({url: url, originalImage: originalImage,
                       annotatedImage: annotatedImage, user_id: username});
-    console.log(newScreenshot);
+    console.log('new screenshot:', newScreenshot);
 
     newScreenshot.save(function(err, screenshot) {
       if (err) {
+        console.log('err', err);
         return res.status(500).end(err);
       }
       User.findOne({username: username}, function(err, user) {
         if (err) {
+          console.log('err', err);
           return res.status(404).end(err);
         }
         User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
           if (err) {
+            console.log('err', err);
             return res.status(500).end(err);
           }
           res.status(201).end(screenshot);
