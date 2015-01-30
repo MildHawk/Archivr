@@ -57,7 +57,7 @@ exports.show = function(req, res, next) {
 
 exports.update = function(req, res, next) {
   var id = req.params.id;
-  var newData = {}; //, get new notes
+  var newData = req.body; //, get new notes
   Screenshot.update({_id: id}, newData, function(err, numberAffected, raw) {
     if(err) {
       return res.status(500).end();
