@@ -20,7 +20,9 @@ exports.create = function(req, res, next) {
   var username = req.params.username;
   var annotatedImage = req.body.annotatedImage;
 
-  takeScreenshot(url, function(imageUrl) {
+  takeScreenshot(url, function(err, imageUrl) {
+    if (err) return res.status(500).json({ message: err });
+
     console.log('imageUrl:', imageUrl);
     var originalImage = imageUrl;
     // TODO: change annotatedImage to something real
