@@ -19,25 +19,25 @@ var takeScreenshot = function(url, cb) {
     var randomString = Math.random().toString(36).substring(7);
     var fileName = "/" + randomString + ".png";
     Screenshot(url)
-    .width(width)
-    .height(height)
-    .capture(function(err, img) {
-      if(err) throw err;
-      console.log('img before saving', img)
-      fs.writeFile(__dirname + fileName, img, function(err) {
-        if(err) throw err
-        console.log("img saved!!");
-        cloudinary.uploader.upload(__dirname + fileName, function(result) {
-          console.log('cloudinary result', result);
-          //delete local file;
-          fs.unlink(__dirname + fileName, function() {
-            console.log('file removed!');
-            console.log('result.url', result.url);
-            cb(result.url);
-          })
-        })
-      })
-    })
+      .width(width)
+      .height(height)
+      .capture(function(err, img) {
+        if (err) return cb('Error capturing image: ' + err, null);
+
+        // Write the capture screenshot to disk temporarily
+        fs.writeFile(__dirname + fileName, img, function(err) {
+          if (err) return cb('Error writing file to disk: ' + err, null);
+
+          // Upload to cloudinary
+          cloudinary.uploader.upload(__dirname + fileName, function(result) {
+
+            //delete local file and return cloudinary url
+            fs.unlink(__dirname + fileName, function() {
+              cb(null, result.url);
+            });
+          });
+        });
+      });
 };
 
 module.exports = takeScreenshot;
