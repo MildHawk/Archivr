@@ -22,6 +22,8 @@ exports.create = function(req, res, next) {
 
   takeScreenshot(url, function(imageUrl) {
     var originalImage = imageUrl;
+    // TODO: change annotatedImage to something real
+    var annotatedImage = imageUrl;
 
     var newScreenshot = new Screenshot({url: url, originalImage: originalImage,
                       annotatedImage: annotatedImage, user_id: username});
