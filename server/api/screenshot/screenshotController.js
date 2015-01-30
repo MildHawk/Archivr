@@ -4,13 +4,13 @@ var takeScreenshot = require('../../screenshotCapture/script.js');
 var Promise = require('bluebird');
 
 exports.list = function(req, res, next){
+  // user found through router.param
   var user = req.foundUser;
+  // find screenshots whos user_id's match the found users username
   Screenshot.find({ user_id: user.username }, function(err, screenshots){
-
     if (err) return res.status(500).json({
       status: 500, message: 'Internal Server Error'
     });
-
     res.status(200).json(screenshots);
   });
 };

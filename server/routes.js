@@ -39,8 +39,9 @@ module.exports = function applicationRouter(app) {
     secret: config.jwtTokenSecret,
     credentialsRequired: false,
     getToken: function fromHeaderOrQuerystring(req) {
-      if(req.headers['x-access-header']){
-        return req.headers['x-access-header'];
+      console.log('REQUEST, ', req.headers);
+      if(req.headers['x-access-token']){
+        return req.headers['x-access-token'];
       }
       return null;
     }
