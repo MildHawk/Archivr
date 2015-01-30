@@ -1,13 +1,15 @@
 var screenshotController = require('./screenshotController');
+var auth = require('../../config/auth');
 
 module.exports = function(router) {
   /**
    * /api/user/:username/screenshot
    */
   router.route('/api/user/:username/screenshot')
-    // create a screenshot
+    // get a screenshot
     .get(screenshotController.list)
-    .post(screenshotController.create);
+    // create a screenshot
+    .post(auth.modifiableOnlyByOwner, screenshotController.create);
 
   /**
    * /api/user/:username/screenshot/:id
@@ -16,8 +18,8 @@ module.exports = function(router) {
     // get the screenshot
     .get(screenshotController.show)
     // update the screenshot
-    .put(screenshotController.update)
+    .put(auth.modifiableOnlyByOwner, screenshotController.update)
     // delete the screenshot
-    .delete(screenshotController.destroy);
+    .delete(auth.modifiableOnlyByOwner, screenshotController.destroy);
 
 };
