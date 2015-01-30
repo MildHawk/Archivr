@@ -32,19 +32,19 @@ exports.create = function(req, res, next) {
     newScreenshot.save(function(err, screenshot) {
       if (err) {
         console.log('err', err);
-        return res.status(500).end(err);
+        return res.status(500).json({ message: err });
       }
       User.findOne({username: username}, function(err, user) {
         if (err) {
           console.log('err', err);
-          return res.status(404).end(err);
+          return res.status(404).json({ message: err });
         }
         User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
           if (err) {
             console.log('err', err);
-            return res.status(500).end(err);
+            return res.status(500).json({ message: err });
           }
-          res.status(201).end(screenshot);
+          res.status(201).json(screenshot);
         })
       })
     });
