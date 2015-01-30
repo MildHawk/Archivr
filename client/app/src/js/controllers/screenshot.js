@@ -4,10 +4,11 @@
  * Handles display of a single screenshot.
  */
 
-function ScreenshotController(Screenshots) {
+function ScreenshotController(Screenshot) {
 }
 ScreenshotController.$inject = ['Screenshot'];
 
-angular.module('Archivr.screenshot', [])
-  .controller('ScreenshotController', ScreenshotController);
+angular.module('Archivr.screenshot', [
+  'Archivr.services.Screenshot'
+]).controller('ScreenshotController', ScreenshotController);
 

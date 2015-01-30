@@ -11,6 +11,7 @@ function ProfileBarController(User) {
 }
 ProfileBarController.$inject = ['User'];
 
-angular.module('Archivr.profile', ['Archivr.services.User'])
-.controller('ProfileBarController', ProfileBarController);
+angular.module('Archivr.profile', [
+  'Archivr.services.User'
+]).controller('ProfileBarController', ProfileBarController);
 
