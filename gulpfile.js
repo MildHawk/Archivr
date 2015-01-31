@@ -171,6 +171,15 @@ gulp.task('test', function(callback) {
 });
 
 /**
+ * build is the entry-point to build out app artifacts for deployment. Runs
+ * sub-task based on environment.
+ */
+gulp.task('build', function() {
+  var env = process.env.NODE_ENV || 'development';
+  gulp.start('build-' + env);
+});
+
+/**
  * build-development and build-production tasks are to build out the app with different
  * configurations. Preprocessing is necessary to insert the appropriate
  * base href into the Jade partials.

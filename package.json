@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/index.js",
     "postinstall": "npm run build",
-    "build": "./node_modules/bower/bin/bower install && node node_modules/.bin/gulp build-development",
+    "build": "./node_modules/bower/bin/bower install && node node_modules/.bin/gulp build",
     "test": "gulp test"
   },
   "engines": {
