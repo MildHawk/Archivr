@@ -130,12 +130,166 @@ gulp.task('karma', function (done) {
   }, done);
 });
 
+
+
+
+
+
+var handleErr = function (err) {
+  console.log(err.message);
+  process.exit(1);
+};
+
+// gulp.task('static', function () {
+//   return gulp.src([
+//     'test/*.js',
+//     'lib/**/*.js',
+//     'benchmark/**/*.js',
+//     'index.js',
+//     'doc.js',
+//     'gulpfile.js'
+//   ])
+//   .pipe(jshint('.jshintrc'))
+//   .pipe(jshint.reporter('jshint-stylish'))
+//   .pipe(jshint.reporter('fail'))
+//   .pipe(jscs())
+//   .on('error', handleErr);
+//   // .pipe(eslint())
+//   // .pipe(eslint.format())
+//   // .pipe(eslint.failOnError());
+// });
+
+var istanbul = require('gulp-istanbul');
+var coveralls = require('gulp-coveralls');
+var plumber = require('gulp-plumber');
+
+gulp.task('testStuff', function (cb) {
+  var mochaErr;
+
+  gulp.src([
+    // 'lib/**/*.js',
+    // 'index.js'
+    './server/**/*.js'
+  ])
+  .pipe(istanbul({
+    includeUntested: true
+  }))
+  .pipe(istanbul.hookRequire())
+  .on('finish', function () {
+    gulp.src(['./spec/server/userRouter.js'])
+      .pipe(plumber())
+      .pipe(mocha({
+        reporter: 'spec'
+      }))
+      .on('error', function (err) {
+        mochaErr = err;
+      })
+      .pipe(istanbul.writeReports())
+      .on('end', function () {
+        cb(mochaErr);
+      });
+  });
+});
+
+gulp.task('coveralls', ['testStuff'], function () {
+  // if (!process.env.CI) return;
+  // return gulp.src(path.join(__dirname, 'coverage/lcov.info'))
+  return gulp.src('./coverage/lcov.info')
+    .pipe(coveralls());
+});
+
+gulp.task('doStuff', ['testStuff', 'coveralls'])
+
+
+
+
+
+
+
+
+
+
+// var istanbul = require('gulp-istanbul');
+// We'll use mocha here, but any test framework will work
+// var mocha = require('gulp-mocha');
+
+// gulp.task('mocha', function (cb) {
+//   return gulp.src(['lib/**/*.js', 'main.js'])
+//     .pipe(istanbul()) // Covering files
+//     .pipe(istanbul.hookRequire()) // Force `require` to return covered files
+//     .on('finish', function () {
+//       gulp.src(['test/*.js'])
+//         .pipe(mocha())
+//         .pipe(istanbul.writeReports()) // Creating the reports after tests runned
+//         .on('end', cb);
+//     });
+// });
+
+// gulp.task('serverUnitTests', function(callback) {
+//     var coverageVar = '$$server_cov_' + new Date().getTime() + '$$';
+//     gulp.src([ './server/**/*.js' ])
+//         // Instrument source code
+//         .pipe(
+//             istanbul({
+//                 coverageVariable: coverageVar
+//             })
+//         )
+//         .on('finish', function (){
+//             // Load tests into mocha
+//             gulp.src( paths.serverSpec )
+//                 .pipe(
+//                     mocha({
+//                         reporter: 'spec'
+//                     })
+//                     .on( 'error', handleError )
+//                 )
+//                 // Create coverage reports
+//                 .pipe(istanbul.writeReports({
+//                     dir: __dirname,
+//                     reporters: ['html', 'lcov', 'text-summary', 'json'],
+//                     reportOpts: {
+//                         dir: __dirname
+//                     },
+//                     coverageVariable: coverageVar
+//                 }))
+//                 // Throw error if coverage thresholds not met
+//                 .pipe( istanbulEnforcer(enforcerOptions) )
+//                 .on( 'error', handleError )
+//                 .on( 'end', callback );
+//         });
+// });
+
+// ----- last version ----
 gulp.task('mocha', function () {
-  return gulp.src(paths.serverSpec, {read: false})
-    .pipe(mocha({
-      reporter: 'spec',
-      timeout: 20000
-    }))
+  return gulp.src(['./server/**/*.js'])
+    .pipe(istanbul()) // Covering files
+    .pipe(istanbul.hookRequire()) // Force `require` to return covered files
+    .on('finish', function() {
+      gulp.src(paths.serverSpec, {read: false})
+        .pipe(mocha({
+          reporter: 'spec',
+          timeout: 20000
+        }))
+        .pipe(istanbul.writeReports())
+        .once('error', function () {
+            process.exit(1);
+        })
+        .once('end', function () {
+          process.exit();
+        });
+    });
+
+// gulp.task('mocha', function () {
+//   return gulp.src(paths.serverSpec, {read: false})
+//     .pipe(istanbul()) // Covering files
+//     .pipe(istanbul.hookRequire()) // Force `require` to return covered files
+//     .on('finish', function() {
+
+//     });
+//     .pipe(mocha({
+//       reporter: 'spec',
+//       timeout: 20000
+//     }))
     /**
      * The methods below are a hack to get gulp to exit after mocha tests
      * finish. Without these methods, you must ^+C to exit, and Travis will
@@ -146,12 +300,12 @@ gulp.task('mocha', function () {
      * or Travis is behaving strangely, comment out these methods to report
      * the errors and debug.
      */
-    .once('error', function () {
-        process.exit(1);
-    })
-    .once('end', function () {
-      process.exit();
-    });
+    // .once('error', function () {
+    //     process.exit(1);
+    // })
+    // .once('end', function () {
+    //   process.exit();
+    // });
 });
 
 gulp.task('watch', function() {
