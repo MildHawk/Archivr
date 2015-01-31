@@ -4,9 +4,12 @@
  * Handles display of a user screenshots.
  */
 
-function ScreenshotsController($location, screenshots, Screenshot) {
+function ScreenshotsController($stateParams, $location, screenshots, Screenshot, User) {
+
   this.screenshots = screenshots;
   this.url = '';
+  this.isUser = User.getUser() !== null && User.getUser().username === $stateParams.username;
+
   this.addScreenshot = function(url){
     Screenshot.addScreenshot(url)
       .success(function(data){
@@ -26,9 +29,11 @@ function ScreenshotsController($location, screenshots, Screenshot) {
 }
 
 ScreenshotsController.$inject = [
+  '$stateParams',
   '$location',
   'screenshots',
-  'Screenshot'
+  'Screenshot',
+  'User'
 ];
 
 angular.module('Archivr.screenshots', [

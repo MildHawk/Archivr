@@ -23,17 +23,14 @@ function AuthController($window, $location, Auth, User) {
     Auth.signup({
       username: user,
       password: pass
-    })
-    .then(function(response) {
+    }).then(function(response) {
       console.log(response);
       // $window.localStorage.setItem('com.archivr', token);
       // $location.path('/screenshots');
-    })
-    .catch(function(error) {
+    }).catch(function(error) {
       console.error(error);
     });
   };
-
 
   this.logout = function(){
     console.log('Signed out');

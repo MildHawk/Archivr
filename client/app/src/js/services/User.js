@@ -1,13 +1,12 @@
 function User() {
-
-  var user = {};
+  var user = null;
 
   var getUser = function () {
     return user;
   };
 
-  var setUser = function(user){
-    user = user;
+  var setUser = function(newUser){
+    user = newUser;
   };
 
   return {
@@ -16,5 +15,5 @@ function User() {
   };
 }
 
-angular.module('Archivr.services.User', [
-]).factory('User', User);
+angular.module('Archivr.services.User', [])
+  .factory('User', User);

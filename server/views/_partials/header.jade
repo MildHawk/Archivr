@@ -1,5 +1,5 @@
 //- partial for the header bar
-header(role="header" id="header")
+header(role="header" id="header" ng-controller="NavController as NavCtrl")
   nav.navbar.navbar-inverse.navbar-fixed-top
     .container-fluid
       .navbar-header
@@ -9,11 +9,11 @@ header(role="header" id="header")
           span.icon-bar
         a(class="navbar-brand" href="/") Archivr
       ul(class="nav navbar-nav navbar-right")
-        li
+        li(ng-hide="NavCtrl.loggedIn")
           a(href="/login") Login
-        li
+        li(ng-hide="NavCtrl.loggedIn")
           a(href="/signup") Signup
-        li
-          a(href="/logout") Logout
+        li(ng-show="NavCtrl.loggedIn")
+          a(href="#" ng-click="NavCtrl.logout()") Logout
 
 

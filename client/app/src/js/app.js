@@ -32,8 +32,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
             });
         }
       },
-      views:  {
-
+      views: {
 
         // main view
         '': {
@@ -78,7 +77,17 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
       url: '/screenshot/:screenshotId',
       templateUrl: '/views/screenshot.html',
       controller: 'ScreenshotController',
-      controllerAs: 'screenshotCtrl'
+      controllerAs: 'screenshotCtrl',
+      resolve: {
+        screenshot: function($stateParams, $window, Screenshot) {
+          return Screenshot.getScreenshot($stateParams.username, $stateParams.screenshotId)
+            .then(function(response){
+              return response;
+            }).catch(function(err){
+              return err;
+            });
+        }
+      }
     })
 
     /**
@@ -134,6 +143,16 @@ function AttachTokens($window) {
   };
 }
 
+function run($rootScope, $location, Auth) {
+  $rootScope.Authenticated = Auth.isAuth();
+
+  $rootScope.$on('$stateChangeStart', function(event) {
+    $rootScope.Authenticated = Auth.isAuth();
+  }.bind(this));
+
+}
+run.$inject = ['$rootScope', '$location', 'Auth'];
+
 angular
   .module('Archivr', [
     'Archivr.auth',
@@ -142,10 +161,12 @@ angular
     'Archivr.screenshots',
     'Archivr.screenshot',
     'Archivr.services.Auth',
+    'Archivr.nav',
     'Archivr.services.User',
     'Archivr.services.Screenshot',
     'Archivr.userPage',
     'ui.router'
   ])
   .config(config)
+  .run(run)
   .factory('AttachTokens', AttachTokens);

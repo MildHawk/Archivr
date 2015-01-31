@@ -6,7 +6,7 @@
 
 function ProfileBarController(User) {
 
-  this.user = User.user;
+  this.user = User.getUser();
 
 }
 ProfileBarController.$inject = ['User'];

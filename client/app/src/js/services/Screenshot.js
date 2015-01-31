@@ -17,15 +17,13 @@ function Screenshot($http, User) {
 
   var addScreenshot = function (url) {
     var user = User.getUser();
-    console.log(user);
     return $http.post('/api/user/' + user.username + '/screenshot', {
       url: url
     });
   };
 
-  var getScreenshot = function(id){
-    var user = User.getUser();
-    return $http.get('/api/user/' + user.username + '/screenshot/' + id)
+  var getScreenshot = function(user, id){
+    return $http.get('/api/user/' + user + '/screenshot/' + id)
       .then(function(response) {
         return response;
       });
