@@ -6,6 +6,84 @@ var express = require('express');
 var app = require('../../server/index.js');
 var User = require('../../server/api/user/userModel');
 var Screenshot = require('../../server/api/screenshot/screenshotModel');
+var cloudinary = require('cloudinary');
+
+function removeRecentImagesFromCloudinary(number, cb) {
+  // Get images from server
+  cloudinary.api.resources(function(result) {
+    var images = result.resources.slice(0, number);
+
+    // Store public IDs to delete
+    var publicIds = [];
+    for (var i = 0; i < images.length; i++) {
+      publicIds.push(images[i].public_id);
+    }
+
+    // Delete from Cloudinary
+    cloudinary.api.delete_resources(publicIds, function(result) {
+      cb(result);
+    });
+
+  });
+}
+
+xdescribe('TEST working with Cloudinary', function () {
+
+    // cloudinary.api.delete_resources(['rarniozvwkulalqu0hyo'], function(result){
+    // });
+    // cloudinary.api.resources(function(result) {
+    //   returns {resources: [...]}
+    // })
+
+  it('should get resources', function (done) {
+    cloudinary.api.resources(function(result) {
+      console.log(result)
+      expect(true).to.equal(true);
+      done();
+    });
+  });
+});
+
+describe('Working with Cloudinary', function () {
+
+  var numImagesBeforeTest;
+
+  before(function (done) {
+    cloudinary.api.resources(function(result) {
+      numImagesBeforeTest = result.resources.length;
+      done();
+    });
+  });
+
+  after(function (done) {
+    removeRecentImagesFromCloudinary(1, function(result) {
+      cloudinary.api.resources(function(result) {
+        if (numImagesBeforeTest !== result.resources.length) {
+          done('Issue cleaning on Cloudinary');
+        } else {
+          done();
+        }
+      });
+    });
+  });
+
+  it('should be able to clean up after itself', function (done) {
+    // Create new image
+    request(app).post('/api/user/Ruben/screenshot')
+      .send({ url: 'http://www.google.com' })
+      .end(function(err, res) {
+        if (err) return done(err);
+        console.log('create result:', res.body);
+        done();
+        // // clean up
+        // removeRecentImagesFromCloudinary(1, function(result) {
+        //   console.log('delete result:', result);
+        //   done();
+        // })
+      });
+  });
+
+});
 
 describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot', function () {
 
@@ -27,8 +105,8 @@ describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot', funct
   describe('POST /', function () {
 
     it('should create a new screenshot', function (done) {
-      request(app).post('/api/screenshot/Ruben/screenshot')
-        .send({ url: 'http://www.purple.com' })  // TODO: why send annotatedImage?
+      request(app).post('/api/user/Ruben/screenshot')
+        .send({ url: 'http://www.purple.com' })
         // should get back 201 response
         .expect(201)
         .end(function(err, res) {
@@ -36,7 +114,9 @@ describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot', funct
 
           Screenshot.find(function(err, res) {
             expect(res.length).to.equal(1);
-            done();
+            removeRecentImagesFromCloudinary(1, function(result) {
+              done();
+            });
           });
         });
     });
