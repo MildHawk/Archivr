@@ -1,5 +1,5 @@
 
-# Archivr [![Stories in Ready](https://badge.waffle.io/MildHawk/Archivr.png?label=ready&title=Ready)](https://waffle.io/MildHawk/Archivr) [![Build Status](https://travis-ci.org/MildHawk/Archivr.svg?branch=develop)](https://travis-ci.org/MildHawk/Archivr) [![Coverage Status](https://coveralls.io/repos/MildHawk/Archivr/badge.svg?branch=)](https://coveralls.io/r/MildHawk/Archivr?branch=develop)
+# Archivr [![Stories in Ready](https://badge.waffle.io/MildHawk/Archivr.png?label=ready&title=Ready)](https://waffle.io/MildHawk/Archivr) [![Build Status](https://travis-ci.org/MildHawk/Archivr.svg?branch=develop)](https://travis-ci.org/MildHawk/Archivr) [![Coverage Status](https://coveralls.io/repos/MildHawk/Archivr/badge.svg?branch=develop)](https://coveralls.io/r/MildHawk/Archivr?branch=develop)
 Because it's hip to add an "r" at the end. r.
 
 <!--
