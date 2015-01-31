@@ -27,7 +27,8 @@ function ScreenshotsController(screenshots, Screenshot, $location) {
 
 ScreenshotsController.$inject = [
   'screenshots',
-  'Screenshot'
+  'Screenshot',
+  '$location'
 ];
 
 angular.module('Archivr.screenshots', [

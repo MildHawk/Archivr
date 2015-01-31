@@ -17,7 +17,7 @@ function ScreenshotController(Screenshot, User) {
   };
   this.getScreenshot();
 }
-ScreenshotController.$inject = ['Screenshot'];
+ScreenshotController.$inject = ['Screenshot', 'User'];
 
 angular.module('Archivr.screenshot', [
   'Archivr.services.Screenshot',
