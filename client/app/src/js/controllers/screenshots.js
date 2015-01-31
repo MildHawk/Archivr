@@ -22,7 +22,7 @@ function ScreenshotsController(screenshots, Screenshot, $location) {
   };
   this.changeView = function(screenshotId) {
     $location.path('/screenshot/' + screenshotId);
-  }
+  };
 }
 
 ScreenshotsController.$inject = [

@@ -13,7 +13,7 @@ function ScreenshotController(Screenshot, User) {
       .success(function(data) {
         console.log(data);
         this.screenshot = data;
-      })
+      });
   };
   this.getScreenshot();
 }
