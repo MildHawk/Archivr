@@ -179,7 +179,8 @@ gulp.task('testStuff', function (cb) {
     gulp.src(['./spec/server/userRouter.js'])
       .pipe(plumber())
       .pipe(mocha({
-        reporter: 'spec'
+        reporter: 'spec',
+        timeout: 20000
       }))
       .on('error', function (err) {
         mochaErr = err;
@@ -198,7 +199,7 @@ gulp.task('coveralls', ['testStuff'], function () {
     .pipe(coveralls());
 });
 
-gulp.task('doStuff', ['testStuff', 'coveralls'])
+gulp.task('mocha', ['testStuff', 'coveralls'])
 
 
 
@@ -260,24 +261,24 @@ gulp.task('doStuff', ['testStuff', 'coveralls'])
 // });
 
 // ----- last version ----
-gulp.task('mocha', function () {
-  return gulp.src(['./server/**/*.js'])
-    .pipe(istanbul()) // Covering files
-    .pipe(istanbul.hookRequire()) // Force `require` to return covered files
-    .on('finish', function() {
-      gulp.src(paths.serverSpec, {read: false})
-        .pipe(mocha({
-          reporter: 'spec',
-          timeout: 20000
-        }))
-        .pipe(istanbul.writeReports())
-        .once('error', function () {
-            process.exit(1);
-        })
-        .once('end', function () {
-          process.exit();
-        });
-    });
+// gulp.task('mocha', function () {
+//   return gulp.src(['./server/**/*.js'])
+//     .pipe(istanbul()) // Covering files
+//     .pipe(istanbul.hookRequire()) // Force `require` to return covered files
+//     .on('finish', function() {
+//       gulp.src(paths.serverSpec, {read: false})
+//         .pipe(mocha({
+//           reporter: 'spec',
+//           timeout: 20000
+//         }))
+//         .pipe(istanbul.writeReports())
+//         .once('error', function () {
+//             process.exit(1);
+//         })
+//         .once('end', function () {
+//           process.exit();
+//         });
+//     });
 
 // gulp.task('mocha', function () {
 //   return gulp.src(paths.serverSpec, {read: false})
@@ -306,7 +307,7 @@ gulp.task('mocha', function () {
     // .once('end', function () {
     //   process.exit();
     // });
-});
+// });
 
 gulp.task('watch', function() {
   gulp.watch(paths.src.img + '/**/*', ['image']);
