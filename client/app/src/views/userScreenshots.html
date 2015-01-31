@@ -9,8 +9,8 @@
   <div class="container">
       <ul class="row" >
         <li class="col-xs-6 col-md-3" ng-repeat="screenshot in screenshotsCtrl.screenshots">
-          <a ng-click="screenshotsCtrl.getScreenshot(screenshot._id)"href="#" class="thumbnail">
-            <img src="{{ screenshot.sizes.small.url }}" alt="{{ screenshot.sizes.small.description }}">
+          <a href="#" class="thumbnail">
+            <img ng-click="screenshotCtrl.changeView(screenshot._id)" src="{{ screenshot.sizes.small.url }}" alt="{{ screenshot.sizes.small.description }}">
           </a>
         </li>
       </ul>
