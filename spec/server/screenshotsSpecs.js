@@ -112,7 +112,24 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
     });
   });
 
+
   describe('POST /', function () {
+    var bail;
+
+    // remove image after each test
+    afterEach(function (done) {
+      // do not delete image if it was never created
+      if (bail) {
+        // reset bail for next test
+        bail = false;
+        return done();
+      }
+      // otherwise, delete from Cloudinary
+      removeRecentImagesFromCloudinary(1, function(res) {
+        done();
+      });
+    });
+
 
     it('should create a new screenshot', function (done) {
       request(app).post('/api/user/Ruben/screenshot')
@@ -120,13 +137,14 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
         // should get back 201 response
         .expect(201)
         .end(function(err, res) {
-          if (err) return done(err);
+          if (err) {
+            bail = true;
+            return done(err);
+          }
 
           Screenshot.find(function(err, res) {
             expect(res.length).to.equal(1);
-            removeRecentImagesFromCloudinary(1, function(result) {
-              done();
-            });
+            done();
           });
         });
     });
@@ -135,7 +153,11 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
       request(app).post('/api/user/Ruben/screenshot')
         .send({ url: 'http://www.purple.com' })
         .end(function(err, res) {
-          if (err) return done(err);
+          if (err) {
+            bail = true;
+            return done(err);
+          }
+
           request(app).get('/api/user/Ruben')
             .expect(function(res) {
               // should append id to user images
@@ -143,9 +165,7 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
             })
             .end(function(err, res) {
               if (err) return done(err);
-              removeRecentImagesFromCloudinary(1, function(res) {
-                done();
-              });
+              done();
             });
         });
     });
@@ -195,14 +215,15 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', functio
   var screenshot;
   var bail;
 
-  beforeEach(function (done) {
-    // Clear users and screenshots collections
+  before(function (done) {
+    // Clear users, create test account
     User.remove({}, function() {
       var user = new User({
         username: 'Ruben',
         password: 'password'
       });
       user.save(function() {
+        // Clear screenshots
         Screenshot.remove({}, function() {
 
           // Create a new stock screenshot
@@ -228,7 +249,8 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', functio
     });
   });
 
-  afterEach(function (done) {
+  // delete image from Cloudinary
+  after(function (done) {
     // do not delete image if it was never created
     if (bail) {
       // reset bail for next test
@@ -270,12 +292,6 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', functio
   });
 
   describe('PUT /', function () {
-
-    it('should return 200 on successful update', function (done) {
-      request(app).put('/api/user/Ruben/screenshot/' + screenshot._id)
-        .send({ visits: 2 })
-        .expect(200, done);
-    });
 
     it('should update a screenshot and store in DB', function (done) {
       request(app).put('/api/user/Ruben/screenshot/' + screenshot._id)
