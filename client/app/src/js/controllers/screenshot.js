@@ -6,7 +6,7 @@
 
 function ScreenshotController(Screenshot, User) {
 
-  this.screenshot = screenshot;
+  this.screenshot = {};
 
   this.getScreenshot = function(id) {
     Screenshot.getScreenshot(id)
@@ -15,6 +15,7 @@ function ScreenshotController(Screenshot, User) {
         this.screenshot = data;
       })
   };
+  this.getScreenshot();
 }
 ScreenshotController.$inject = ['Screenshot'];
 

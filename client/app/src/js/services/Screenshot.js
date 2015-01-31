@@ -15,14 +15,6 @@ function Screenshot($http, User) {
       });
   };
 
-  var getScreenshot = function(screenshotId) {
-    var user = User.getUser().username;
-    return $http.get('/api/user' + user + '/screenshot' + screenshotId)
-    .then(function(response) {
-      return response
-    })
-  }
-
   var addScreenshot = function (url) {
     var user = User.getUser();
     console.log(user);

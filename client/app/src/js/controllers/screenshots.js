@@ -4,7 +4,7 @@
  * Handles display of a user screenshots.
  */
 
-function ScreenshotsController(screenshots, Screenshot) {
+function ScreenshotsController(screenshots, Screenshot, $location) {
   this.screenshots = screenshots;
   this.url = '';
   this.addScreenshot = function(url){
@@ -13,13 +13,16 @@ function ScreenshotsController(screenshots, Screenshot) {
         console.log(data);
       });
   };
-  this.getScreenshot = function(id){
-    Screenshot.getScreenshot(id)
+  this.getScreenshots = function(id){
+    Screenshot.getScreenshots(id)
       .success(function(data){
         console.log(data);
+        this.screenshots = data;
       });
-
   };
+  this.changeView = function(screenshotId) {
+    $location.path('/screenshot/' + screenshotId);
+  }
 }
 
 ScreenshotsController.$inject = [
