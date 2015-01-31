@@ -15,33 +15,35 @@ exports.list = function(req, res, next){
   });
 };
 
+/**
+ * create
+ * ======
+ * Takes screenshot of specified URL, creates new Screenshot in DB, and
+ * adds screenshot to the user images.
+ */
 exports.create = function(req, res, next) {
-  var url = req.body.url;
   var username = req.params.username;
-  var annotatedImage = req.body.annotatedImage;
+  var url = req.body.url;
 
-  takeScreenshot(url, function(imageUrl) {
-    var originalImage = imageUrl;
+  takeScreenshot(url, function(err, imageUrl) {
+    if (err) return res.status(500).json({ message: err });
 
-  var newScreenshot = new Screenshot({url: url, originalImage: originalImage,
-                      annotatedImage: annotatedImage, user_id: username});
-    console.log(newScreenshot);
-
+    // Save screenshot
+    var newScreenshot = new Screenshot({url: url, originalImage: imageUrl,
+                      annotatedImage: imageUrl, user_id: username});
     newScreenshot.save(function(err, screenshot) {
-      if(err) {
-        return res.status(500).end();
-      }
+      if (err) return res.status(500).json({ message: err });
+
+      // Get user to add the screenshot
       User.findOne({username: username}, function(err, user) {
-        if(err) {
-          return res.status(404).end();
-        }
+        if (err) return res.status(404).json({ message: err });
+
+        // Add screenshot to user
         User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
-          if(err) {
-            return res.status(500).end();
-          }
-          res.end();
-        })
-      })
+          if (err) return res.status(500).json({ message: err });
+          res.status(201).json(screenshot);
+        });
+      });
     });
   });
 };
@@ -59,7 +61,7 @@ exports.update = function(req, res, next) {
   var id = req.params.id;
   var newData = {}; //, get new notes
   Screenshot.update({_id: id}, newData, function(err, numberAffected, raw) {
-    if(err) {
+    if (err) {
       return res.status(500).end();
     }
     res.end();
@@ -70,11 +72,11 @@ exports.destroy = function(req, res, next) {
   var username = req.params.username;
   var id = req.params.id;
   Screenshot.findOne({_id: id}, function(err, screenshot) {
-    if(!screenshot) {
+    if (!screenshot) {
       res.status(404).end();
     } else {
       Screenshot.remove({_id: id}, function(err) {
-        if(err) {
+        if (err) {
           return res.status(500).end();
         }
         res.status(200).end();

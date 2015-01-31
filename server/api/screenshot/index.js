@@ -9,7 +9,9 @@ module.exports = function(router) {
     // get a screenshot
     .get(screenshotController.list)
     // create a screenshot
-    .post(auth.modifiableOnlyByOwner, screenshotController.create);
+    // TODO: reset to require auth
+    // .post(auth.modifiableOnlyByOwner, screenshotController.create);
+    .post(screenshotController.create);
 
   /**
    * /api/user/:username/screenshot/:id
@@ -18,8 +20,12 @@ module.exports = function(router) {
     // get the screenshot
     .get(screenshotController.show)
     // update the screenshot
-    .put(auth.modifiableOnlyByOwner, screenshotController.update)
+    // TODO: reset to require auth
+    // .put(auth.modifiableOnlyByOwner, screenshotController.update)
+    .put(screenshotController.update)
     // delete the screenshot
-    .delete(auth.modifiableOnlyByOwner, screenshotController.destroy);
+    // TODO: reset to require auth
+    // .delete(auth.modifiableOnlyByOwner, screenshotController.destroy);
+    .delete(screenshotController.destroy);
 
 };
