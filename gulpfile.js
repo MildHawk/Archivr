@@ -32,10 +32,10 @@ var paths = {
   karmaConf: __dirname + '/spec/karma.conf.js'
 };
 
-var handleError = function(err) {
-  console.log(err.toString());
-  this.emit('end');
-};
+// var handleError = function(err) {
+//   console.log(err.toString());
+//   this.emit('end');
+// };
 
 var jsFiles = [
   paths.src.bower + '/angular/angular.js',
@@ -135,7 +135,7 @@ gulp.task('karma', function (done) {
 
 
 
-var handleErr = function (err) {
+var handleError = function (err) {
   console.log(err.message);
   process.exit(1);
 };
@@ -163,7 +163,7 @@ var istanbul = require('gulp-istanbul');
 var coveralls = require('gulp-coveralls');
 var plumber = require('gulp-plumber');
 
-gulp.task('testStuff', function (cb) {
+gulp.task('testStuff', function () {
   var mochaErr;
 
   gulp.src([
@@ -187,19 +187,20 @@ gulp.task('testStuff', function (cb) {
       })
       .pipe(istanbul.writeReports())
       .on('end', function () {
-        cb(mochaErr);
+        if (mochaErr) return handleError(mochaErr);
+        // handleError(mochaErr);
       });
   });
 });
 
-gulp.task('coveralls', ['testStuff'], function () {
-  // if (!process.env.CI) return;
+gulp.task('coveralls', function () {
+  if (!process.env.CI) return;
   // return gulp.src(path.join(__dirname, 'coverage/lcov.info'))
   return gulp.src('./coverage/lcov.info')
     .pipe(coveralls());
 });
 
-gulp.task('mocha', ['testStuff', 'coveralls'])
+// gulp.task('mocha', ['testStuff', 'coveralls'])
 
 
 
@@ -260,25 +261,51 @@ gulp.task('mocha', ['testStuff', 'coveralls'])
 //         });
 // });
 
+gulp.task('something', function(cb) {
+  console.log('something else');
+  cb();
+})
+
 // ----- last version ----
-// gulp.task('mocha', function () {
-//   return gulp.src(['./server/**/*.js'])
-//     .pipe(istanbul()) // Covering files
-//     .pipe(istanbul.hookRequire()) // Force `require` to return covered files
-//     .on('finish', function() {
-//       gulp.src(paths.serverSpec, {read: false})
-//         .pipe(mocha({
-//           reporter: 'spec',
-//           timeout: 20000
-//         }))
-//         .pipe(istanbul.writeReports())
-//         .once('error', function () {
-//             process.exit(1);
-//         })
-//         .once('end', function () {
-//           process.exit();
-//         });
-//     });
+gulp.task('mocha', function (cb) {
+  var mochaErr;
+  gulp.src(['./server/**/*.js'])
+    .pipe(istanbul({ includeUntested: true })) // Covering files
+    .pipe(istanbul.hookRequire()) // Force `require` to return covered files
+    .on('finish', function() {
+      gulp.src('./spec/server/userRouter.js', {read: false})
+      // gulp.src(paths.serverSpec, {read: false})
+        .pipe(plumber())
+        .pipe(mocha({
+          reporter: 'spec',
+          timeout: 20000
+        }))
+        .on('error', function(err) {
+          // console.log('error reached', err);
+          mochaErr = err;
+        })
+        .pipe(istanbul.writeReports())
+        .on('end', function () {
+          console.log('end reached');
+          // handleError(mochaErr);
+          if (mochaErr) {
+            handleError(mochaErr);
+          }
+          process.exit();
+          // cb();
+          // cb(mochaErr);
+        })
+    });
+
+// gulp.task('something', ['mocha'], function(cb) {
+//   console.log('doing something else');
+//   cb();
+// });
+
+// gulp.task('somethingElse', ['mocha', 'something'], function() {
+//   console.log('all done!');
+//   cb();
+// });
 
 // gulp.task('mocha', function () {
 //   return gulp.src(paths.serverSpec, {read: false})
@@ -307,7 +334,7 @@ gulp.task('mocha', ['testStuff', 'coveralls'])
     // .once('end', function () {
     //   process.exit();
     // });
-// });
+});
 
 gulp.task('watch', function() {
   gulp.watch(paths.src.img + '/**/*', ['image']);

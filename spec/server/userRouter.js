@@ -38,6 +38,17 @@ describe('INTEGRATION: Server + DB: /api/user', function () {
         });
     });
 
+    xit('should fail something', function (done) {
+      expect(true).to.equal(false);
+      done();
+    });
+
+    xit('should fail something', function (done) {
+      expect(true).to.equal(false);
+      done();
+    });
+
+
   });
 
   describe('POST /', function () {
