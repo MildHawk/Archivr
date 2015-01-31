@@ -52,19 +52,24 @@ exports.show = function(req, res, next) {
   var username = req.params.username;
   var id = req.params.id;
   Screenshot.findOne({ _id: id }, function(err, screenshot) {
-    if (err) return res.send(500);
+    if (err) return res.send(404);
     res.status(200).json(screenshot);
   });
 };
 
+/**
+ * update
+ * ======
+ * Updates resource with new key-value pairs passed in the request body
+ */
 exports.update = function(req, res, next) {
   var id = req.params.id;
-  var newData = {}; //, get new notes
+  var newData = req.body;
   Screenshot.update({_id: id}, newData, function(err, numberAffected, raw) {
     if (err) {
-      return res.status(500).end();
+      return res.status(404).end();
     }
-    res.end();
+    res.json(raw);
   })
 };
 
