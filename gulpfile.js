@@ -134,6 +134,7 @@ gulp.task('mocha', function () {
   return gulp.src(paths.serverSpec, {read: false})
     .pipe(mocha({
       reporter: 'spec',
+      timeout: 20000
     }))
     /**
      * The methods below are a hack to get gulp to exit after mocha tests

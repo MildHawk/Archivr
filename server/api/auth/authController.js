@@ -10,17 +10,17 @@ exports.signup = function(req, res, next) {
 exports.login = function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     // if theres an error throw a 500
-    if (err) return res.send(500);
+    if (err) return res.status(500).end();
 
     // the user doesnt exist
-    if (!user && info.message.match(/Incorrect username/)) return res.json(404, {
-      message: 'User does not exist'
-    });
+    if (!user && info.message.match(/Incorrect username/)) {
+      return res.status(404).json({ message: 'User does not exist' });
+    }
 
     // invalid password
-    if (!user && info.message.match(/Incorrect password/)) return res.json(404, {
-      message: 'Invalid password'
-    });
+    if (!user && info.message.match(/Incorrect password/)) {
+      return res.status(404).json({ message: 'Invalid password' });
+    }
 
     // the user exists, log them in, send a jwt
     if (user) {
@@ -39,5 +39,5 @@ exports.login = function(req, res, next) {
 exports.logout = function(req, res, next) {
   // logout happens on the frontend ?
   req.logout();
-  res.send(200);
+  res.status(200).end();
 };

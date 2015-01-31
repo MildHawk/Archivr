@@ -14,9 +14,9 @@ module.exports = function applicationRouter(app) {
     // find the user
     User.findOne({ username: username }, function(err, user) {
       // there was an error
-      if (err) return res.send(500);
+      if (err) return res.status(500).end();
       // the user doesn't exist
-      if (!user) return res.send(404);
+      if (!user) return res.status(404).end();
       // found the user
       if (user) {
         // the user exists, attach their ID to the request
