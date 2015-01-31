@@ -12,6 +12,9 @@ var stylish = require('jshint-stylish');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
 var preprocess = require('gulp-preprocess');
+var istanbul = require('gulp-istanbul');
+var coveralls = require('gulp-coveralls');
+var plumber = require('gulp-plumber');
 
 var paths = {
   src: {
@@ -123,226 +126,6 @@ gulp.task('processEnv', function() {
     .pipe(gulp.dest(paths.jade + '/dist'));
 });
 
-gulp.task('karma', function (done) {
-  return karma.start({
-    configFile: paths.karmaConf,
-    singleRun: true
-  }, done);
-});
-
-
-
-
-
-
-var handleMochaError = function (err) {
-  console.log(err.message);
-  process.exit(1);
-};
-
-// gulp.task('static', function () {
-//   return gulp.src([
-//     'test/*.js',
-//     'lib/**/*.js',
-//     'benchmark/**/*.js',
-//     'index.js',
-//     'doc.js',
-//     'gulpfile.js'
-//   ])
-//   .pipe(jshint('.jshintrc'))
-//   .pipe(jshint.reporter('jshint-stylish'))
-//   .pipe(jshint.reporter('fail'))
-//   .pipe(jscs())
-//   .on('error', handleErr);
-//   // .pipe(eslint())
-//   // .pipe(eslint.format())
-//   // .pipe(eslint.failOnError());
-// });
-
-var istanbul = require('gulp-istanbul');
-var coveralls = require('gulp-coveralls');
-var plumber = require('gulp-plumber');
-
-gulp.task('testStuff', function () {
-  var mochaErr;
-
-  gulp.src([
-    // 'lib/**/*.js',
-    // 'index.js'
-    './server/**/*.js'
-  ])
-  .pipe(istanbul({
-    includeUntested: true
-  }))
-  .pipe(istanbul.hookRequire())
-  .on('finish', function () {
-    gulp.src(['./spec/server/userRouter.js'])
-      .pipe(plumber())
-      .pipe(mocha({
-        reporter: 'spec',
-        timeout: 20000
-      }))
-      .on('error', function (err) {
-        mochaErr = err;
-      })
-      .pipe(istanbul.writeReports())
-      .on('end', function () {
-        if (mochaErr) return handleError(mochaErr);
-        // handleError(mochaErr);
-      });
-  });
-});
-
-gulp.task('coveralls', function () {
-  if (!process.env.CI) return;
-  // return gulp.src(path.join(__dirname, 'coverage/lcov.info'))
-  return gulp.src('./coverage/lcov.info')
-    .pipe(coveralls());
-});
-
-// gulp.task('mocha', ['testStuff', 'coveralls'])
-
-
-
-
-
-
-
-
-
-
-// var istanbul = require('gulp-istanbul');
-// We'll use mocha here, but any test framework will work
-// var mocha = require('gulp-mocha');
-
-// gulp.task('mocha', function (cb) {
-//   return gulp.src(['lib/**/*.js', 'main.js'])
-//     .pipe(istanbul()) // Covering files
-//     .pipe(istanbul.hookRequire()) // Force `require` to return covered files
-//     .on('finish', function () {
-//       gulp.src(['test/*.js'])
-//         .pipe(mocha())
-//         .pipe(istanbul.writeReports()) // Creating the reports after tests runned
-//         .on('end', cb);
-//     });
-// });
-
-// gulp.task('serverUnitTests', function(callback) {
-//     var coverageVar = '$$server_cov_' + new Date().getTime() + '$$';
-//     gulp.src([ './server/**/*.js' ])
-//         // Instrument source code
-//         .pipe(
-//             istanbul({
-//                 coverageVariable: coverageVar
-//             })
-//         )
-//         .on('finish', function (){
-//             // Load tests into mocha
-//             gulp.src( paths.serverSpec )
-//                 .pipe(
-//                     mocha({
-//                         reporter: 'spec'
-//                     })
-//                     .on( 'error', handleError )
-//                 )
-//                 // Create coverage reports
-//                 .pipe(istanbul.writeReports({
-//                     dir: __dirname,
-//                     reporters: ['html', 'lcov', 'text-summary', 'json'],
-//                     reportOpts: {
-//                         dir: __dirname
-//                     },
-//                     coverageVariable: coverageVar
-//                 }))
-//                 // Throw error if coverage thresholds not met
-//                 .pipe( istanbulEnforcer(enforcerOptions) )
-//                 .on( 'error', handleError )
-//                 .on( 'end', callback );
-//         });
-// });
-
-gulp.task('something', function(cb) {
-  console.log('something else');
-  cb();
-})
-
-// ----- last version ----
-gulp.task('mocha', function (cb) {
-  var mochaErr;
-  gulp.src(['./server/**/*.js'])
-    .pipe(istanbul({ includeUntested: true })) // Covering files
-    .pipe(istanbul.hookRequire()) // Force `require` to return covered files
-    .on('finish', function() {
-      gulp.src('./spec/server/userRouter.js', {read: false})
-      // gulp.src(paths.serverSpec, {read: false})
-        .pipe(plumber())
-        .pipe(mocha({
-          reporter: 'spec',
-          timeout: 20000
-        }))
-        .on('error', function(err) {
-          // console.log('error reached', err);
-          mochaErr = err;
-        })
-        .pipe(istanbul.writeReports())
-        .on('end', function () {
-          console.log('end reached');
-          // handleError(mochaErr);
-          if (mochaErr) {
-            handleMochaError(mochaErr);
-          }
-          process.exit();
-          // cb();
-          // cb(mochaErr);
-        })
-    });
-
-// gulp.task('something', ['mocha'], function(cb) {
-//   console.log('doing something else');
-//   cb();
-// });
-
-// gulp.task('somethingElse', ['mocha', 'something'], function() {
-//   console.log('all done!');
-//   cb();
-// });
-
-// gulp.task('mocha', function () {
-//   return gulp.src(paths.serverSpec, {read: false})
-//     .pipe(istanbul()) // Covering files
-//     .pipe(istanbul.hookRequire()) // Force `require` to return covered files
-//     .on('finish', function() {
-
-//     });
-//     .pipe(mocha({
-//       reporter: 'spec',
-//       timeout: 20000
-//     }))
-    /**
-     * The methods below are a hack to get gulp to exit after mocha tests
-     * finish. Without these methods, you must ^+C to exit, and Travis will
-     * never finish running the tests.
-     *
-     * However, it suppresses error messages from mocha (e.g. server
-     * errors that cause the process to crash). If the tests are not running
-     * or Travis is behaving strangely, comment out these methods to report
-     * the errors and debug.
-     */
-    // .once('error', function () {
-    //     process.exit(1);
-    // })
-    // .once('end', function () {
-    //   process.exit();
-    // });
-});
-
-gulp.task('watch', function() {
-  gulp.watch(paths.src.img + '/**/*', ['image']);
-  gulp.watch(paths.src.scss + '/**/*.scss', ['compass']);
-  gulp.watch(paths.src.js + '/**/*.js', ['lint', 'javascript']);
-  gulp.watch(paths.src.views + '/**/*', ['moveViews']);
-});
-
 // Run testing suite: lint, karma (client-side) and mocha (server-side)
 gulp.task('test', function(callback) {
   /**
@@ -350,6 +133,88 @@ gulp.task('test', function(callback) {
    * messages from both will be potentially interleaved.
    */
   runSequence('lint', 'karma', 'mocha', callback);
+});
+
+gulp.task('karma', function (done) {
+  return karma.start({
+    configFile: paths.karmaConf,
+    singleRun: true
+  }, done);
+});
+
+/**
+ * mocha
+ * =====
+ * Runs the mocha tests. Because gulp-mocha is stupid, this task must be
+ * forcibly exited using `process.exit()`. As such, **no other tasks will
+ * successfully be reached after this task.** Do whatever hair-brained
+ * workarounds are necessary to not have any tasks be dependent on this one.
+ */
+
+var handleMochaError = function (err) {
+  console.log('Mocha encountered an error, exiting with status 1');
+  console.log('Error:', err.message);
+  process.exit(1);
+};
+
+gulp.task('mocha', function (cb) {
+  var mochaErr;
+  // Track src files that should be covered
+  gulp.src(['./server/**/*.js'])
+    .pipe(istanbul({ includeUntested: true })) // Covering files
+    .pipe(istanbul.hookRequire()) // Force `require` to return covered files
+    .on('finish', function() {
+      // Specify server specs
+      gulp.src(paths.serverSpec, {read: false})
+        .pipe(plumber())
+        .pipe(mocha({
+          reporter: 'spec',
+          timeout: 20000
+        }))
+        /**
+         * Keep track of latest error on Mocha. Because a failed test counts
+         * as an error, the process should not be exited until end of tests.
+         */
+        .on('error', function(err) {
+          /**
+           * This intermediate log is useful for when mocha crashes (as opposed
+           * to a test failing). Can be commented out if needed.
+           */
+          console.error('ERROR:', err.message);
+          console.error('Stack:', err.stack);
+          mochaErr = err;
+        })
+        // Write reports to Istanbul
+        .pipe(istanbul.writeReports())
+        /**
+         * The methods below are a hack to get gulp to exit after mocha tests
+         * finish. Without them, `gulp mocha` doesn't exit and Travis
+         * never finishes running the tests.
+         */
+        .on('end', function () {
+          if (mochaErr) return handleMochaError(mochaErr);
+          // Force mocha to exit, because gulp-mocha is stupid.
+          process.exit();
+        });
+    });
+});
+
+/**
+ * coveralls
+ * =========
+ * Sends code coverage data to Coveralls.
+ */
+gulp.task('coveralls', function () {
+  if (!process.env.CI) return;
+  return gulp.src('./coverage/lcov.info')
+    .pipe(coveralls());
+});
+
+gulp.task('watch', function() {
+  gulp.watch(paths.src.img + '/**/*', ['image']);
+  gulp.watch(paths.src.scss + '/**/*.scss', ['compass']);
+  gulp.watch(paths.src.js + '/**/*.js', ['lint', 'javascript']);
+  gulp.watch(paths.src.views + '/**/*', ['moveViews']);
 });
 
 /**
