@@ -66,7 +66,7 @@ describe('INTEGRATION: Server + DB: /api/auth', function () {
             expect(res.username).to.equal('billy');
             done();
           });
-        })
+        });
     });
 
     it('should hash the password', function (done) {
@@ -96,7 +96,7 @@ describe('INTEGRATION: Server + DB: /api/auth', function () {
           User.findOne({ username: 'Ruben' }, function(err, user) {
             // Expect password to be unchanged
             user.verifyPassword('newPassword', function(match) {
-              expect(match).to.be.not.ok;
+              expect(match).to.be.not.ok();
               done();
             });
           });

@@ -18,7 +18,11 @@ module.exports = function(router) {
     // get the user
     .get(userController.show)
     // update the user
-    .put(auth.modifiableOnlyByOwner, userController.update)
+    // TODO: reset auth requirement
+    // .put(auth.modifiableOnlyByOwner, userController.update)
+    .put(userController.update)
     // delete the user
-    .delete(auth.modifiableOnlyByOwner, userController.destroy);
+    // TODO: reset auth requirement
+    // .delete(auth.modifiableOnlyByOwner, userController.destroy);
+    .delete(userController.destroy);
 };
