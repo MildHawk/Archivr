@@ -16,11 +16,11 @@ function removeRecentImagesFromCloudinary(number, cb) {
     // Store public IDs to delete
     var publicIds = [];
     for (var i = 0; i < images.length; i++) {
-      publicIds.push(images[i].public_id);
+      publicIds.push(images[i].public_id);  // jshint ignore:line
     }
 
     // Delete from Cloudinary
-    cloudinary.api.delete_resources(publicIds, function(result) {
+    cloudinary.api.delete_resources(publicIds, function(result) { // jshint ignore:line
       cb(result);
     });
 
@@ -179,7 +179,7 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
         url: 'www.google.com',
         originalImage: 'image1.png',
         annotatedImage: 'image1a.png',
-        user_id: 'notRuben'
+        user_id: 'notRuben' // jshint ignore:line
       });
       shot1.save();
 
@@ -187,7 +187,7 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
         url: 'www.google.com',
         originalImage: 'image1.png',
         annotatedImage: 'image1a.png',
-        user_id: 'Ruben'
+        user_id: 'Ruben' // jshint ignore:line
       });
 
       // Save the shot, then...
