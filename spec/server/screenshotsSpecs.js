@@ -27,24 +27,40 @@ function removeRecentImagesFromCloudinary(number, cb) {
   });
 }
 
-xdescribe('TEST working with Cloudinary', function () {
+xdescribe('Bail functionality', function () {
+  /**
+   * This describe block is a basic proof of concept of using `bail`
+   *
+   * bail is used to cause `after` hook to skip deleting from Cloudinary
+   * if no new image was created. If that wasn't there, non-test images
+   * would get deleted.
+   */
+  var screenshot;
+  var bail;
 
-    // cloudinary.api.delete_resources(['rarniozvwkulalqu0hyo'], function(result){
-    // });
-    // cloudinary.api.resources(function(result) {
-    //   returns {resources: [...]}
-    // })
+  afterEach(function (done) {
+    if (bail) {
+      // reset bail for next test
+      bail = false;
+      console.log('bailing');
 
-  it('should get resources', function (done) {
-    cloudinary.api.resources(function(result) {
-      console.log(result)
-      expect(true).to.equal(true);
-      done();
-    });
+      return done();
+    }
+    console.log('not bailing');
+    done();
+  });
+
+  it('should bail on err', function (done) {
+    bail = true;
+    done();
+  });
+
+  it('should not bail on not err', function (done) {
+    done();
   });
 });
 
-describe('Working with Cloudinary', function () {
+xdescribe('Working with Cloudinary', function () {
 
   var numImagesBeforeTest;
 
@@ -73,19 +89,13 @@ describe('Working with Cloudinary', function () {
       .send({ url: 'http://www.google.com' })
       .end(function(err, res) {
         if (err) return done(err);
-        console.log('create result:', res.body);
         done();
-        // // clean up
-        // removeRecentImagesFromCloudinary(1, function(result) {
-        //   console.log('delete result:', result);
-        //   done();
-        // })
       });
   });
 
 });
 
-describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot', function () {
+xdescribe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function () {
 
   // Clear users and screenshots collections
   beforeEach(function (done) {
@@ -122,8 +132,8 @@ describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot', funct
     });
 
     it('should append to user image property', function (done) {
-      request(app).post('/api/screenshot/Ruben/screenshot')
-        .send({ url: 'http://www.purple.com' })  // TODO: why send annotatedImage?
+      request(app).post('/api/user/Ruben/screenshot')
+        .send({ url: 'http://www.purple.com' })
         .end(function(err, res) {
           if (err) return done(err);
           request(app).get('/api/user/Ruben')
@@ -133,7 +143,9 @@ describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot', funct
             })
             .end(function(err, res) {
               if (err) return done(err);
-              done();
+              removeRecentImagesFromCloudinary(1, function(res) {
+                done();
+              });
             });
         });
     });
@@ -141,19 +153,27 @@ describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot', funct
 
   describe('GET /', function () {
 
-    it('should return a screenshot', function (done) {
+    it('should return screenshots belonging to user', function (done) {
       // Create a new shot
-      var shot = new Screenshot({
+      var shot1 = new Screenshot({
         url: 'www.google.com',
         originalImage: 'image1.png',
         annotatedImage: 'image1a.png',
-        user: 'Ruben'
+        user_id: 'notRuben'
+      });
+      shot1.save();
+
+      var shot2 = new Screenshot({
+        url: 'www.google.com',
+        originalImage: 'image1.png',
+        annotatedImage: 'image1a.png',
+        user_id: 'Ruben'
       });
 
       // Save the shot, then...
-      shot.save(function(err, shot) {
+      shot2.save(function(err, shot) {
         // query the server
-        request(app).get('/api/screenshot/Ruben/screenshot')
+        request(app).get('/api/user/Ruben/screenshot')
           .expect(200)
           .expect('Content-Type', /json/)
           .expect(function(res) {
@@ -170,9 +190,10 @@ describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot', funct
   });
 });
 
-describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot/:id', function () {
+describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', function () {
 
-  var shotID;
+  var screenshot;
+  var bail;
 
   beforeEach(function (done) {
     // Clear users and screenshots collections
@@ -187,24 +208,45 @@ describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot/:id', f
     Screenshot.remove({}, function() {});
 
     // Create a new stock screenshot
-    request(app).post('/api/screenshot/Ruben/screenshot')
+    request(app).post('/api/user/Ruben/screenshot')
       .send({ url: 'http://www.purple.com' })
       .expect(function(res) {
-        shotID = res.body;  // TODO may need to change later
+        screenshot = res.body;
       })
       .end(function(err, res) {
-        if (err) return done(err);
+        if (err) {
+          // tell teardown to not delete recent image; not created
+          bail = true;
+
+          return done(err);
+        }
         done();
       });
+  });
+
+  afterEach(function (done) {
+    // do not delete image if it was never created
+    if (bail) {
+      // reset bail for next test
+      bail = false;
+
+      return done();
+    }
+    // otherwise, delete from Cloudinary
+    removeRecentImagesFromCloudinary(1, function(res) {
+      done();
+    });
   });
 
   describe('GET /', function () {
 
     it('should retrieve screenshots from a user', function (done) {
       request(app)
-        .get('/api/screenshot/Ruben/screenshot/' + shotID)
+        .get('/api/user/Ruben/screenshot/' + screenshot._id)
         .expect(200)
-        .expect('Content-Type', /image/)
+        .expect(function(res) {
+          expect(res.body).to.include.keys('url', 'originalImage', 'user_id');
+        })
         .end(function(err, res) {
           if (err) done(err);
           done();
@@ -212,12 +254,12 @@ describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot/:id', f
     });
 
     it('should fail to retrieve bad screenshot id', function (done) {
-      request(app).get('/api/screenshot/Ruben/screenshot/notAnID')
+      request(app).get('/api/user/Ruben/screenshotnotAnID')
         .expect(404, done);
     });
 
     it('should fail on bad username', function (done) {
-      request(app).get('/api/screenshot/billy/screenshot/' + shotID)
+      request(app).get('/api/user/billy/screenshot/' + screenshot._id)
         .expect(404, done);
     });
 
@@ -234,11 +276,11 @@ describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot/:id', f
 
   describe('DELETE /', function () {
     it('should delete a screenshot', function (done) {
-      request(app).delete('/api/screenshot/Ruben/screenshot/' + shotID)
+      request(app).delete('/api/user/Ruben/screenshot/' + screenshot._id)
         .expect(200)
         .end(function(err, res) {
           if (err) return done(err);
-          request(app).get('/api/screenshot/Ruben/screenshot')
+          request(app).get('/api/user/Ruben/screenshot')
             .expect(function(res) {
               expect(res.body).to.have.length(0);
             })
@@ -250,12 +292,12 @@ describe('INTEGRATION: Server + DB: /api/screenshot/:username/screenshot/:id', f
     });
 
     it('should fail to delete with bad ID', function (done) {
-      request(app).delete('/api/screenshot/Ruben/screenshot/notanid')
+      request(app).delete('/api/user/Ruben/screenshotnotanid')
         .expect(404, done);
     });
 
     it('should fail with bad username', function (done) {
-      request(app).delete('/api/screenshot/billy/screenshot/' + shotID)
+      request(app).delete('/api/user/billy/screenshot/' + screenshot._id)
         .expect(404, done);
     });
   });
