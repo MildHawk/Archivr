@@ -12,6 +12,9 @@ function LandingController(Screenshots, Auth) {
         this.screenshots = data;
       })
   }
+  this.changeView = function(screenshotId) {
+    $location.path('/screenshot/' + screenshotId);
+  };
   this.getScreenshots();
 }
 
