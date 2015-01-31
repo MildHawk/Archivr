@@ -78,6 +78,7 @@ module.exports = function(config) {
     singleRun: true
   });
 
+  // Custom configuration for Travis-CI
   if(process.env.TRAVIS){
     config.browsers = ['chromeTravisCI'];
   }

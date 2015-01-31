@@ -1,21 +1,29 @@
 language: node_js
 node_js:
 - '0.10'
+
+# Start MongoDB service
 services:
 - mongodb
+
+# Update npm, necessary for certain packages to install correctly
 before_install:
 - npm install -g npm
+
+# Special configurations for using Chrome browser in Travis
 before_script:
 - export CHROME_BIN=chromium-browser
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
-- npm install -g gulp karma
+
+# Disable email notifications
 notifications:
   email: false
+
+# Deploy to Heroku on successful build on `develop` branch
 deploy:
   provider: heroku
   api_key:
     secure: c6G807KC0GI/26YRBFbsi0XuYBUVH7VJ44xv03z400EJKM4SvSqMUZMBjHjCJTuPX7GxEDUV6tcj3paS1fpe2hckiHXyePQJSIOaYrW4TloZR8u4hVSy6jF6snjHZ+RLvB6k25Pe13KEpUDJKSRpioAnFtmQttVefuHZoIjVN0s=
   app: archivr-dev
   on: develop
-    # repo: MildHawk/Archivr
