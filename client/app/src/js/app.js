@@ -98,6 +98,13 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
       templateUrl: '/views/login.html',
       controller: 'AuthController',
       controllerAs: 'authCtrl'
+    })
+
+    .state('logout', {
+      url: '/logout',
+      templateUrl: '/views/logout.html',
+      controller: 'AuthController',
+      controllerAs: 'authCtrl'
     });
 
   // default uncaught routes to landing page
