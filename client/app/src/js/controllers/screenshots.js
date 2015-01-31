@@ -4,7 +4,7 @@
  * Handles display of a user screenshots.
  */
 
-function ScreenshotsController(screenshots, Screenshot, $location) {
+function ScreenshotsController($location, screenshots, Screenshot) {
   this.screenshots = screenshots;
   this.url = '';
   this.addScreenshot = function(url){
@@ -17,7 +17,7 @@ function ScreenshotsController(screenshots, Screenshot, $location) {
     Screenshot.getScreenshots(id)
       .success(function(data){
         console.log(data);
-        this.screenshots = data;
+        //this.screenshots = data; -> don't need this since we resolve the screenshots on app.js and inject them here
       });
   };
   this.changeView = function(screenshotId) {
@@ -26,9 +26,9 @@ function ScreenshotsController(screenshots, Screenshot, $location) {
 }
 
 ScreenshotsController.$inject = [
+  '$location',
   'screenshots',
-  'Screenshot',
-  '$location'
+  'Screenshot'
 ];
 
 angular.module('Archivr.screenshots', [
