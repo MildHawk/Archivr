@@ -32,10 +32,10 @@ var paths = {
   karmaConf: __dirname + '/spec/karma.conf.js'
 };
 
-// var handleError = function(err) {
-//   console.log(err.toString());
-//   this.emit('end');
-// };
+var handleError = function(err) {
+  console.log(err.toString());
+  this.emit('end');
+};
 
 var jsFiles = [
   paths.src.bower + '/angular/angular.js',
@@ -135,7 +135,7 @@ gulp.task('karma', function (done) {
 
 
 
-var handleError = function (err) {
+var handleMochaError = function (err) {
   console.log(err.message);
   process.exit(1);
 };
@@ -289,7 +289,7 @@ gulp.task('mocha', function (cb) {
           console.log('end reached');
           // handleError(mochaErr);
           if (mochaErr) {
-            handleError(mochaErr);
+            handleMochaError(mochaErr);
           }
           process.exit();
           // cb();
