@@ -52,7 +52,7 @@ exports.show = function(req, res, next) {
   var username = req.params.username;
   var id = req.params.id;
   Screenshot.findOne({ _id: id }, function(err, screenshot) {
-    if (err) return res.send(404);
+    if (err) return res.status(404).end();
     res.status(200).json(screenshot);
   });
 };
