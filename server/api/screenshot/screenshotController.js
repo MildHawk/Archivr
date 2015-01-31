@@ -69,7 +69,7 @@ exports.update = function(req, res, next) {
     if (err) {
       return res.status(404).end();
     }
-    res.json(raw);
+    res.sendStatus(200);
   })
 };
 
