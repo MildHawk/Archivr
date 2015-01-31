@@ -27,7 +27,7 @@ function removeRecentImagesFromCloudinary(number, cb) {
   });
 }
 
-xdescribe('Bail functionality', function () {
+describe('Bail functionality', function () {
   /**
    * This describe block is a basic proof of concept of using `bail`
    *
@@ -60,7 +60,7 @@ xdescribe('Bail functionality', function () {
   });
 });
 
-xdescribe('Working with Cloudinary', function () {
+describe('Working with Cloudinary', function () {
 
   var numImagesBeforeTest;
 
@@ -95,7 +95,7 @@ xdescribe('Working with Cloudinary', function () {
 
 });
 
-xdescribe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function () {
+describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function () {
 
   // Clear users and screenshots collections
   beforeEach(function (done) {
@@ -202,26 +202,30 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', functio
         username: 'Ruben',
         password: 'password'
       });
-      user.save(function() {});
-    });
+      user.save(function() {
+        Screenshot.remove({}, function() {
 
-    Screenshot.remove({}, function() {});
+          // Create a new stock screenshot
+          request(app).post('/api/user/Ruben/screenshot')
+            .send({ url: 'http://www.purple.com' })
+            .expect(function(res) {
+              // store screenshot for later
+              screenshot = res.body;
+            })
+            .end(function(err, res) {
+              if (err) {
+                // tell teardown to not delete recent image; not created
+                bail = true;
+                console.log('error creating new test screenshot');
 
-    // Create a new stock screenshot
-    request(app).post('/api/user/Ruben/screenshot')
-      .send({ url: 'http://www.purple.com' })
-      .expect(function(res) {
-        screenshot = res.body;
-      })
-      .end(function(err, res) {
-        if (err) {
-          // tell teardown to not delete recent image; not created
-          bail = true;
+                return done(err);
+              }
+              done();
+            });
 
-          return done(err);
-        }
-        done();
+        });
       });
+    });
   });
 
   afterEach(function (done) {
@@ -248,13 +252,13 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', functio
           expect(res.body).to.include.keys('url', 'originalImage', 'user_id');
         })
         .end(function(err, res) {
-          if (err) done(err);
+          if (err) return done(err);
           done();
         });
     });
 
     it('should fail to retrieve bad screenshot id', function (done) {
-      request(app).get('/api/user/Ruben/screenshotnotAnID')
+      request(app).get('/api/user/Ruben/screenshot/screenshotnotAnID')
         .expect(404, done);
     });
 
@@ -267,9 +271,30 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', functio
 
   describe('PUT /', function () {
 
-    it('TODO: what should screenshot PUT do?', function (done) {
-      expect(true).to.equal(false);
-      done();
+    it('should return 200 on successful update', function (done) {
+      request(app).put('/api/user/Ruben/screenshot/' + screenshot._id)
+        .send({ visits: 2 })
+        .expect(200, done);
+    });
+
+    it('should update a screenshot and store in DB', function (done) {
+      request(app).put('/api/user/Ruben/screenshot/' + screenshot._id)
+        .send({ visits: 2 })
+        .expect(200)
+        .expect(function(res) {
+          console.log(res.body);
+        })
+        .end(function(err, res) {
+          if (err) return done(err);
+          request(app).get('/api/user/Ruben/screenshot/' + screenshot._id)
+            .expect(function(res) {
+              expect(res.body.visits).to.equal(2);
+            })
+            .end(function(err, res) {
+              if (err) return done(err);
+              done();
+            });
+        });
     });
 
   });
@@ -292,7 +317,7 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', functio
     });
 
     it('should fail to delete with bad ID', function (done) {
-      request(app).delete('/api/user/Ruben/screenshotnotanid')
+      request(app).delete('/api/user/Ruben/screenshot/screenshotnotanid')
         .expect(404, done);
     });
 
