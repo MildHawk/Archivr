@@ -30,6 +30,7 @@ function ScreenshotsController($stateParams, $location, screenshots, Screenshot,
   };
   this.changeView = function(screenshotId) {
     $location.path('/screenshot/' + screenshotId);
+    //$state.go('contact.detail', {id: screenshotId}, {location: true});
   };
 }
 
