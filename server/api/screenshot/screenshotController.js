@@ -25,12 +25,12 @@ exports.create = function(req, res, next) {
   var username = req.params.username;
   var url = req.body.url;
 
-  takeScreenshot(url, function(err, imageUrl) {
+  takeScreenshot(url, function(err, imageUrl, imagePublicId) {
     if (err) return res.status(500).json({ message: err });
 
     // Save screenshot
-    var newScreenshot = new Screenshot({url: url, originalImage: imageUrl,
-                      annotatedImage: imageUrl, username: username});
+    var newScreenshot = new Screenshot({url: url, originalImage: imageUrl, originalImageId: imagePublicId,
+                      annotatedImage: imageUrl, user_id: username});
     newScreenshot.save(function(err, screenshot) {
       if (err) return res.status(500).json({ message: err });
 
@@ -51,8 +51,8 @@ exports.create = function(req, res, next) {
 /**
  * show
  * ======
- * Returns the screenshot with the id passed in the request 
- * 
+ * Returns the screenshot with the id passed in the request
+ *
  */
 exports.show = function(req, res, next) {
   // Get username and id sent in the request
@@ -86,14 +86,14 @@ exports.update = function(req, res, next) {
 /**
  * destroy
  * ======
- * Returns the screenshot with the id passed in the request 
- * 
+ * Returns the screenshot with the id passed in the request
+ *
  */
 exports.destroy = function(req, res, next) {
   // Get username and id passed in the request
   var username = req.params.username;
   var id = req.params.id;
-  // Find screenshot with passed id 
+  // Find screenshot with passed id
   Screenshot.findOne({_id: id}, function(err, screenshot) {
     if (!screenshot) {
       res.status(404).end();
