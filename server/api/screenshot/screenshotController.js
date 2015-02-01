@@ -31,7 +31,7 @@ exports.list = function(req, res, next){
 exports.create = function(req, res, next) {
   var username = req.params.username;
   var url = req.body.url;
-  if(url.parse(url).hostname ) { //regex to check if it contains http and a dot followed by something)
+  if( (url.parse(url).protocol !== 'http:' || 'https:') || url.parse(url).hostname.indexOf('.') === -1 ) { //regex to check if it contains http and a dot followed by something)
     res.status(500).json({ message: 'Invalid URL'});
   }
 
