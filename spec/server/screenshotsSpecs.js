@@ -179,7 +179,7 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
         url: 'www.google.com',
         originalImage: 'image1.png',
         annotatedImage: 'image1a.png',
-        user_id: 'notRuben' // jshint ignore:line
+        username: 'notRuben' // jshint ignore:line
       });
       shot1.save();
 
@@ -187,7 +187,7 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
         url: 'www.google.com',
         originalImage: 'image1.png',
         annotatedImage: 'image1a.png',
-        user_id: 'Ruben' // jshint ignore:line
+        username: 'Ruben' // jshint ignore:line
       });
 
       // Save the shot, then...
@@ -271,7 +271,7 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', functio
         .get('/api/user/Ruben/screenshot/' + screenshot._id)
         .expect(200)
         .expect(function(res) {
-          expect(res.body).to.include.keys('url', 'originalImage', 'user_id');
+          expect(res.body).to.include.keys('url', 'originalImage', 'username');
         })
         .end(function(err, res) {
           if (err) return done(err);
