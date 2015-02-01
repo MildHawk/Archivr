@@ -2,6 +2,13 @@ var Screenshot = require('./screenshotModel');
 var User = require('../user/userModel');
 var takeScreenshot = require('../../screenshotCapture/script.js');
 
+exports.retrieveAll = function(req, res, next){
+  Screenshot.find({ access: 'public' }, function(err, screenshots) {
+    if(err) return res.status(500).json({ message: err });
+    res.status(200).json(screenshots);
+  });
+};
+
 exports.list = function(req, res, next){
   // user found through router.param
   var user = req.foundUser;
