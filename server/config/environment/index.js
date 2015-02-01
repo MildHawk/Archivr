@@ -28,9 +28,13 @@ var cloudinary = require('cloudinary');
  *
  * Initialize nconf here.
  */
-nconf.argv() // grabs flags, e.g. --foo bar --> nconf.get('foo') === 'bar'
-  .env() // grabs process.env
-  .file({ file: __dirname + '/../local.env.json' }) // loads local.env if exists
+nconf
+  // grab flags, e.g. --foo bar --> nconf.get('foo') === 'bar'
+  .argv()
+  // grab process.env
+  .env()
+   // load local.env if exists
+  .file({ file: __dirname + '/../local.env.json' });
 
 function requiredProcessEnv(name) {
   if(!process.env[name]) {
@@ -94,11 +98,13 @@ var all = {
  * (http://bit.ly/1Lj4KIy)
  */
 if (all.env === 'development') {
+  /* jshint ignore:start */
   cloudinary.config({
     cloud_name: nconf.get('CLOUDINARY_NAME'),
     api_key: nconf.get('CLOUDINARY_KEY'),
     api_secret: nconf.get('CLOUDINARY_SECRET')
   });
+  /* jshint ignore:end */
 }
 
 // Export the config object based on the NODE_ENV

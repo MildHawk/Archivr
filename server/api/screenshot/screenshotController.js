@@ -1,12 +1,11 @@
 var Screenshot = require('./screenshotModel');
 var User = require('../user/userModel');
 var takeScreenshot = require('../../screenshotCapture/script.js');
-var Promise = require('bluebird');
 
 exports.list = function(req, res, next){
   // user found through router.param
   var user = req.foundUser;
-  // find screenshots whos user_id's match the found users username
+  // find screenshots whos username's match the found users username
   Screenshot.find({ username: user.username }, function(err, screenshots){
     if (err) return res.status(500).json({
       status: 500, message: 'Internal Server Error'
@@ -30,7 +29,7 @@ exports.create = function(req, res, next) {
 
     // Save screenshot
     var newScreenshot = new Screenshot({url: url, originalImage: imageUrl, originalImageId: imagePublicId,
-                      annotatedImage: imageUrl, user_id: username});
+                      annotatedImage: imageUrl, username: username});
     newScreenshot.save(function(err, screenshot) {
       if (err) return res.status(500).json({ message: err });
 
@@ -39,7 +38,7 @@ exports.create = function(req, res, next) {
         if (err) return res.status(404).json({ message: err });
 
         // Add screenshot to user
-        User.update({username: username}, {$push: {"images": screenshot._id}}, function(err, numAffected, rawResponse) {
+        User.update({username: username}, {$push: {'images': screenshot._id}}, function(err, numAffected, rawResponse) {
           if (err) return res.status(500).json({ message: err });
           res.status(201).json(screenshot);
         });
@@ -80,7 +79,7 @@ exports.update = function(req, res, next) {
       return res.status(404).end();
     }
     res.sendStatus(200);
-  })
+  });
 };
 
 /**
@@ -104,7 +103,7 @@ exports.destroy = function(req, res, next) {
           return res.status(500).end();
         }
         res.status(200).end();
-      })
+      });
     }
-  })
+  });
 };
