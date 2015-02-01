@@ -1,6 +1,7 @@
 var Screenshot = require('./screenshotModel');
 var User = require('../user/userModel');
 var takeScreenshot = require('../../screenshotCapture/script.js');
+var url = require('url');
 
 exports.retrieveAll = function(req, res, next){
   Screenshot.find({ access: 'public' }, function(err, screenshots) {
@@ -30,6 +31,9 @@ exports.list = function(req, res, next){
 exports.create = function(req, res, next) {
   var username = req.params.username;
   var url = req.body.url;
+  if(url.parse(url).hostname ) { //regex to check if it contains http and a dot followed by something)
+    res.status(500).json({ message: 'Invalid URL'});
+  }
 
   takeScreenshot(url, function(err, imageUrl, imagePublicId) {
     if (err) return res.status(500).json({ message: err });
