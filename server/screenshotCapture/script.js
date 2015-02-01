@@ -24,18 +24,18 @@ var takeScreenshot = function(url, cb) {
     .width(width)
     .height(height)
     .capture(function(err, img) {
-      if (err) return cb('Error capturing image: ' + err, null);
+      if (err) return cb('Error capturing image: ' + err, null, null);
 
       // Write the capture screenshot to disk temporarily
       fs.writeFile(__dirname + fileName, img, function(err) {
-        if (err) return cb('Error writing file to disk: ' + err, null);
+        if (err) return cb('Error writing file to disk: ' + err, null, null);
 
         // Upload to cloudinary
         cloudinary.uploader.upload(__dirname + fileName, function(result) {
 
           //delete local file and return cloudinary url
           fs.unlink(__dirname + fileName, function() {
-            cb(null, result.url);
+            cb(null, result.url, result.public_id);
           });
         });
       });
