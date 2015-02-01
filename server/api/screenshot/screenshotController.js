@@ -1,6 +1,7 @@
 var Screenshot = require('./screenshotModel');
 var User = require('../user/userModel');
 var takeScreenshot = require('../../screenshotCapture/script.js');
+var cloudinary = require('cloudinary');
 
 /**
  * retrieveAll
@@ -122,7 +123,7 @@ exports.destroy = function(req, res, next) {
       // so that the CDN doesn't return a cached copy
       cloudinary.uploader.destroy(screenshot.originalImageId, function(result) {
         console.log(result);
-      })
+      });
       // Then, from db
       Screenshot.remove({_id: id}, function(err) {
         if (err) {
