@@ -13,6 +13,7 @@ var usersSchema = mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+//hash password before saving a user 
 usersSchema.pre('save', function(next) {
   var user = this;
 
@@ -32,6 +33,7 @@ usersSchema.pre('save', function(next) {
 
 });
 
+//helper method to check if password sent is the same than the hashed password in the db 
 usersSchema.methods.verifyPassword = function(password, callback) {
   bcrypt.compare(password, this.password, function(err, match) {
     if (err) {
