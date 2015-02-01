@@ -23,7 +23,7 @@ module.exports = function(router) {
    * /api/user/:username/screenshot/:id
    */
   router.route('/api/user/:username/screenshot/:id')
-    // get an specific screenshot from a user
+    // get a specific screenshot from a user
     .get(screenshotController.show)
     // update the screenshot
     // TODO: reset to require auth
