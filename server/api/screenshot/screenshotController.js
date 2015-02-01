@@ -33,7 +33,7 @@ exports.create = function(req, res, next) {
   var url = req.body.url;
   if( (url.parse(url).protocol !== 'http:' &&  url.parse(url).protocol !== 'https:')  || url.parse(url).hostname.indexOf('.') === -1 ) { //Possible cleaner conditional with regex to check if it contains http and a dot followed by something)
     res.status(500).json({ message: 'Invalid URL'});
-  })
+  }
 
   takeScreenshot(url, function(err, imageUrl, imagePublicId) {
     if (err) return res.status(500).json({ message: err });
