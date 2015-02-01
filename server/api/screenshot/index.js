@@ -2,12 +2,14 @@ var screenshotController = require('./screenshotController');
 var auth = require('../../config/auth');
 
 module.exports = function(router) {
+  
   /**
    * /api/screenshot
    */
   router.route('/api/screenshot')
     //get all screenshots
     .get(screenshotController.retrieveAll);
+    
   /**
    * /api/user/:username/screenshot
    */
