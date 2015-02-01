@@ -15,7 +15,7 @@ function Screenshot($http, User) {
       })
       .catch(function(error) {
         console.log(error);
-      })
+      });
   };
 
   var getScreenshots = function() {
