@@ -3,7 +3,7 @@ var User = require('../user/userModel');
 var takeScreenshot = require('../../screenshotCapture/script.js');
 
 exports.retrieveAll = function(req, res, next){
-  Screenshot.find({}, function(err, screenshots) {
+  Screenshot.find({ access: 'public' }, function(err, screenshots) {
     if(err) return res.status(500).json({ message: err });
     res.status(200).json(screenshots);
   });
