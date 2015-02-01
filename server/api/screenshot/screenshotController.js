@@ -5,7 +5,7 @@ var takeScreenshot = require('../../screenshotCapture/script.js');
 exports.list = function(req, res, next){
   // user found through router.param
   var user = req.foundUser;
-  // find screenshots whos user_id's match the found users username
+  // find screenshots whos username's match the found users username
   Screenshot.find({ username: user.username }, function(err, screenshots){
     if (err) return res.status(500).json({
       status: 500, message: 'Internal Server Error'
@@ -29,7 +29,7 @@ exports.create = function(req, res, next) {
 
     // Save screenshot
     var newScreenshot = new Screenshot({url: url, originalImage: imageUrl, originalImageId: imagePublicId,
-                      annotatedImage: imageUrl, user_id: username});
+                      annotatedImage: imageUrl, username: username});
     newScreenshot.save(function(err, screenshot) {
       if (err) return res.status(500).json({ message: err });
 
