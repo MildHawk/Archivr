@@ -4,7 +4,7 @@
  * Responsible for authenticating user. Handles JWT from server which contains
  * user model data. JWT is stored in localStorage as 'com.archivr'.
  */
-function Auth($http, $location, $window) {
+function Auth($http, $location, $window, User) {
   // sign a user in
   var signin = function(user) {
     return $http({
@@ -32,12 +32,11 @@ function Auth($http, $location, $window) {
   };
 
   var signout = function() {
-    console.log('in services... signout!!!');
+    console.log('Logging user out, destroying JWT');
     $window.localStorage.removeItem('com.archivr');
+    User.setUser(null);
     $location.path('/login');
-    console.log('hello');
   };
-
 
   return {
     signin: signin,
@@ -46,9 +45,8 @@ function Auth($http, $location, $window) {
     signout: signout
   };
 }
-Auth.$inject = ['$http', '$location', '$window'];
-
+Auth.$inject = ['$http', '$location', '$window', 'User'];
 
 angular.module('Archivr.services.Auth', [
+  'Archivr.services.User'
 ]).factory('Auth', Auth);
-

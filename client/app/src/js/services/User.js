@@ -1,13 +1,16 @@
-function User() {
+/**
+ *  The user service is for keeping track of the authenicated user across controllers
+ */
 
-  var user = {};
+function User() {
+  var user = null;
 
   var getUser = function () {
     return user;
   };
 
-  var setUser = function(user){
-    user = user;
+  var setUser = function(newUser){
+    user = newUser;
   };
 
   return {
@@ -16,5 +19,5 @@ function User() {
   };
 }
 
-angular.module('Archivr.services.User', [
-]).factory('User', User);
+angular.module('Archivr.services.User', [])
+  .factory('User', User);

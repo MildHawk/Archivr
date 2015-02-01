@@ -5,7 +5,6 @@
  */
 
 function UserPageController($stateParams, User) {
-
   // Get User object for reference
   // this.user = new User($stateParams.username);
 

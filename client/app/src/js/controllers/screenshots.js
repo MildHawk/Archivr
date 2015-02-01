@@ -4,15 +4,23 @@
  * Handles display of a user screenshots.
  */
 
-function ScreenshotsController($location, screenshots, Screenshot) {
+function ScreenshotsController($stateParams, $location, screenshots, Screenshot, User) {
+
   this.screenshots = screenshots;
   this.url = '';
+  /**
+   * displays the form for adding another screenshot if the authenticated user
+   * is the same user whos page we are viewing.
+   */
+  this.isUser = User.getUser() !== null && User.getUser().username === $stateParams.username;
+
   this.addScreenshot = function(url){
     Screenshot.addScreenshot(url)
       .success(function(data){
         console.log(data);
       });
   };
+  // we are injecting screenshots from resolve but this might be useful in the future.
   this.getScreenshots = function(id){
     Screenshot.getScreenshots(id)
       .success(function(data){
@@ -26,9 +34,11 @@ function ScreenshotsController($location, screenshots, Screenshot) {
 }
 
 ScreenshotsController.$inject = [
+  '$stateParams',
   '$location',
   'screenshots',
-  'Screenshot'
+  'Screenshot',
+  'User'
 ];
 
 angular.module('Archivr.screenshots', [
