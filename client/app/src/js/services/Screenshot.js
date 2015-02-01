@@ -8,9 +8,16 @@
 
 function Screenshot($http, User) {
 
+  var getAllScreenshots  = function() {
+    return $http.get('api/screenshot')
+      .then(function(response) {
+        return response;
+      });
+  };
+
   var getScreenshots = function() {
     var user = User.getUser();
-    return $http.get('/api/screenshot')
+    return $http.get('/api/user/' + user + '/screenshot')
       .then(function(response) {
         return response;
       });
@@ -32,6 +39,7 @@ function Screenshot($http, User) {
   };
 
   return {
+    getAllScreenshots: getAllScreenshots,
     getScreenshots: getScreenshots,
     addScreenshot: addScreenshot,
     getScreenshot: getScreenshot
