@@ -9,10 +9,7 @@
 function Screenshot($http, User) {
 
   var getAllScreenshots  = function() {
-    return $http.get('/api/screenshot')
-      .then(function(response) {
-        return response;
-      });
+    return $http.get('/api/screenshot');
   };
 
   var getScreenshots = function() {
