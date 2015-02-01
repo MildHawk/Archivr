@@ -48,9 +48,17 @@ exports.create = function(req, res, next) {
   });
 };
 
+/**
+ * show
+ * ======
+ * Returns the screenshot with the id passed in the request 
+ * 
+ */
 exports.show = function(req, res, next) {
+  //Get username and id sent in the request
   var username = req.params.username;
   var id = req.params.id;
+  //Find screenshot with passed id and return it
   Screenshot.findOne({ _id: id }, function(err, screenshot) {
     if (err) return res.status(404).end();
     res.status(200).json(screenshot);
@@ -63,9 +71,10 @@ exports.show = function(req, res, next) {
  * Updates resource with new key-value pairs passed in the request body
  */
 exports.update = function(req, res, next) {
+  //Get id from the API endpoint and the new data passed in the request body
   var id = req.params.id;
   var newData = req.body;
-
+  //Update screenshot that contains that id with new data passed in the request
   Screenshot.update({_id: id}, newData, function(err, numberAffected, raw) {
     if (err) {
       return res.status(404).end();
@@ -74,13 +83,22 @@ exports.update = function(req, res, next) {
   })
 };
 
+/**
+ * destroy
+ * ======
+ * Returns the screenshot with the id passed in the request 
+ * 
+ */
 exports.destroy = function(req, res, next) {
+  //get username and id passed in the request
   var username = req.params.username;
   var id = req.params.id;
+  //find screenshot with passed id 
   Screenshot.findOne({_id: id}, function(err, screenshot) {
     if (!screenshot) {
       res.status(404).end();
     } else {
+      //If the screenshot exists, remove it
       Screenshot.remove({_id: id}, function(err) {
         if (err) {
           return res.status(500).end();
