@@ -10,7 +10,7 @@ function Screenshot($http, User) {
 
   var getScreenshots = function() {
     var user = User.getUser();
-    return $http.get('/api/user/' + user + '/screenshot')
+    return $http.get('/api/screenshot')
       .then(function(response) {
         return response;
       });
