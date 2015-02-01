@@ -8,6 +8,10 @@ function ScreenshotsController($stateParams, $location, screenshots, Screenshot,
 
   this.screenshots = screenshots;
   this.url = '';
+  /**
+   * displays the form for adding another screenshot if the authenticated user
+   * is the same user whos page we are viewing.
+   */
   this.isUser = User.getUser() !== null && User.getUser().username === $stateParams.username;
 
   this.addScreenshot = function(url){

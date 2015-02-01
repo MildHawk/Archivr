@@ -3,11 +3,14 @@
  * ====================
  * Handles control across the navigation bar
  */
-
 function NavController($rootScope, Auth) {
 
   this.loggedIn = $rootScope.Authenticated;
 
+  /**
+   * watches for changes on the $rootscope.Authenicated.  if we
+   * stop being authenicated the loggedIn property will be updated as well
+   */
   $rootScope.$watch('Authenticated', function(authenticated) {
     this.loggedIn = authenticated;
   }.bind(this));

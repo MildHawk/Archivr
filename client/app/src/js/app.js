@@ -143,6 +143,11 @@ function AttachTokens($window) {
   };
 }
 
+/**
+ * Run function is executed at bootstrap time.  We can inject things
+ * that we want to have available to use through our app
+ * this sets $rootScope.Authenticated to true or false on every route state change
+ */
 function run($rootScope, $location, Auth) {
   $rootScope.Authenticated = Auth.isAuth();
 
