@@ -2,6 +2,12 @@ var Screenshot = require('./screenshotModel');
 var User = require('../user/userModel');
 var takeScreenshot = require('../../screenshotCapture/script.js');
 
+/**
+ * retrieveAll
+ * ======
+ * Returns all screenshots from all users
+ * 
+ */
 exports.retrieveAll = function(req, res, next){
   Screenshot.find({ access: 'public' }, function(err, screenshots) {
     if(err) return res.status(500).json({ message: err });
@@ -9,6 +15,12 @@ exports.retrieveAll = function(req, res, next){
   });
 };
 
+/**
+ * list
+ * ======
+ * Returns all screenshots from a specific user
+ * 
+ */
 exports.list = function(req, res, next){
   // user found through router.param
   var user = req.foundUser;
@@ -105,6 +117,13 @@ exports.destroy = function(req, res, next) {
       res.status(404).end();
     } else {
       // If the screenshot exists, remove it
+      // First from Cloudinary, -->TODO: create helper function to remove this from controller
+      // We might want to use { invalidate: true } as seen in cloudinary.com/documentation/node_image_upload
+      // so that the CDN doesn't return a cached copy
+      cloudinary.uploader.destroy(screenshot.originalImageId, function(result) {
+        console.log(result);
+      })
+      // Then, from db
       Screenshot.remove({_id: id}, function(err) {
         if (err) {
           return res.status(500).end();
