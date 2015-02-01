@@ -9,7 +9,10 @@
 function Screenshot($http, User) {
 
   var getAllScreenshots  = function() {
-    return $http.get('/api/screenshot');
+    return $http.get('/api/screenshot')
+      .then(function(response) {
+        return response;
+      });
   };
 
   var getScreenshots = function() {
@@ -35,11 +38,14 @@ function Screenshot($http, User) {
       });
   };
 
+  var screenshots = [];
+
   return {
     getAllScreenshots: getAllScreenshots,
     getScreenshots: getScreenshots,
     addScreenshot: addScreenshot,
-    getScreenshot: getScreenshot
+    getScreenshot: getScreenshot,
+    screenshots: screenshots
   };
 }
 Screenshot.$inject = ['$http', 'User'];
