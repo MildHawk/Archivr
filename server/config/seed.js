@@ -6,6 +6,7 @@
 var User = require('../api/user/userModel');
 var Screenshot = require('../api/screenshot/screenshotModel');
 
+// Store image IDs to insert into user creation... hacky solution
 var imageIdsForAndrew = [];
 var imageIdsForRuben = [];
 
@@ -73,6 +74,7 @@ Screenshot.find({}).remove(function() {
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753386/ee2bboyamcfur5odksan.png',
     user_id: 'Andrew'
   }, function(err, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12) {
+    // Get all image ids
     imageIdsForAndrew.push(m1._id);
     imageIdsForAndrew.push(m2._id);
     imageIdsForAndrew.push(m3._id);
@@ -86,7 +88,7 @@ Screenshot.find({}).remove(function() {
     imageIdsForAndrew.push(m11._id);
     imageIdsForAndrew.push(m12._id);
 
-    // Screenshots for Ruben
+    // THEN... Screenshots for Ruben
     Screenshot.create({ // 1
       url: 'http://www.google.com',
       originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422651327/cl5at8odtqfjgsmber6i.png',
@@ -107,7 +109,7 @@ Screenshot.find({}).remove(function() {
       imageIdsForRuben.push(m2._id);
       imageIdsForRuben.push(m3._id);
 
-      // Clear users and seed
+      // THEN... Clear users and seed
       User.find({}).remove(function() {
         User.create({
           id: 'test',

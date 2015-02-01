@@ -34,5 +34,8 @@ module.exports = function expressConfig(app) {
   app.set('jwtTokenSecret', config.jwtTokenSecret);
 
   // Seed database if specified
-  if (config.seedDB) require('./seed');
+  if (config.seedDB) {
+    console.log('Seeding database...');
+    require('./seed');
+  }
 };
