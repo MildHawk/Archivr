@@ -38,11 +38,14 @@ function Screenshot($http, User) {
       });
   };
 
+  var screenshots = [];
+
   return {
     getAllScreenshots: getAllScreenshots,
     getScreenshots: getScreenshots,
     addScreenshot: addScreenshot,
-    getScreenshot: getScreenshot
+    getScreenshot: getScreenshot,
+    screenshots: screenshots
   };
 }
 Screenshot.$inject = ['$http', 'User'];
