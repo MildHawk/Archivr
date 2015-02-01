@@ -179,7 +179,7 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
         url: 'www.google.com',
         originalImage: 'image1.png',
         annotatedImage: 'image1a.png',
-        username: 'notRuben' // jshint ignore:line
+        username: 'notRuben'
       });
       shot1.save();
 
@@ -187,7 +187,7 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
         url: 'www.google.com',
         originalImage: 'image1.png',
         annotatedImage: 'image1a.png',
-        username: 'Ruben' // jshint ignore:line
+        username: 'Ruben'
       });
 
       // Save the shot, then...
