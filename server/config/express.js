@@ -32,4 +32,10 @@ module.exports = function expressConfig(app) {
   // dynamically set port if in production otherwise use port 3000
   app.set('port', config.port);
   app.set('jwtTokenSecret', config.jwtTokenSecret);
+
+  // Seed database if specified
+  if (config.seedDB) {
+    console.log('Seeding database...');
+    require('./seed');
+  }
 };
