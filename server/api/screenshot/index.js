@@ -7,7 +7,7 @@ module.exports = function(router) {
    */
   router.route('/api/screenshot')
     //get all screenshots
-    .get(screenshotController.retrieveAll)
+    .get(screenshotController.retrieveAll);
   /**
    * /api/user/:username/screenshot
    */
