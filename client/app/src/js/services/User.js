@@ -1,3 +1,7 @@
+/**
+ *  The user service is for keeping track of the authenicated user across controllers
+ */
+
 function User() {
   var user = null;
 
