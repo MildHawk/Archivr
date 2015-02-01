@@ -17,62 +17,62 @@ Screenshot.find({}).remove(function() {
     url: 'http://www.google.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422651327/cl5at8odtqfjgsmber6i.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422651327/cl5at8odtqfjgsmber6i.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, { // 2
     url: 'http://www.random.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422749458/qgv2bwhwdrcqletbznnc.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422749458/qgv2bwhwdrcqletbznnc.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, { // 3
     url: 'http://www.facebook.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422752920/uxryntqxacyak5fwv5ez.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422752920/uxryntqxacyak5fwv5ez.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, { // 4
     url: 'http://www.asana.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753081/qnprmx3dapys2w6vtame.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753081/qnprmx3dapys2w6vtame.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, { // 5
     url: 'http://www.purple.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753106/m28t0rrgtgdt8zzruf8o.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753106/m28t0rrgtgdt8zzruf8o.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, { // 6
     url: 'http://www.yahoo.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753136/s83njghjf2t84mlslrpv.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753136/s83njghjf2t84mlslrpv.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, { // 7
     url: 'http://www.hackreactor.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753172/lfhyndtvkacmxksrxnmx.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753172/lfhyndtvkacmxksrxnmx.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, { // 8
     url: 'http://www.evernote.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753221/p1igphs2ybquinjenyeo.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753221/p1igphs2ybquinjenyeo.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, { // 9
     url: 'http://www.heroku.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753268/gnpnltvch0rkwfzx0uzj.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753268/gnpnltvch0rkwfzx0uzj.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, { // 10
     url: 'http://www.cnn.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753332/uzsrs4iv0fzhjyprbeou.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753332/uzsrs4iv0fzhjyprbeou.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, { // 11
     url: 'http://www.apple.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753360/xke2zfdigsotyfhrbvdk.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753360/xke2zfdigsotyfhrbvdk.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, { // 12
     url: 'http://www.trello.com',
     originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753386/ee2bboyamcfur5odksan.png',
     annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422753386/ee2bboyamcfur5odksan.png',
-    user_id: 'Andrew'
+    username: 'Andrew'
   }, function(err, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12) {
     // Get all image ids
     imageIdsForAndrew.push(m1._id);
@@ -93,17 +93,17 @@ Screenshot.find({}).remove(function() {
       url: 'http://www.google.com',
       originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422651327/cl5at8odtqfjgsmber6i.png',
       annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422651327/cl5at8odtqfjgsmber6i.png',
-      user_id: 'Ruben'
+      username: 'Ruben'
     }, { // 2
       url: 'http://www.random.com',
       originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422749458/qgv2bwhwdrcqletbznnc.png',
       annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422749458/qgv2bwhwdrcqletbznnc.png',
-      user_id: 'Ruben'
+      username: 'Ruben'
     }, { // 3
       url: 'http://www.facebook.com',
       originalImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422752920/uxryntqxacyak5fwv5ez.png',
       annotatedImage: 'http://res.cloudinary.com/hdflpcx8g/image/upload/v1422752920/uxryntqxacyak5fwv5ez.png',
-      user_id: 'Ruben'
+      username: 'Ruben'
     }, function(err, m1, m2, m3) {
       imageIdsForRuben.push(m1._id);
       imageIdsForRuben.push(m2._id);
