@@ -2,7 +2,7 @@
  * Defines function to take screenshot
  */
 
-var Screenshot = require('url-to-screenshot');
+var screenshot = require('url-to-screenshot');
 var fs = require('fs');
 var cloudinary = require('cloudinary');
 
@@ -15,12 +15,12 @@ var cloudinary = require('cloudinary');
 var takeScreenshot = function(url, cb) {
   // Set screenshot properties
   var randomString = Math.random().toString(36).substring(7);
-  var fileName = "/" + randomString + ".png";
+  var fileName = '/' + randomString + '.png';
   var width = 800;
   var height = 600;
 
   // Take screenshot
-  Screenshot(url)
+  screenshot(url)
     .width(width)
     .height(height)
     .capture(function(err, img) {
@@ -35,7 +35,7 @@ var takeScreenshot = function(url, cb) {
 
           //delete local file and return cloudinary url
           fs.unlink(__dirname + fileName, function() {
-            cb(null, result.url, result.public_id);
+            cb(null, result.url, result.public_id); // jshint ignore:line
           });
         });
       });

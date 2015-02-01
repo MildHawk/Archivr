@@ -52,20 +52,20 @@ module.exports = function(app) {
     consumerSecret: '1iU7qKqlgWaFq4g3x48JtwKot1ykQVWldPFRKrbZX6CMjGQrT1',
     callbackURL: 'http://localhost:3000/auth/twitter/callback'
   }, function(token, tokenSecret, profile, done) {
-    User.findOne({ username: profile.screen_name }, function(err, user){
+    User.findOne({ username: profile.screen_name }, function(err, user){ // jshint ignore:line
       if (err) return done(err);
       if (user) {
         // user exists
         return done(null, user);
       } else {
         // create the user
-        var user = new User({ username: profile.screen_name });
+        user = new User({ username: profile.screen_name }); // jshint ignore:line
         user.save(function(err, user) {
           if (err) return done(null, false);
           return done(null, user);
-        })
+        });
       }
-    })
+    });
   }));
 
   /**

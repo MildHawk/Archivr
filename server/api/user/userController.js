@@ -14,7 +14,7 @@ exports.list = function(req, res, next) {
       return res.status(500).end();
     }
     res.json(users);
-  })
+  });
 };
 
 exports.create = function(req, res, next) {
@@ -35,7 +35,7 @@ exports.create = function(req, res, next) {
           return res.status(500).end();
         }
 
-        console.log("User created");
+        console.log('User created');
 
         res.status(201).json({
           message: 'User created'
@@ -44,7 +44,7 @@ exports.create = function(req, res, next) {
       });
 
     } else {
-      console.log("already exists");
+      console.log('already exists');
 
       res.status(409).json({
         message: 'User already exists'
@@ -74,7 +74,7 @@ exports.update = function(req, res, next) {
     if (!numberAffected) return res.status(404).end('User not found.');
 
     res.end();
-  })
+  });
   // the user exists, we need to make sure
   // the user is trying to update their own information
   // and not someone elses... so we need to check
@@ -95,7 +95,7 @@ exports.destroy = function(req, res, next) {
           return res.status(500).end();
         }
         res.status(200).end();
-      })
+      });
     }
-  })
+  });
 };
