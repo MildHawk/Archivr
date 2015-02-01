@@ -3,10 +3,16 @@ var auth = require('../../config/auth');
 
 module.exports = function(router) {
   /**
+   * /api/screenshot
+   */
+  router.route('/api/screenshot')
+    //get all screenshots
+    .get(screenshotController.retrieveAll)
+  /**
    * /api/user/:username/screenshot
    */
   router.route('/api/user/:username/screenshot')
-    // get a screenshot
+    // get all screenshots from a user
     .get(screenshotController.list)
     // create a screenshot
     // TODO: reset to require auth
@@ -17,7 +23,7 @@ module.exports = function(router) {
    * /api/user/:username/screenshot/:id
    */
   router.route('/api/user/:username/screenshot/:id')
-    // get the screenshot
+    // get an specific screenshot from a user
     .get(screenshotController.show)
     // update the screenshot
     // TODO: reset to require auth
