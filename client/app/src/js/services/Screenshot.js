@@ -22,6 +22,7 @@ function Screenshot($http, User) {
     });
   };
 
+  // should return a screenshot object owned by the requested user
   var getScreenshot = function(user, id){
     return $http.get('/api/user/' + user + '/screenshot/' + id)
       .then(function(response) {

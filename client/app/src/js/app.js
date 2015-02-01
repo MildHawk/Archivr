@@ -79,7 +79,8 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
       controller: 'ScreenshotController',
       controllerAs: 'screenshotCtrl',
       resolve: {
-        screenshot: function($stateParams, $window, Screenshot) {
+        // get screenshot base on requested username and id and inject into controller
+        screenshot: function($stateParams, Screenshot) {
           return Screenshot.getScreenshot($stateParams.username, $stateParams.screenshotId)
             .then(function(response){
               return response;

@@ -20,6 +20,7 @@ function ScreenshotsController($stateParams, $location, screenshots, Screenshot,
         console.log(data);
       });
   };
+  // we are injecting screenshots from resolve but this might be useful in the future.
   this.getScreenshots = function(id){
     Screenshot.getScreenshots(id)
       .success(function(data){
