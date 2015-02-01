@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var db = require('../../db/index.js');
 var bcrypt   = require('bcrypt-nodejs');
 
-//TODO --> set username to be unique
+// TODO --> set username to be unique
 
 var usersSchema = mongoose.Schema({
   username: { type: String, required: true },
@@ -13,7 +13,7 @@ var usersSchema = mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-//hash password before saving a user 
+// hash password before saving a user 
 usersSchema.pre('save', function(next) {
   var user = this;
 
@@ -33,7 +33,7 @@ usersSchema.pre('save', function(next) {
 
 });
 
-//helper method to check if password sent is the same than the hashed password in the db 
+// helper method to check if password sent is the same than the hashed password in the db 
 usersSchema.methods.verifyPassword = function(password, callback) {
   bcrypt.compare(password, this.password, function(err, match) {
     if (err) {
