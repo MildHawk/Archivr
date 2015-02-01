@@ -4,21 +4,21 @@
  * Handles display landing page.
  */
 
-function LandingController(Screenshots, Auth) {
+function LandingController($location, Screenshots, Auth) {
   this.screenshots = [];
   this.getScreenshots = function() {
     Screenshots.getScreenshots()
       .success(function(data) {
         this.screenshots = data;
-      })
-  }
+      });
+  };
   this.changeView = function(screenshotId) {
     $location.path('/screenshot/' + screenshotId);
   };
   this.getScreenshots();
 }
 
-LandingController.$inject = ['Screenshot','Auth'];
+LandingController.$inject = ['$location','Screenshot','Auth'];
 
 
 angular.module('Archivr.landing', [
