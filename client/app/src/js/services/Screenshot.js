@@ -12,7 +12,10 @@ function Screenshot($http, User) {
     return $http.get('/api/screenshot')
       .then(function(response) {
         return response;
-      });
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
   };
 
   var getScreenshots = function() {

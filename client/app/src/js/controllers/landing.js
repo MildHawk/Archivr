@@ -5,12 +5,14 @@
  */
 
 function LandingController($location, Screenshots, Auth) {
-  this.data = {screenshots: Screenshots.screenshots};
+  this.screenshots = [];
   this.getAllScreenshots = function() {
     Screenshots.getAllScreenshots()
-      .success(function(data) {
-        console.log(data);
-        this.data.screenshots = data;
+      .then(function(data) {
+        this.screenshots = data;
+      })
+      .catch(function(error) {
+        console.log(error);
       });
   };
   this.changeView = function(screenshotId) {

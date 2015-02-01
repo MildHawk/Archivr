@@ -3,7 +3,7 @@
 
   <div class="container">
       <ul class="row" >
-        <li class="col-xs-6 col-md-3" ng-repeat="screenshot in landingCtrl.data.screenshots">
+        <li class="col-xs-6 col-md-3" ng-repeat="screenshot in landingCtrl.screenshots">
           <a href="#" class="thumbnail" ng-click="landingCtrl.changeView(screenshot._id)">
             <img src="{{ screenshot.originalImage }}" alt="whatever">
           </a>
