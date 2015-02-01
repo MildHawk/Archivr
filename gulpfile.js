@@ -30,6 +30,8 @@ var paths = {
     img: './client/app/dist/img',
     views: './client/app/dist/views'
   },
+  server: './server',
+  spec: './spec',
   jade: './server/views/_partials',
   serverSpec: __dirname + '/spec/server/**/*.js',
   karmaConf: __dirname + '/spec/karma.conf.js'
@@ -52,7 +54,8 @@ var jsFiles = [
 // Keep track of own JS files for linting
 var jsFilesForLint = [
   paths.src.js + '/**/*.js',
-  './spec/**/*.js'
+  paths.server + '/**/*.js',
+  paths.spec + '/**/*.js'
 ];
 
 var jadeFiles = [paths.jade + '/*.jade'];
