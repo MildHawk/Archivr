@@ -5,7 +5,7 @@
  */
 
 function ScreenshotsController($stateParams, $state, $location, screenshots, Screenshot, User) {
-
+  var self = this;
   this.screenshots = screenshots;
   this.url = '';
 
@@ -17,10 +17,12 @@ function ScreenshotsController($stateParams, $state, $location, screenshots, Scr
 
   this.addScreenshot = function(url){
     Screenshot.addScreenshot(url)
-      .success(function(data){
-        console.log(data);
+      .then(function(data){
+        console.log('response on create', data);
+        self.screenshots.push(data.data)
       });
   };
+
   // we are injecting screenshots from resolve but this might be useful in the future.
   this.getScreenshots = function(id){
     Screenshot.getScreenshots(id)
@@ -29,6 +31,7 @@ function ScreenshotsController($stateParams, $state, $location, screenshots, Scr
         //this.screenshots = data; -> don't need this since we resolve the screenshots on app.js and inject them here
       });
   };
+
   this.changeView = function(screenshotId) {
     // navigate to nested user view screenshot
     $state.go('user.screenshot', { screenshotId: screenshotId });
