@@ -209,9 +209,27 @@ gulp.task('mocha', function (cb) {
  */
 gulp.task('coveralls', function () {
   if (!process.env.CI) return;
+  return gulp.src([
+    './coverage/client/lcov.info',
+    './coverage/lcov.info'
+  ])
+    .pipe(concat('lcov.info'))
+    .pipe(coveralls)
   return gulp.src('./coverage/lcov.info')
     .pipe(coveralls());
 });
+
+
+
+gulp.task('testy', function () {
+  return gulp.src([
+    './coverage/client/lcov.info',
+    './coverage/lcov.info'
+  ])
+    .pipe(concat('test.info'))
+    .pipe(gulp.dest('./coverage'));
+});
+
 
 gulp.task('watch', function() {
   gulp.watch(paths.src.img + '/**/*', ['image']);

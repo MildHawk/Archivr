@@ -17,7 +17,7 @@ module.exports = function(config) {
     files: [
       // TODO: specify client files more carefully
       // src files
-      'client/dist/app.min.js',
+      'client/app/dist/app.min.js',
 
       // TODO: set up server-side tests in karma
       // spec files
@@ -34,13 +34,24 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      /**
+       * source files to test coverage for
+       * do not include tests or libraries
+       * (these files will be instrumented by Istanbul)
+       */
+      'client/app/src/js/**/*.js': ['coverage']
     },
 
+    // optionally, configure the coverage reporter
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/client'
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
 
     // web server port
@@ -71,6 +82,8 @@ module.exports = function(config) {
         flags: ['--no-sandbox']
       }
     },
+
+
 
 
     // Continuous Integration mode
