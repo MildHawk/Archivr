@@ -6,7 +6,7 @@
 
 function ScreenshotsController($stateParams, $state, $location, screenshots, Screenshot, User) {
   var _this = this;
-  this.screenshots = screenshots;
+  this.screenshots = screenshots === undefined ? [] : screenshots;
   this.url = '';
 
   /**
@@ -20,9 +20,7 @@ function ScreenshotsController($stateParams, $state, $location, screenshots, Scr
       .then(function(data){
         console.log('response on create', data);
         // create an array if one doesnt exist, otherwise concat onto it
-        _this.screenshots = Array.isArray(_this.screenshots)
-          ? _this.screenshots.concat([data.data])
-          : [data.data];
+        _this.screenshots.push(data.data);
 
       });
   };
