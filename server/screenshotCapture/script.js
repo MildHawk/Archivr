@@ -34,7 +34,7 @@ var takeScreenshot = function(url, width, height, cb) {
 
         // Upload to cloudinary
         cloudinary.uploader.upload(__dirname + fileName, function(result) {
-          console.log("Image uploaded to cloudinary");
+          console.log('Image uploaded to cloudinary');
           //delete local file and return cloudinary url
           fs.unlink(__dirname + fileName, function() {
             cb(null, result.url, result.public_id); // jshint ignore:line
