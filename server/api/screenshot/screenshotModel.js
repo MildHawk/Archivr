@@ -10,6 +10,7 @@ var screenshotsSchema = mongoose.Schema({
   // originalImageId is the Cloudinary public_id of the image uploaded
   originalImageId: { type: String },
   username: { type: String, required: true },
+  comment: { type: String },
   visits: { type: Number, default: 0 },
   access: {type: String, default: 'public'},
   createdAt: { type: Date, default: Date.now }
