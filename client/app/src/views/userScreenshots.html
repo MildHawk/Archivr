@@ -17,10 +17,7 @@
       <ul class="list-unstyled">
         <li class="col-xs-6 col-md-3" ng-repeat="screenshot in screenshotsCtrl.screenshots">
           <a href="#" class="thumbnail">
-            <img
-              ng-click="screenshotCtrl.changeView(screenshot._id)"
-              src="{{ screenshot.sizes.small.url }}"
-              alt="{{ screenshot.sizes.small.description }}" />
+            <img src="{{ screenshot.originalImage }}" ng-click="screenshotsCtrl.changeView(screenshot._id)" />
           </a>
         </li>
       </ul>

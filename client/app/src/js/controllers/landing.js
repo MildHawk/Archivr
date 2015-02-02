@@ -6,6 +6,7 @@
 
 function LandingController($location, Screenshots, Auth) {
   this.screenshots = [];
+
   this.getAllScreenshots = function() {
     Screenshots.getAllScreenshots()
       .then(function(data) {
@@ -15,12 +16,13 @@ function LandingController($location, Screenshots, Auth) {
         console.log(error);
       });
   };
+
   this.changeView = function(screenshotId) {
     $location.path('/screenshot/' + screenshotId);
   };
+
   this.getAllScreenshots();
 }
-
 LandingController.$inject = ['$location','Screenshot','Auth'];
 
 
