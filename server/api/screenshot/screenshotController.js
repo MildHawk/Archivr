@@ -117,12 +117,13 @@ exports.destroy = function(req, res, next) {
     if (!screenshot) {
       res.status(404).end();
     } else {
-      // If the screenshot exists, remove it
-      // First from Cloudinary, -->TODO: create helper function to remove this from controller
-      // We might want to use { invalidate: true } as seen in cloudinary.com/documentation/node_image_upload
-      // so that the CDN doesn't return a cached copy
+      /** If the screenshot exists, remove it
+      * First from Cloudinary, -->TODO: create helper function to remove this from controller
+      * We might want to use { invalidate: true } as seen in cloudinary.com/documentation/node_image_upload
+      * so that the CDN doesn't return a cached copy
+      */
       cloudinary.uploader.destroy(screenshot.originalImageId, function(result) {
-        console.log(result);
+        console.log("Image removed from Cloudinary, result -->", result);
       });
       // Then, from db
       Screenshot.remove({_id: id}, function(err) {
