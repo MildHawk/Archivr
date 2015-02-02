@@ -19,7 +19,11 @@ function ScreenshotsController($stateParams, $state, $location, screenshots, Scr
     Screenshot.addScreenshot(url)
       .then(function(data){
         console.log('response on create', data);
-        self.screenshots.push(data.data)
+        // create an array if one doesnt exist, otherwise concat onto it
+        self.screenshots = Array.isArray(self.screenshots)
+          ? self.screenshots.concat([data.data])
+          : [data.data];
+
       });
   };
 
