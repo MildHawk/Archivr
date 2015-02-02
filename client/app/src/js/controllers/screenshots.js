@@ -6,7 +6,7 @@
 
 function ScreenshotsController($stateParams, $state, $location, screenshots, Screenshot, User) {
   var _this = this;
-  this.screenshots = screenshots === undefined ? [] : screenshots;
+  this.screenshots = screenshots || [];
   this.url = '';
 
   /**
