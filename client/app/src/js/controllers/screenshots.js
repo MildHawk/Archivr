@@ -4,10 +4,11 @@
  * Handles display of a user screenshots.
  */
 
-function ScreenshotsController($stateParams, $location, screenshots, Screenshot, User) {
+function ScreenshotsController($stateParams, $state, $location, screenshots, Screenshot, User) {
 
   this.screenshots = screenshots;
   this.url = '';
+  console.log(User.getUser());
   /**
    * displays the form for adding another screenshot if the authenticated user
    * is the same user whos page we are viewing.
@@ -29,13 +30,14 @@ function ScreenshotsController($stateParams, $location, screenshots, Screenshot,
       });
   };
   this.changeView = function(screenshotId) {
-    $location.path('/screenshot/' + screenshotId);
-    //$state.go('contact.detail', {id: screenshotId}, {location: true});
+    // $location.url($location.url() + '/screenshot/' + screenshotId);
+    $state.go('user.screenshot', { screenshotId: screenshotId });
   };
 }
 
 ScreenshotsController.$inject = [
   '$stateParams',
+  '$state',
   '$location',
   'screenshots',
   'Screenshot',

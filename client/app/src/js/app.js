@@ -23,15 +23,16 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
      */
     .state('user', {
       url: '/users/:username',
-      resolve: {
-        screenshots: function($stateParams, Screenshot) {
-          var user = $stateParams.username;
-          return Screenshot.getScreenshots(user)
-            .then(function(screenshots){
-              return screenshots.data;
-            });
-        }
-      },
+      // resolve: {
+      //   screenshots: function($stateParams, Screenshot) {
+      //     return Screenshot.getScreenshots($stateParams.username)
+      //       .then(function(screenshots){
+      //         return screenshots.data;
+      //       }).catch(function(err) {
+      //         console.log('Error getting screenshots: ', err);
+      //       });
+      //   }
+      // },
       views: {
 
         // main view
@@ -51,17 +52,41 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
           templateUrl: '/views/profileBar.html',
           controller: 'ProfileBarController',
           controllerAs: 'profileBarCtrl'
-        },
+        }//,
 
         /**
          * screenshots
          * ===========
          * Displays all the screenshots from a user
          */
-        'screenshots@user': {
-          templateUrl: '/views/userScreenshots.html',
-          controller: 'ScreenshotsController',
-          controllerAs: 'screenshotsCtrl'
+
+        // 'screenshots@user': {
+        //   templateUrl: '/views/userScreenshots.html',
+        //   controller: 'ScreenshotsController',
+        //   controllerAs: 'screenshotsCtrl'
+        // }
+
+      }
+    })
+
+    /**
+     * screenshots
+     * ==========
+     * nested view to display the collection of user screenshots
+     */
+    .state('user.screenshots', {
+      url: '/screenshots',
+      templateUrl: '/views/userScreenshots.html',
+      controller: 'ScreenshotsController',
+      controllerAs: 'screenshotsCtrl',
+      resolve: {
+        screenshots: function($stateParams, Screenshot) {
+          return Screenshot.getScreenshots($stateParams.username)
+            .then(function(screenshots){
+              return screenshots.data;
+            }).catch(function(err) {
+              console.log('Error getting screenshots: ', err);
+            });
         }
       }
     })
@@ -74,7 +99,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
      * the screenshot details (when authorized).
      */
     .state('user.screenshot', {
-      url: '/screenshot/:screenshotId',
+      url: '/screenshots/:screenshotId',
       templateUrl: '/views/screenshot.html',
       controller: 'ScreenshotController',
       controllerAs: 'screenshotCtrl',
@@ -83,9 +108,9 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
         screenshot: function($stateParams, Screenshot) {
           return Screenshot.getScreenshot($stateParams.username, $stateParams.screenshotId)
             .then(function(response){
-              return response;
+              return response.data;
             }).catch(function(err){
-              return err;
+              console.log('Error fetching screenshot: ', err);
             });
         }
       }

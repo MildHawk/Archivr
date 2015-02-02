@@ -12,8 +12,7 @@ function AuthController($window, $location, Auth, User) {
     }).then(function(response) {
       $window.localStorage.setItem('com.archivr', response.token);
       User.setUser(response.user);
-      console.log(response.user);
-      $location.path('/users/' + response.user.username);
+      $location.path('/users/' + response.user.username + '/screenshots');
     }).catch(function (error) {
       console.log(error);
     });
@@ -26,7 +25,7 @@ function AuthController($window, $location, Auth, User) {
     }).then(function(response) {
       console.log(response);
       // $window.localStorage.setItem('com.archivr', token);
-      // $location.path('/screenshots');
+      $location.path('/login');
     }).catch(function(error) {
       console.error(error);
     });

@@ -5,9 +5,8 @@
  */
 
 function ScreenshotController(Screenshot, User, screenshot) {
-
   this.screenshot = screenshot;
-
+  console.log(screenshot);
 }
 ScreenshotController.$inject = ['Screenshot', 'User', 'screenshot'];
 
