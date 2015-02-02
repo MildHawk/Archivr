@@ -15,14 +15,12 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // TODO: specify client files more carefully
       // src files
-      'client/dist/app.min.js',
+      'node_modules/angular-mocks/angular-mocks.js',
+      'client/app/dist/js/app.min.js',
 
-      // TODO: set up server-side tests in karma
       // spec files
       'spec/client/**/*.js'
-      // 'spec/server/**/*.js'
     ],
 
 

@@ -48,7 +48,8 @@ var jsFiles = [
   paths.src.js + '/app.js',
   paths.src.js + '/controllers/*.js',
   paths.src.js + '/directives/*.js',
-  paths.src.js + '/services/*.js'
+  paths.src.js + '/services/*.js',
+  './node_modules/angular-mocks/angular-mocks.js'
 ];
 
 // Keep track of own JS files for linting
