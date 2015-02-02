@@ -1,41 +1,58 @@
 
 # Archivr [![Stories in Ready](https://badge.waffle.io/MildHawk/Archivr.png?label=ready&title=Ready)](https://waffle.io/MildHawk/Archivr) [![Build Status](https://travis-ci.org/MildHawk/Archivr.svg?branch=develop)](https://travis-ci.org/MildHawk/Archivr) [![Coverage Status](https://coveralls.io/repos/MildHawk/Archivr/badge.svg?branch=develop)](https://coveralls.io/r/MildHawk/Archivr?branch=develop)
-Because it's hip to add an "r" at the end. r.
 
-<!--
-> This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
+> Because it's hip to add an "r" at the end. r.
 
-There is an approach called "working backwards" that is widely used at Amazon. They work backwards from the customer, rather than starting with an idea for a product and trying to bolt customers onto it. While working backwards can be applied to any specific product decision, using this approach is especially important when developing new products or features.
+## Team
 
-For new initiatives a product manager typically starts by writing an internal press release announcing the finished product. The target audience for the press release is the new/updated product's customers, which can be retail customers or internal users of a tool or technology. Internal press releases are centered around the customer problem, how current solutions (internal or external) fail, and how the new product will blow away existing solutions.
+  - __Product Owner__: Jackson Hoose
+  - __Scrum Master__: Andrew Smith
+  - __Development Team Members__: Ruben Vicario, Rick Wuebker
 
-If the benefits listed don't sound very interesting or exciting to customers, then perhaps they're not (and shouldn't be built). Instead, the product manager should keep iterating on the press release until they've come up with benefits that actually sound like benefits. Iterating on a press release is a lot less expensive than iterating on the product itself (and quicker!).
+## Table of Contents
 
-If the press release is more than a page and a half, it is probably too long. Keep it simple. 3-4 sentences for most paragraphs. Cut out the fat. Don't make it into a spec. You can accompany the press release with a FAQ that answers all of the other business or execution questions so the press release can stay focused on what the customer gets. My rule of thumb is that if the press release is hard to write, then the product is probably going to suck. Keep working at it until the outline for each paragraph flows.
+1. [Usage](#Usage)
+1. [Requirements](#requirements)
+1. [Development](#development)
+    1. [Installing Dependencies](#installing-dependencies)
+    1. [Roadmap](#roadmap)
+1. [Team](#team)
+1. [Contributing](#contributing)
 
-Oh, and I also like to write press-releases in what I call "Oprah-speak" for mainstream consumer products. Imagine you're sitting on Oprah's couch and have just explained the product to her, and then you listen as she explains it to her audience. That's "Oprah-speak", not "Geek-speak".
+## Usage
 
-Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
- -->
-Some catch phrase here...
+> Create a user, take some screenshots of websites. Share them with friends.
 
-## Summary ##
-Archivr is a tool for archiving and annotating the internet. Archiving involves taking screenshots of current sites. Availability for public and private archives. Integrates with social platforms to share your favorite archives with friends. Create a visual catalogue of your favorite moments from the internet -- for design or memories.
+## Requirements
 
-## Problem ##
-The internet is emphemeral. We provide a way to capture it. Then we make it easy to take notes on it, point out features, etc.
+- Node
+- npm
+- Ruby
+- Bundler (`$ gem install bundler`)
+- MongoDB
 
-## Solution ##
-Ease of use: enter the URL, get the screencapture, and then annotate it. Save in your notebook and view later or share with your friends!
+## Development
 
-## Quote from You ##
-"I can't believe it... adding the 'r' really did make it better!" - Anonymous
+### Installing Dependencies
 
-## How to Get Started ##
-Connect easily through your favorite social media platforms. Then enter a URL and you're started!
+From within the root directory:
 
-## Customer Quote ##
-"All my archiving dreams came true-r!" - Anonymous
+```sh
+npm install
+gulp build-development
 
-## Closing and Call to Action ##
-www.archivr.com
+# Run in separate tabs
+mongod
+nodemon server/index.js
+```
+
+### Roadmap
+
+Start learning about the project by reading the [Wiki](https://github.com/MildHawk/Archivr/wiki).
+
+View the project roadmap [here](https://waffle.io/mildhawk/archivr).
+
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
