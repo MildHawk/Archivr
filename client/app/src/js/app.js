@@ -21,7 +21,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
      * Displays the user information and recent screen shots. Contains
      * multiple sibling views.
      * the user view has an unamed ui-view that nested views
-     * ie. screenshots and screenshot get loaded into.
+     * i.e. screenshots and screenshot get loaded into.
      */
     .state('user', {
       url: '/users/:username',
@@ -64,7 +64,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
             .then(function(screenshots){
               return screenshots.data;
             }).catch(function(err) {
-              console.log('Error getting screenshots: ', err);
+              console.error('Error getting screenshots: ', err);
             });
         }
       }
@@ -89,7 +89,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
             .then(function(response){
               return response.data;
             }).catch(function(err){
-              console.log('Error fetching screenshot: ', err);
+              console.error('Error fetching screenshot: ', err);
             });
         }
       }
