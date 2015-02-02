@@ -13,29 +13,18 @@ var cloudinary = require('cloudinary');
  * Passes the Cloudinary file URL to the callback.
  */
 
-cloudinary.config({ 
-  cloud_name: 'sample', 
-  api_key: '874837483274837', 
-  api_secret: 'a676b67565c6767a6767d6767f676fe1' 
-});
 var takeScreenshot = function(url, cb) {
   // Set screenshot properties
   var randomString = Math.random().toString(36).substring(7);
   var fileName = '/' + randomString + '.png';
   var width = 800;
   var height = 600;
-  var top = 500;
-  var left = 500;
 
   // Take screenshot
-  screenshot(url, { clip: {
-    top: top, 
-    left: left, 
-    width: width, 
-    height: height
-  } })
-    //.width(width)
-    //.height(height)
+  screenshot(url)
+    .width(width)
+    .height(height)
+    .clip()
     .capture(function(err, img) {
       if (err) return cb('Error capturing image: ' + err, null, null);
 
@@ -56,5 +45,3 @@ var takeScreenshot = function(url, cb) {
 };
 
 module.exports = takeScreenshot;
-
-takeScreenshot("http://www.google.com");
