@@ -123,7 +123,7 @@ exports.destroy = function(req, res, next) {
       * so that the CDN doesn't return a cached copy
       */
       cloudinary.uploader.destroy(screenshot.originalImageId, function(result) {
-        console.log("Image removed from Cloudinary, result -->", result);
+        console.log('Image removed from Cloudinary, result -->', result);
       });
       // Then, from db
       Screenshot.remove({_id: id}, function(err) {
