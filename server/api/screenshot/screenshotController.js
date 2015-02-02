@@ -30,7 +30,7 @@ exports.list = function(req, res, next){
 exports.create = function(req, res, next) {
   var username = req.params.username;
   var url = req.body.url;
-  var comment = req.body.comment || "Default comment";
+  var comment = req.body.comment || 'Default comment';
 
   takeScreenshot(url, function(err, imageUrl, imagePublicId) {
     if (err) return res.status(500).json({ message: err });
