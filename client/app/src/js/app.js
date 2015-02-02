@@ -20,19 +20,11 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
      * =========
      * Displays the user information and recent screen shots. Contains
      * multiple sibling views.
+     * the user view has an unamed ui-view that nested views
+     * ie. screenshots and screenshot get loaded into.
      */
     .state('user', {
       url: '/users/:username',
-      // resolve: {
-      //   screenshots: function($stateParams, Screenshot) {
-      //     return Screenshot.getScreenshots($stateParams.username)
-      //       .then(function(screenshots){
-      //         return screenshots.data;
-      //       }).catch(function(err) {
-      //         console.log('Error getting screenshots: ', err);
-      //       });
-      //   }
-      // },
       views: {
 
         // main view
@@ -52,20 +44,7 @@ function config($urlRouterProvider, $stateProvider, $locationProvider, $httpProv
           templateUrl: '/views/profileBar.html',
           controller: 'ProfileBarController',
           controllerAs: 'profileBarCtrl'
-        }//,
-
-        /**
-         * screenshots
-         * ===========
-         * Displays all the screenshots from a user
-         */
-
-        // 'screenshots@user': {
-        //   templateUrl: '/views/userScreenshots.html',
-        //   controller: 'ScreenshotsController',
-        //   controllerAs: 'screenshotsCtrl'
-        // }
-
+        }
       }
     })
 

@@ -8,7 +8,7 @@ function ScreenshotsController($stateParams, $state, $location, screenshots, Scr
 
   this.screenshots = screenshots;
   this.url = '';
-  console.log(User.getUser());
+
   /**
    * displays the form for adding another screenshot if the authenticated user
    * is the same user whos page we are viewing.
@@ -30,7 +30,7 @@ function ScreenshotsController($stateParams, $state, $location, screenshots, Scr
       });
   };
   this.changeView = function(screenshotId) {
-    // $location.url($location.url() + '/screenshot/' + screenshotId);
+    // navigate to nested user view screenshot
     $state.go('user.screenshot', { screenshotId: screenshotId });
   };
 }
