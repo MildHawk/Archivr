@@ -2,7 +2,7 @@ describe('User', function() {
   var User;
 
   beforeEach(module('Archivr.services.User'));
-  beforeEach(inject(function (_User_) {
+  beforeEach(inject(function(_User_) {
     User = _User_;
   }));
 
