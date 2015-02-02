@@ -11,6 +11,7 @@ function User() {
 
   var setUser = function(newUser){
     user = newUser;
+    return user;
   };
 
   return {
