@@ -27,6 +27,7 @@ function Screenshot($http, User) {
 
   var addScreenshot = function (url) {
     var user = User.getUser();
+    console.log(user);
     return $http.post('/api/user/' + user.username + '/screenshot', {
       url: url
     });
