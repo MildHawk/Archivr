@@ -19,7 +19,7 @@ function User($cookies) {
   };
 }
 
-Auth.$inject = ['$cookies'];
+User.$inject = ['$cookies'];
 
 angular.module('Archivr.services.User', ['ngCookies'])
   .factory('User', User);
