@@ -2,6 +2,8 @@ var Screenshot = require('./screenshotModel');
 var User = require('../user/userModel');
 var takeScreenshot = require('../../screenshotCapture/script.js');
 var cloudinary = require('cloudinary');
+var urlModule = require('url');
+
 
 /**
  * retrieveAll
@@ -43,8 +45,8 @@ exports.list = function(req, res, next){
 exports.create = function(req, res, next) {
   var username = req.params.username;
   var url = req.body.url;
-  var height = req.body.height;
   var width = req.body.width;
+  var height = req.body.height;
 
   takeScreenshot(url, width, height, function(err, imageUrl, imagePublicId) {
     if (err) return res.status(500).json({ message: err });

@@ -17,8 +17,8 @@ var takeScreenshot = function(url, width, height, cb) {
   // Set screenshot properties
   var randomString = Math.random().toString(36).substring(7);
   var fileName = '/' + randomString + '.png';
-  var width = width || 1024;
-  var height = height || 768;
+  width = width || 1024;
+  height = height || 768;
 
   // Take screenshot
   screenshot(url)
