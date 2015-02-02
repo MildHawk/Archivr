@@ -8,8 +8,11 @@ function LandingController($location, Screenshots, Auth) {
   this.screenshots = [];
   this.getAllScreenshots = function() {
     Screenshots.getAllScreenshots()
-      .success(function(data) {
+      .then(function(data) {
         this.screenshots = data;
+      })
+      .catch(function(error) {
+        console.log(error);
       });
   };
   this.changeView = function(screenshotId) {
