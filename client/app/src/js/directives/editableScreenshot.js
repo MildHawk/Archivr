@@ -18,16 +18,16 @@ function editableScreenshot() {
 
       // drawing controls
       '<div class="controls">',
-        '<ul class="list-inline">',
-          '<li>',
-            '<a href="#" data-clear class="btn btn-default">Clear</a>',
-          '</li>',
-          '<li>',
-            '<a href="#" data-save class="btn btn-default">Save</a>',
-          '</li>',
-        '</ul>',
+        // '<ul class="list-inline">',
+        //   '<li>',
+        //     '<a href="#" data-clear class="btn btn-default">Clear</a>',
+        //   '</li>',
+        //   '<li>',
+        //     '<a href="#" data-save class="btn btn-default">Save</a>',
+        //   '</li>',
+        // '</ul>',
       '</div>',
-      '<canvas id="image" style="url(\'{{ screenshot.originalImage }}\') no-repeat left top;"',
+      '<canvas id="image" style="background:url(\'{{ screenshot.originalImage }}\') no-repeat left top;"',
       ' width="{{ screenshot.width }}" height="{{ screenshot.height }}"></canvas>',
       // drawing container
       // '<div class="image" style="',
@@ -42,7 +42,7 @@ function editableScreenshot() {
   directive.link = function(scope, el, attrs) {
     // save jquery wrapped element
     var $el = $(el);
-
+    console.log(scope.screenshot);
     $el.find('#image').sketch();
 
     // enable drawing plugin and save element/api to editable
