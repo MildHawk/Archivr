@@ -1,7 +1,12 @@
+var mongoose = require('../db/index.js');
 /**
  * Populate DB with sample data on server start
  * to disable, edit config/environment/index.js, and set `seedDB: false`
  */
+
+ //drop database
+ mongoose.db.dropDatabase();
+
 
 var User = require('../api/user/userModel');
 var Screenshot = require('../api/screenshot/screenshotModel');
