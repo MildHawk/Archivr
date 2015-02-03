@@ -3,11 +3,12 @@
 <div id='signup'>
 
   <h1>Sign up</h1>
-  <form name="signupForm" ng-submit='authCtrl.signup(username, password)'>
+  <form name="signupForm" class="form" ng-submit='authCtrl.signup(username, password)'>
     <label for="username">Create username:</label>
-    <input id="username" type='text' ng-model='username'>
+    <input id="username" class="form-control" type='text' ng-model='username'>
     <label for="password">Create password:</label>
-    <input id="password" type="password" ng-model='password'>
-    <button>Sign up</button>
+    <input id="password" class="form-control" type="password" ng-model='password'>
+    <br>
+    <button class="btn btn-success">Sign up</button>
   </form>
 </div>
