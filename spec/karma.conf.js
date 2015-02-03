@@ -15,14 +15,14 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // TODO: specify client files more carefully
       // src files
-      'client/dist/app.min.js',
+      'client/app/src/bower_components/angular/angular.min.js',
+      'client/app/src/bower_components/angular-ui-router/release/angular-ui-router.min.js',
+      'node_modules/angular-mocks/angular-mocks.js',
+      'client/app/src/js/**/*.js',
 
-      // TODO: set up server-side tests in karma
       // spec files
       'spec/client/**/*.js'
-      // 'spec/server/**/*.js'
     ],
 
 
