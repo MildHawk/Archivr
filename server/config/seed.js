@@ -1,15 +1,12 @@
+var mongoose = require('../db/index.js');
 /**
  * Populate DB with sample data on server start
  * to disable, edit config/environment/index.js, and set `seedDB: false`
  */
 
- //drop collections
- mongoose.connection.collections['Screenshot'].drop( function(err) {
-    console.log('screenshot collection dropped');
-});
- mongoose.connection.collections['User'].drop( function(err) {
-    console.log('user collection dropped');
-});
+ //drop database
+ mongoose.db.dropDatabase();
+
 
 var User = require('../api/user/userModel');
 var Screenshot = require('../api/screenshot/screenshotModel');
