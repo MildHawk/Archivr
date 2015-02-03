@@ -45,8 +45,8 @@ exports.list = function(req, res, next){
 exports.create = function(req, res, next) {
   var username = req.params.username;
   var url = req.body.url;
-  var width = req.body.width;
-  var height = req.body.height;
+  var width = req.body.width || 1024;
+  var height = req.body.height || 768;
 
   var rValidUrl = /^(?!mailto:)(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:(?:(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[0-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))|localhost)(?::\d{2,5})?(?:\/[^\s]*)?$/i;
   if( !url.match(rValidUrl) ) { 
@@ -58,7 +58,7 @@ exports.create = function(req, res, next) {
 
     // Save screenshot
     var newScreenshot = new Screenshot({url: url, originalImage: imageUrl, originalImageId: imagePublicId,
-                      annotatedImage: imageUrl, username: username});
+                      annotatedImage: imageUrl, username: username, width: width, height: height});
     newScreenshot.save(function(err, screenshot) {
       if (err) return res.status(500).json({ message: err });
 
