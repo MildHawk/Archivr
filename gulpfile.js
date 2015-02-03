@@ -46,7 +46,7 @@ var jsFiles = [
   paths.src.bower + '/angular/angular.js',
   paths.src.bower + '/angular-ui-router/release/angular-ui-router.js',
   paths.src.bower + '/jquery/dist/jquery.js',
-  paths.src.bower + '/jqScribble/jquery.jqscribble.js',
+  paths.src.bower + '/sketch.js/sketch.js',
   paths.src.js + '/app.js',
   paths.src.js + '/directives/*.js',
   paths.src.js + '/services/*.js',
