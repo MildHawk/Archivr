@@ -179,7 +179,9 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
         url: 'www.google.com',
         originalImage: 'image1.png',
         annotatedImage: 'image1a.png',
-        username: 'notRuben'
+        username: 'notRuben',
+        width: 800,
+        height: 600
       });
       shot1.save();
 
@@ -187,7 +189,9 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot', function ()
         url: 'www.google.com',
         originalImage: 'image1.png',
         annotatedImage: 'image1a.png',
-        username: 'Ruben'
+        username: 'Ruben',
+        width: 800,
+        height: 600
       });
 
       // Save the shot, then...
@@ -250,19 +254,25 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', functio
   });
 
   // delete image from Cloudinary
-  after(function (done) {
-    // do not delete image if it was never created
-    if (bail) {
-      // reset bail for next test
-      bail = false;
+  //
+  // We don't need to delete for this round, because we will delete the Cloudinary
+  // file through the DELETE request.
+  //
+  // TODO: test this better.
+  //
+  // after(function (done) {
+  //   // do not delete image if it was never created
+  //   if (bail) {
+  //     // reset bail for next test
+  //     bail = false;
 
-      return done();
-    }
-    // otherwise, delete from Cloudinary
-    removeRecentImagesFromCloudinary(1, function(res) {
-      done();
-    });
-  });
+  //     return done();
+  //   }
+  //   // otherwise, delete from Cloudinary
+  //   removeRecentImagesFromCloudinary(1, function(res) {
+  //     done();
+  //   });
+  // });
 
   describe('GET /', function () {
 
@@ -294,6 +304,7 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', functio
   describe('PUT /', function () {
 
     it('should update a screenshot and store in DB', function (done) {
+      console.log('screenshot', screenshot);
       request(app).put('/api/user/Ruben/screenshot/' + screenshot._id)
         .send({ visits: 2 })
         .expect(200)
@@ -338,7 +349,7 @@ describe('INTEGRATION: Server + DB: /api/user/:username/screenshot/:id', functio
     });
 
     it('should fail with bad username', function (done) {
-      request(app).delete('/api/user/billy/screenshot/' + screenshot._id)
+      request(app).delete('/api/user/billy/screenshot/notanID')
         .expect(404, done);
     });
   });
