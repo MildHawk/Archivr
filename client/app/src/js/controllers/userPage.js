@@ -6,8 +6,7 @@
 
 function UserPageController($stateParams, User) {
   // Get User object for reference
-  // this.user = new User($stateParams.username);
-
+  this.user = User.getUser();
 }
 UserPageController.$inject = ['$stateParams', 'User'];
 

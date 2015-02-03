@@ -1,20 +1,20 @@
 <!-- Template for UserScreenshots -->
 
-  <form
-    ng-if="screenshotsCtrl.isUser"
-    name="newScreenshot"
-    class="form-inline"
-    id="newScreenshot"
-    ng-submit="newScreenshot.$valid && screenshotsCtrl.addScreenshot(url)"
-    novalidate>
-    <!-- <label for="newUrl">Enter URL:</label> -->
-    <input placeholder="Enter URL here..." id="newUrl" type="url" name="url" ng-model="url" class="form-control">
-    <button class="btn" type="submit">Get Screenshot</button>
-  </form>
-
   <div class="row">
     <div class="col-md-12">
-      <ul class="list-unstyled">
+      <form
+        ng-if="screenshotsCtrl.isUser"
+        name="newScreenshot"
+        class="form-inline form"
+        id="newScreenshot"
+        ng-submit="newScreenshot.$valid && screenshotsCtrl.addScreenshot(url)"
+        novalidate>
+        <!-- <label for="newUrl">Enter URL:</label> -->
+        <input placeholder="Enter URL here..." id="newUrl" type="url" name="url" ng-model="url" class="form-control">
+        <button class="btn btn-success" type="submit">Get Screenshot</button>
+      </form>
+      <br>
+      <ul class="list-unstyled row">
         <li class="col-xs-6 col-md-3" ng-repeat="screenshot in screenshotsCtrl.screenshots">
           <a href="#" class="thumbnail">
             <img src="{{ screenshot.originalImage }}" ng-click="screenshotsCtrl.changeView(screenshot._id)" />

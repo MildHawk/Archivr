@@ -45,11 +45,14 @@ var handleError = function(err) {
 var jsFiles = [
   paths.src.bower + '/angular/angular.js',
   paths.src.bower + '/angular-ui-router/release/angular-ui-router.js',
+  paths.src.bower + '/jquery/dist/jquery.js',
+  paths.src.bower + '/sketch.js/lib/sketch.js',
   paths.src.js + '/app.js',
-  paths.src.js + '/controllers/*.js',
   paths.src.js + '/directives/*.js',
   paths.src.js + '/services/*.js',
-  './node_modules/angular-mocks/angular-mocks.js'
+  './node_modules/angular-mocks/angular-mocks.js',
+  paths.src.js + '/controllers/*.js',
+  paths.src.js + '/services/*.js'
 ];
 
 // Keep track of own JS files for linting
