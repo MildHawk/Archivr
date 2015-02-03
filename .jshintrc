@@ -22,5 +22,6 @@
 
     // Environments
     "mocha": true,
-    "jasmine": true
+    "jasmine": true,
+    "jquery": true
 }
