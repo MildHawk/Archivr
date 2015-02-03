@@ -18,6 +18,8 @@ function AuthController($window, $location, Auth, User) {
     });
   };
 
+
+
   this.signup = function(user, pass) {
     Auth.signup({
       username: user,

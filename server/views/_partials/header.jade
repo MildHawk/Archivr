@@ -15,5 +15,9 @@ header(role="header" id="header" ng-controller="NavController as NavCtrl")
           a(href="/signup") Signup
         li(ng-show="NavCtrl.loggedIn")
           a(href="#" ng-click="NavCtrl.logout()") Logout
+        li
+          a(ui-sref="about") About
+        li(ng-show="NavCtrl.loggedIn")
+          a(href="#" ng-click="NavCtrl.goToMyScreenshots()") My Archivs
 
 
