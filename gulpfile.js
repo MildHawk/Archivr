@@ -222,14 +222,15 @@ gulp.task('coveralls', function () {
 
 
 gulp.task('testy', function () {
-  return gulp.src([
-    './coverage/client/lcov.info',
-    './coverage/lcov.info'
-  ])
-    .pipe(concat('test.info'))
-    .pipe(gulp.dest('./coverage'));
+  // return gulp.src([
+  //   './coverage/client/lcov.info',
+  //   './coverage/lcov.info'
+  // ])
+  //   .pipe(concat('combined.info'))
+  //   .pipe(gulp.dest('./coverage'))
+  return gulp.src('./coverage/combined.info')
+  .pipe(coveralls());
 });
-
 
 gulp.task('watch', function() {
   gulp.watch(paths.src.img + '/**/*', ['image']);

@@ -44,8 +44,9 @@ module.exports = function(config) {
 
     // optionally, configure the coverage reporter
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/client'
+      type : 'lcov',
+      dir : 'coverage/client',
+      subdir: 'lcovTest'
     },
 
     // test results reporter to use
