@@ -5,8 +5,8 @@ var screenshotsSchema = mongoose.Schema({
   url: { type: String, required: true },
   // originalImage is the url of the image uploaded to Cloudinary
   originalImage: { type: String, required: true },
-  width: { type: Number, require: true },
-  height: { type: Number, require: true },
+  width: { type: Number, required: true },
+  height: { type: Number, required: true },
   // annotation functionality to be implemented on the front-end, see wiki for more info about libraries suggested
   annotatedImage: { type: String, required: true },
   // originalImageId is the Cloudinary public_id of the image uploaded
