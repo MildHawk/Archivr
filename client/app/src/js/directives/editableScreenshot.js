@@ -64,7 +64,7 @@ function editableScreenshot() {
     //   });
     // });
 
-  }
+  };
 
   return directive;
 }
