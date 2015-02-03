@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var config = require('./environment');
 var session = require('express-session');
+var cors = require('cors');
 
 module.exports = function expressConfig(app) {
   // standard POST request body parser
@@ -13,6 +14,8 @@ module.exports = function expressConfig(app) {
 
   // HTTP request logger middleware
   app.use(morgan('combined'));
+
+  app.use(cors());
 
   // set view directory
   app.set('views', __dirname + '/../views');
