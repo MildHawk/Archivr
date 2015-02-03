@@ -2,15 +2,15 @@
  *  The user service is for keeping track of the authenicated user across controllers
  */
 
-function User() {
+function User($cookies) {
   var user = null;
 
   var getUser = function () {
-    return user;
+    return $cookies.user;
   };
 
   var setUser = function(newUser){
-    user = newUser;
+    $cookies.user = newUser;
   };
 
   return {
@@ -19,5 +19,7 @@ function User() {
   };
 }
 
-angular.module('Archivr.services.User', [])
+User.$inject = ['$cookies'];
+
+angular.module('Archivr.services.User', ['ngCookies'])
   .factory('User', User);
