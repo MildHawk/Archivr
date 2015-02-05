@@ -6,6 +6,7 @@ function AuthController($window, $location, Auth, User) {
   // the above are not currently used, commented out for JSHint to pass.
   this.validation = {};
   this.validation.success = true;
+  this.validation.message = '';
   console.log('this.validation.success', this.validation.success);
 
   var self = this;
@@ -35,6 +36,7 @@ function AuthController($window, $location, Auth, User) {
     }).catch(function(error) {
       console.log('error', error);
       self.validation.success = false;
+      self.validation.message = 'Error status ' + error.status + ': ' + error.statusText;
     });
   };
 
