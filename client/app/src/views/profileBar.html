@@ -1,6 +1,6 @@
 <div class="container profile-view">
   <div class="row">
-    <a href="/users/aa/screenshots">
+    <a ng-href="/users/{{userPageCtrl.user.username}}/screenshots">
       <img ng-src="{{ userPageCtrl.user.profileImage || '../img/anonymous_200.gif' }}">
     </a>
   </div>
