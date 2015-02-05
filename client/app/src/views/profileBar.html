@@ -1,6 +1,8 @@
 <div class="container profile-view">
   <div class="row">
-    <img ng-src="{{ userPageCtrl.user.profileImage || 'http://www.gurucul.com/wp-content/uploads/2014/02/anonymous-user.png' }}">
+    <a href="/users/aa/screenshots">
+      <img ng-src="{{ userPageCtrl.user.profileImage || '../img/anonymous_200.gif' }}">
+    </a>
   </div>
   <div class="row">
     <h1>{{ userPageCtrl.user.username }}</h1>
