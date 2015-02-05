@@ -1,19 +1,18 @@
 <!-- inside signup -->
 
-<div id='login'>
-  <h1>Login</h1>
-  <form name='signupForm' class='form' ng-submit='authCtrl.login(username, password)'>
-    <label for='username'>Enter username:</label>
-    <input id='username' type='text' class='form-control' ng-model='username'>
-    <label for='password'>Enter password:</label>
-    <input id='password' class='form-control' type='password' ng-model='password'>
+<div id="login">
+  <h1>Log in</h1>
+  <form name="signupForm" class="form" ng-submit="authCtrl.login(username, password)" style="width: 50%">
+    <label for="username">Enter usrname:</label>
+    <input id="username" type="text" class="form-control" ng-model="username">
+    <label for="password">Enter passwrd:</label>
+    <input id="password" class="form-control" type="password" ng-model="password">
     <br>
-    <button class='btn btn-success'>Log in</button>
+    <button class="btn btn-success">Log in</button>
     <!-- This div only shows when a login is unsuccessful -->
-    <div class='row help-block' ng-hide='validation.success'>
+    <div class="row help-block" ng-hide="authCtrl.validation.success">
       <br/>
-      <p>{{validation.success}}</p>
-      <p>Incorrect login information.</p>
+      <p>Incorrect login information...</p>
     </div>
     <!-- End unsuccessful login div -->
   </form>

@@ -21,7 +21,6 @@ function AuthController($window, $location, Auth, User) {
     }).catch(function(error) {
       console.log('error', error);
       self.validation.success = false;
-      // self.validation.message = 'Fuck you';
     });
   };
 
@@ -35,6 +34,7 @@ function AuthController($window, $location, Auth, User) {
       $location.path('/login');
     }).catch(function(error) {
       console.log('error', error);
+      self.validation.success = false;
     });
   };
 
