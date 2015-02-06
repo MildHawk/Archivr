@@ -47,7 +47,8 @@ function editableScreenshot() {
     
     $el.find('[data-save]').on('click', function(e){
       //var data = canvas.toDataUri();
-      console.log(e)
+      var dataRef = canvas[0].toDataURL();
+      console.log(dataRef);
       scope.save('Data from directive', canvas);
       // scope.save()
     });
