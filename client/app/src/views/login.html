@@ -1,7 +1,13 @@
 <!-- inside signup -->
-
 <div id="login">
   <h1>Log in</h1>
+
+  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+  </fb:login-button>
+
+  <div id="status">
+  </div>
+
   <form name="signupForm" class="form" ng-submit="authCtrl.login(username, password)" style="width: 50%">
     <label for="username">Enter usrname:</label>
     <input id="username" type="text" class="form-control" ng-model="username">
@@ -10,6 +16,7 @@
     <br>
     <button class="btn btn-success">Log in</button>
     <!-- This div only shows when a login is unsuccessful -->
+
     <div class="row help-block" ng-hide="authCtrl.validation.success">
       <br/>
       <p>Incorrect login information...</p>
