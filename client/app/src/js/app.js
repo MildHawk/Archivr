@@ -171,6 +171,7 @@ angular
     'Archivr.screenshots',
     'Archivr.screenshot',
     'Archivr.services.Auth',
+    'Archivr.directives.angulike',
     'Archivr.directives.editableScreenshot',
     'Archivr.nav',
     'Archivr.services.User',
