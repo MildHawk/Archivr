@@ -6,14 +6,21 @@
 2. Clone to local computer.
 1. Make commits to your feature branch. Commits are written in present tense.
 1. Add upstream remote
-2. 
-`$ git remote add upstream https://github.com/Fire-Devil/Archivr/`
+  
+  `$ git remote add upstream https://github.com/Fire-Devil/Archivr/`
 1. Make a new branch for the issue/feature you are working on.
   1. Feature branches are cut from `develop`
     - `feature-<name>-#<issueNumber>`
   1. Hotfix branches are cut from `develop`
     - `hotfix-<name>`
   
+  **NOTE**: Make sure to test your changes:
+
+  1. Run the server and leave it watching: `nodemon server/index.js`
+
+  2. In another terminal window, rebuild the dist files: `gulp build-development`
+
+  3. Point your browser to `localhost:3000`
 1. Add and commit to your feature branch. (don't push)
   `$git add .`
   `$git commit -m 'short description of changes made'`
