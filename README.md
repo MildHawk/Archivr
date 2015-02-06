@@ -1,13 +1,27 @@
 
-# Archivr [![Stories in Ready](https://badge.waffle.io/MildHawk/Archivr.png?label=ready&title=Ready)](https://waffle.io/MildHawk/Archivr) [![Build Status](https://travis-ci.org/MildHawk/Archivr.svg?branch=develop)](https://travis-ci.org/MildHawk/Archivr) [![Coverage Status](https://coveralls.io/repos/MildHawk/Archivr/badge.svg?branch=develop)](https://coveralls.io/r/MildHawk/Archivr?branch=develop)
+# Archivr
 
-> Because it's hip to add an "r" at the end. r.
+Screencap. Scribble. Share.
 
-## Team
+## Development
 
-  - __Product Owner__: Jackson Hoose
-  - __Scrum Master__: Andrew Smith
-  - __Development Team Members__: Ruben Vicario, Rick Wuebker
+### Legacy Team
+  - __Product Owner__:
+    - [Dan Tennery-Spalding](https://github.com/teachrdan)
+  - __Scrum Master__:
+    - [Christine Young](https://github.com/cyanCYMK)
+  - __Development Team__: 
+    - [Nick Sippl-Swezey](https://github.com/nsipplswezey)
+    - [Tole Liberman](https://github.com/tliber)
+
+### Greenfield Team
+  - __Product Owner__:
+    - Jackson Hoose
+  - __Scrum Master__:
+    - Andrew Smith
+  - __Development Team__:
+    - Ruben Vicario
+    - Rick Wuebker
 
 ## Table of Contents
 
@@ -19,16 +33,20 @@
 1. [Team](#team)
 1. [Contributing](#contributing)
 
+
 ## Usage
 
-> Create a user, take some screenshots of websites. Share them with friends.
+- Take screenshots of websites.
+- Scribble on yr screenshots.
+- Share them with yr friends!
+
 
 ## Requirements
 
 - Node
 - npm
 - Ruby
-- Bundler (`$ gem install bundler`)
+- Bundler
 - MongoDB
 
 ## Development
@@ -38,19 +56,26 @@
 From within the root directory:
 
 ```sh
+gem install bundler
 npm install
+gem install
 gulp build-development
 
 # Run in separate tabs
-mongod
+mongod --dbpath server/db
 nodemon server/index.js
 ```
+
+__Known issues:__
+  - There may be a conflict with different versions of SASS on your machine.
+    - Run `$ gem uninstall sass` and delete the conflicting version.
+
 
 ### Roadmap
 
 Start learning about the project by reading the [Wiki](https://github.com/MildHawk/Archivr/wiki).
 
-View the project roadmap [here](https://waffle.io/mildhawk/archivr).
+View the project roadmap [here](https://waffle.io/fire-devil/archivr).
 
 
 ## Contributing
