@@ -7,7 +7,9 @@
 function UserPageController($stateParams, User) {
   // Get User object for reference
   this.user = User.getUser();
+  this.message = 'Check my Scribblr gallery!';
 }
+
 UserPageController.$inject = ['$stateParams', 'User'];
 
 
