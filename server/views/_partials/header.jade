@@ -10,9 +10,9 @@ header(role="header" id="header" ng-controller="NavController as NavCtrl")
         a(class="navbar-brand" href="/") Archivr
       ul(class="nav navbar-nav navbar-right")
         li(ng-hide="NavCtrl.loggedIn")
-          a(href="/login") Login
+          a(href="/login") Log in
         li(ng-hide="NavCtrl.loggedIn")
-          a(href="/signup") Signup
+          a(href="/signup") Sign up
         li(ng-show="NavCtrl.loggedIn")
           a(href="#" ng-click="NavCtrl.logout()") Logout
 
