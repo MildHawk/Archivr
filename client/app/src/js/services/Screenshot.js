@@ -40,12 +40,29 @@ function Screenshot($http, User) {
         return response;
       });
   };
+  var addDrawing = function(drawing, id){
+    var user = User.getUser();
+    return $http.put('/api/user/' + user.username + '/screenshot/' + id, {
+      annotatedImage : drawing
+    }).success(function(data, status, headers, config) {
+      console.log(data, status, header, config)
+    // this callback will be called asynchronously
+    // when the response is available
+    }).error(function(data, status, header, config) {
+    
+    console.log("ERR ",data, status, header, config)
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+    });
+  };
+
 
   return {
     getAllScreenshots: getAllScreenshots,
     getScreenshots: getScreenshots,
     addScreenshot: addScreenshot,
-    getScreenshot: getScreenshot
+    getScreenshot: getScreenshot,
+    addDrawing : addDrawing
   };
 }
 Screenshot.$inject = ['$http', 'User'];
