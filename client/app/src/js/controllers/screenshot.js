@@ -5,9 +5,9 @@
  */
 
 // <<<<<<< HEAD
-function ScreenshotController(Screenshot, User, screenshot, $window, $document) {
+function ScreenshotController(Screenshot, User, screenshot, $window, $document, $stateParams) {
   this.screenshot = screenshot;
-
+  var self = this;
   this.message = 'Four developers in SF made an app. You will not believe what happened next!';
   console.log(screenshot);
   // console.log(this.screenshot.el)
@@ -17,9 +17,14 @@ function ScreenshotController(Screenshot, User, screenshot, $window, $document) 
     console.log('running saveScreenshot');
     // var canvas = $document;
      // here is the most important part because if you dont replace you will get a DOM 18 exception.
-    var image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'); 
-    
+    // var image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'); 
+    // console.log('my special image', image)
 
+    Screenshot.addDrawing(data, $stateParams.screenshotId)
+      .then(function(response){
+        // console.log('response', response);
+        self.screenshot.annotatedImage = data;
+      });
     // it will save locally
     console.log('should be saved');
     // $window.location.href=image;

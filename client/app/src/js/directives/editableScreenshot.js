@@ -25,7 +25,8 @@ function editableScreenshot() {
           '</li>',
         '</ul>',
       '</div>',
-      '<img src="{{ screenshot.annotatedImage }}" ng-if="screenshot.annotatedImage" class="" />',
+      '<div style="position: relative;">',
+      '<img style="position: absolute; top: 0; left: 0;" src="{{ screenshot.annotatedImage }}" ng-if="screenshot.annotatedImage" class="" />',
       '<canvas id="image" style="background:url(\'{{ screenshot.originalImage }}\') no-repeat left top;"',
       ' width="{{ screenshot.width }}" height="{{ screenshot.height }}"></canvas>',
       // drawing container
@@ -35,6 +36,7 @@ function editableScreenshot() {
       //   '<canvas id="editableScreenshot" style="position:absolute;left:0;top:0;z-index:10;"></canvas>',
       // '</div>',
     '</div>',
+    '</div>'
   ].join('');
 
   // link
@@ -43,9 +45,11 @@ function editableScreenshot() {
     var $el = $(el);
     var canvas = $el.find('#image');
     canvas.sketch();
+    console.log(scope);
     $el.find('[data-save]').on('click', function(e){
       var dataRef = canvas[0].toDataURL('image/png');
       scope.save(dataRef)
+      console.log(dataRef);
     });
     // var c=document.getElementById("myCanvas");
     // var ctx=c.getContext("2d");

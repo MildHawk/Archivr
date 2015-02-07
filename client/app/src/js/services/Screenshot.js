@@ -45,7 +45,8 @@ function Screenshot($http, User) {
     return $http.put('/api/user/' + user.username + '/screenshot/' + id, {
       annotatedImage : drawing
     }).success(function(data, status, headers, config) {
-      console.log(data, status, header, config)
+      // console.log(data, status, header, config)
+      return data;
     // this callback will be called asynchronously
     // when the response is available
     }).error(function(data, status, header, config) {
