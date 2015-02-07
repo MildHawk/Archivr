@@ -6,7 +6,7 @@
 
 /* jshint ignore:start */
   angular
-    .module('Archivr.directives.angulike', []);
+    .module('Archivr.directives.angulike', [])
 
     .directive('tweet', [
       '$window', function ($window) {
@@ -42,9 +42,9 @@
                 element.html('<a href="https://twitter.com/share" class="twitter-share-button" data-text="' + scope.tweet + '">Tweet</a>');
                 $window.twttr.widgets.load(element.parent()[0]);
               }
-            };
-          };
-        };
-      };
+            }
+          }
+        }
+      }
     ]);
 /* jshint ignore:end */
