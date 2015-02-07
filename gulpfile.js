@@ -212,9 +212,29 @@ gulp.task('mocha', function (cb) {
  * Sends code coverage data to Coveralls.
  */
 gulp.task('coveralls', function () {
-  if (!process.env.CI) return;
-  return gulp.src('./coverage/lcov.info')
+  // if (!process.env.CI) return;
+  return gulp
+    .src([
+      './coverage/client/lcovTest/lcov.info',
+      './coverage/lcov.info'
+    ])
+    .pipe(concat('lcov.info'))
     .pipe(coveralls());
+  // return gulp.src('./coverage/lcov.info')
+  //   .pipe(coveralls());
+});
+
+
+
+gulp.task('testy', function () {
+  // return gulp.src([
+  //   './coverage/client/lcov.info',
+  //   './coverage/lcov.info'
+  // ])
+  //   .pipe(concat('combined.info'))
+  //   .pipe(gulp.dest('./coverage'))
+  return gulp.src('./coverage/combined.info')
+  .pipe(coveralls());
 });
 
 gulp.task('watch', function() {
