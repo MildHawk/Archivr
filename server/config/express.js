@@ -3,6 +3,14 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var config = require('./environment');
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
+var redis = require('redis');
+var url = require('url');
+
+// Configure Redis server
+var redisClient = redis.createClient(config.redis.port, config.redis.hostname,
+                                     { no_ready_check: true }); // jshint ignore:line
+if (config.redis.auth) redisClient.auth(config.redis.auth);
 
 module.exports = function expressConfig(app) {
   // standard POST request body parser
@@ -14,6 +22,16 @@ module.exports = function expressConfig(app) {
   // HTTP request logger middleware
   app.use(morgan('combined'));
 
+  app.use(session({
+    // Use RedisStore for session storage
+    store: new RedisStore({
+      client: redisClient
+    }),
+    secret: config.expressSessionSecret,
+    resave: false,
+    saveUninitialized: true
+  }));
+
   // set view directory
   app.set('views', __dirname + '/../views');
 
@@ -22,12 +40,6 @@ module.exports = function expressConfig(app) {
 
   // set static asset dir
   app.use(express.static(__dirname + '/../../client/app/dist'));
-
-  app.use(session({
-    secret: config.expressSessionSecret,
-    resave: false,
-    saveUninitialized: true
-  }));
 
   // dynamically set port if in production otherwise use port 3000
   app.set('port', config.port);

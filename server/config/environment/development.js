@@ -8,5 +8,10 @@ module.exports = {
     uri: 'mongodb://localhost/archivr-dev'
   },
 
+  redis: {
+    hostname: '127.0.0.1',
+    port: 6379
+  },
+
   seedDB: true
 };
