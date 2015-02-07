@@ -13,10 +13,10 @@ html(lang="en" class="no-js" ng-app="Archivr")
           version : 'v2.1'
         });
 
-        FB.getLoginStatus(function(response) {
-          //- statusChangeCallback(response);
-          console.log('logged in?');
-        });
+        //- FB.getLoginStatus(function(response) {
+        //-   //- statusChangeCallback(response);
+        //-   console.log('logged in?');
+        //- });
       };
 
       (function(d, s, id) {
@@ -51,7 +51,7 @@ html(lang="en" class="no-js" ng-app="Archivr")
       function checkLoginState() {
         FB.getLoginStatus(function(response) {
           //- statusChangeCallback(response);
-          console.log('logged in');
+          console.log('fb login response:', response);
         });
       }
 
