@@ -25,7 +25,7 @@ function editableScreenshot() {
           '</li>',
         '</ul>',
       '</div>',
-
+      '<img src="{{ screenshot.annotatedImage }}" ng-if="screenshot.annotatedImage" class="" />',
       '<canvas id="image" style="background:url(\'{{ screenshot.originalImage }}\') no-repeat left top;"',
       ' width="{{ screenshot.width }}" height="{{ screenshot.height }}"></canvas>',
       // drawing container
@@ -41,17 +41,41 @@ function editableScreenshot() {
   directive.link = function(scope, el, attrs) {
     // save jquery wrapped element
     var $el = $(el);
-    console.log(scope.screenshot);
     var canvas = $el.find('#image');
     canvas.sketch();
-    
     $el.find('[data-save]').on('click', function(e){
-      //var data = canvas.toDataUri();
-      var dataRef = canvas[0].toDataURL();
-      console.log(dataRef);
-      scope.save('Data from directive', canvas);
-      // scope.save()
+      var dataRef = canvas[0].toDataURL('image/png');
+      scope.save(dataRef)
     });
+    // var c=document.getElementById("myCanvas");
+    // var ctx=c.getContext("2d");
+    // var imageObj1 = new Image();
+    // var imageObj2 = new Image();
+    // imageObj1.src = "1.png"
+    // imageObj2.src = "2.png";
+    // imageObj1.onload = function() {
+    //    ctx.drawImage(imageObj1, 0, 0, 328, 526);
+    //    imageObj2.onload = function() {
+    //       ctx.drawImage(imageObj2, 15, 85, 300, 300);
+    //       var img = c.toDataURL("image/png");
+    //       document.write('<img src="' + img + '" width="328" height="526"/>');
+    //    }
+    // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // scope.save
     // enable drawing plugin and save element/api to editable
     // var editable = $el.find('#editableScreenshot').jqScribble({
