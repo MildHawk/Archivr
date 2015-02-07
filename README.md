@@ -42,6 +42,9 @@ npm install
 gulp build-development
 
 # Run in separate tabs
+# If it's your first time using mongo, see 
+# http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/
+
 mongod
 nodemon server/index.js
 ```
