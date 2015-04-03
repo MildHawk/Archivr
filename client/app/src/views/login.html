@@ -1,13 +1,26 @@
 <!-- inside signup -->
+<div id="login">
+  <h1>Log in</h1>
 
-<div id='login'>
-  <h1>Login</h1>
-  <form name="signupForm" class="form" ng-submit='authCtrl.login(username, password)'>
-    <label for="username">Enter username:</label>
-    <input id="username" type='text' class="form-control" ng-model='username'>
-    <label for="password">Enter password:</label>
-    <input id="password" class="form-control" type="password" ng-model='password'>
+  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+  </fb:login-button>
+
+  <div id="status">
+  </div>
+
+  <form name="signupForm" class="form" ng-submit="authCtrl.login(username, password)" style="width: 50%">
+    <label for="username">Enter usrname:</label>
+    <input id="username" type="text" class="form-control" ng-model="username">
+    <label for="password">Enter passwrd:</label>
+    <input id="password" class="form-control" type="password" ng-model="password">
     <br>
-    <button class="btn btn-success">Log in</button>
+    <button class="btn btn-success">Let's do this</button>
+    <!-- This div only shows when a login is unsuccessful -->
+
+    <div class="row help-block" ng-hide="authCtrl.validation.success">
+      <br/>
+      <p>Incorrect login information...</p>
+    </div>
+    <!-- End unsuccessful login div -->
   </form>
 </div>

@@ -58,7 +58,7 @@ exports.create = function(req, res, next) {
 
     // Save screenshot
     var newScreenshot = new Screenshot({url: url, originalImage: imageUrl, originalImageId: imagePublicId,
-                      annotatedImage: imageUrl, username: username, width: width, height: height});
+                       username: username, width: width, height: height});
     newScreenshot.save(function(err, screenshot) {
       if (err) return res.status(500).json({ message: err });
 
